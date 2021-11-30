@@ -60,10 +60,11 @@ public class GameLoop implements Runnable{
 //					}
 					accumulator -= updateRate;
 				}
+				render();
 			}
 			
 			// Render to the screen
-			render();
+			
 			printDetails();
 		}
 	}

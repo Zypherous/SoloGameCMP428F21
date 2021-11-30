@@ -19,5 +19,9 @@
 			<name>RESOURCES</name>
 			<value>file:/C:/Users/Jonat/soloGame/Resources</value>
 		</variable>
+		<variable>
+			<name>resources</name>
+			<value>file:/C:/Users/Jonat/soloGame/TowerDefensePrototype/resources</value>
+		</variable>
 	</variableList>
 </projectDescription>

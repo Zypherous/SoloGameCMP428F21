@@ -8,6 +8,7 @@ import display.Display;
 import entity.GameObject;
 import entity.Player;
 import entity.Rect;
+import gfx.SpriteLibrary;
 import input.Input;
 
 public class Game {
@@ -15,7 +16,7 @@ public class Game {
 	private Rect rect[];
 	private Random rand;
 	private Input input;
-	
+	private SpriteLibrary spriteLibrary;
 	
 	private List<GameObject> gameObjects;
 	
@@ -29,7 +30,7 @@ public class Game {
 		rect = new Rect[10];
 		gameObjects = new ArrayList<>();
 		gameObjects.add(new Player(new PlayerController(input)));
-		
+		spriteLibrary = new SpriteLibrary();
 		for(int i = 0; i < rect.length;i++) {
 			rect[i] = new Rect(1200, (rand.nextInt(9)+1) * 64, 64, 64, rand.nextInt(5)+5, 0);
 		}
