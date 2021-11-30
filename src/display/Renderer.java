@@ -24,8 +24,8 @@ public class Renderer {
 		}
 		game.getGameObjects().forEach(gameObject -> graphics.drawImage(
 				gameObject.getSprite(),
-				gameObject.getPosition().getX(),
-				gameObject.getPosition().getY(),
+				(int)gameObject.getPosition().getX(),
+				(int)gameObject.getPosition().getY(),
 //				gameObject.getSize().getWidth(),
 //				gameObject.getSize().getHeight(), 
 				null
