@@ -45,4 +45,8 @@ public class SpriteLibrary {
         File file = new File(resource.getFile());
         return file.list((current, name) -> new File(current, name).isDirectory());
     }
+    
+    public SpriteSheet getUnit(String name) {
+    	return units.get(name);
+    }
 }
