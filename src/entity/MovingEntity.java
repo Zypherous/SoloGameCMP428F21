@@ -27,12 +27,14 @@ public abstract class MovingEntity extends GameObject {
 	public void update() {
 		movement.update(controller);
 		position.apply(movement);
+		
+		
 		manageDirection();
 		animation();
 		animationManager.update(direction);
 	}
 	
-private void animation() {
+	private void animation() {
 		if(movement.isMoving()) {
 			animationManager.playAnimation("walk");
 		}

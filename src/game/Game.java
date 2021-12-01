@@ -4,7 +4,9 @@ import java.util.List;
 import java.util.Random;
 
 import controller.PlayerController;
+import core.Position;
 import display.Display;
+import entity.Enemy;
 import entity.GameObject;
 import entity.Player;
 import entity.Rect;
@@ -21,6 +23,8 @@ public class Game {
 	private Input input;
 	private SpriteLibrary spriteLibrary;
 	
+	private Player player;
+	
 	private List<GameObject> gameObjects;
 	
 
@@ -33,10 +37,14 @@ public class Game {
 		rect = new Rect[10];
 		gameObjects = new ArrayList<>();
 		spriteLibrary = new SpriteLibrary();
-		gameObjects.add(new Player(new PlayerController(input), spriteLibrary));
-		
+		player = new Player(new PlayerController(input), spriteLibrary);
+		gameObjects.add(player);
 		for(int i = 0; i < rect.length;i++) {
-			rect[i] = new Rect(1200, (rand.nextInt(9)+1) * 64, 64, 64, rand.nextInt(5)+5, 0);
+			int randY = rand.nextInt((9)+1)*64;
+			Position randomPos = new Position(1200,randY);
+			rect[i] = new Rect(1200,randY, 64, 64, rand.nextInt(5)+5, 0,randomPos);
+			Enemy enemy = new Enemy(rect[i], i, player);
+			gameObjects.add(enemy);
 		}
 	}
 
@@ -44,8 +52,14 @@ public class Game {
 		// TODO Auto-generated method stub
 		for(int i = 0; i < rect.length; i++) {
 			rect[i].moveLeft(rect[i].getVelx());
-			if(rect[i].getX() <= 64) {		
-				rect[i] = new Rect(1200, (rand.nextInt(9)+1)*64, 64, 64, rand.nextInt(5)+5, 0);
+			if(rect[i].getX() <= 64) {	
+				gameObjects.remove(i+1);
+				
+				int randY = rand.nextInt((9)+1)*64;
+				Position randomPos = new Position(1200,randY);
+				rect[i] = new Rect(1200, randY, 64, 64, rand.nextInt(5)+5, 0, randomPos);
+				Enemy enemy = new Enemy(rect[i], i, player);
+				gameObjects.add(enemy);
 				health--;
 			}
 		}

@@ -1,16 +1,19 @@
 package entity;
 import java.awt.*;
 
+import core.Position;
+
 // Class to represent Axis-Aligned Rectangles
 
 
 public class Rect
 {
+	
 	private int x;
 	private int y;
 	
-	int w;
-	int h;
+	private int w;
+	private int h;
 	
 	private int velx;
 	int vely;
@@ -29,16 +32,35 @@ public class Rect
 		this.vely = 5;
 	}
 	
-	public Rect(int x, int y, int w, int h, int velx, int vely)
+	public int getW() {
+		return w;
+	}
+
+	public void setW(int w) {
+		this.w = w;
+	}
+
+	public int getH() {
+		return h;
+	}
+
+	public void setH(int h) {
+		this.h = h;
+	}
+
+	public Rect(int x, int y, int w, int h, int velx, int vely, Position objPos)
 	{
-		this.setX(x);
-		this.setY(y);
+	
+		this.setX((int)objPos.getX());
+		this.setY((int)objPos.getY());
 		
 		this.w = w;
 		this.h = h;
 		
 		this.setVelx(velx);
 		this.vely = vely;
+		
+		
 	}
 	
 	public Rect(int x, int y, int w, int h, Color color)
@@ -96,9 +118,9 @@ public class Rect
 	public boolean overlaps(Rect r)
 	{
 		return (getX() + w >= r.getX()      ) &&
-			   (getX()     <= r.getX() + r.w) &&
+			   (getX()     <= r.getX() + r.getW()) &&
 			   (getY() + h >= r.getY()      ) &&
-			   (getY()     <= r.getY() + r.h);
+			   (getY()     <= r.getY() + r.getH());
 	}
 	
 	public boolean contains(int mx, int my)
@@ -145,4 +167,6 @@ public class Rect
 	public void setVelx(int velx) {
 		this.velx = velx;
 	}
+
+
 }

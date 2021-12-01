@@ -12,14 +12,14 @@ public class Position {
 	public double getX() {
 		return x;
 	}
-	public void setX(int x) {
-		this.x = x;
+	public void setX(double d) {
+		this.x = d;
 	}
 	public double getY() {
 		return y;
 	}
-	public void setY(int y) {
-		this.y = y;
+	public void setY(double d) {
+		this.y = d;
 	}
 
 	public void apply(Movement movement) {

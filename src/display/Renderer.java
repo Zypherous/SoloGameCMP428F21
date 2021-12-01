@@ -14,6 +14,8 @@ public class Renderer {
 				graphics.drawImage(backgroundTest, row,col, null);
 			}
 		}
+		
+		//Creates Black column 
 		for(int row = 1; row < 10; row++) {
 			graphics.fillRect(32, row*64, 64, 64);
 		}
@@ -30,6 +32,8 @@ public class Renderer {
 //				gameObject.getSize().getHeight(), 
 				null
 				));
+		
+		game.getGameObjects().forEach(gameObject -> gameObject.getRect().draw(graphics));
 	}
 	
 }
