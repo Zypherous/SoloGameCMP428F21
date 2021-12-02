@@ -3,6 +3,8 @@ package game;
 
 public class GameLoop implements Runnable{
 	
+	public static final int UPDATES_PER_SECOND = 60;
+	
 	// Game 
 	private Game game;
 	
@@ -17,7 +19,7 @@ public class GameLoop implements Runnable{
 	private boolean running;
 	
 	// How many times per second we will be updating the game
-	private final double updateRate = 1.0d/60.0d;
+	private final double updateRate = 1.0d/UPDATES_PER_SECOND;
 	
 	public GameLoop(Game game) {
 		this.game = game;
