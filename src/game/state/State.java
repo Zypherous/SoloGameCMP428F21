@@ -1,17 +1,16 @@
 package game.state;
 
-import controller.PlayerController;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 import core.Size;
+import display.Camera;
 import entity.GameObject;
-import entity.Player;
 import entity.Rect;
 import gfx.SpriteLibrary;
 import input.Input;
 import map.GameMap;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 
 public abstract class State {
 
@@ -20,6 +19,7 @@ public abstract class State {
     protected List<GameObject> gameObjects;
     protected SpriteLibrary spriteLibrary;
     protected Input input;
+    protected Camera camera;
     
 	private Random rand;
     
@@ -28,15 +28,18 @@ public abstract class State {
     private Rect rect[];
     private int health = 100;
 
-    public State(Input input) {
+    public State(Size windowSize, Input input) {
         this.input = input;
         gameObjects = new ArrayList<>();
         spriteLibrary = new SpriteLibrary();
+        camera = new Camera(windowSize);
         
         rect = new Rect[10];
         rand = new Random();
 		for(int i = 0; i < rect.length;i++) {
-			rect[i] = new Rect(1200, (rand.nextInt(9)+1) * 64, 64, 64, rand.nextInt(5)+5, 0);
+			rect[i] = new Rect(1200 - (int) Math.abs(camera.getPosition().getX()), 
+					((rand.nextInt(9)+1) * 64 )- (int) Math.abs(camera.getPosition().getY()),
+					64, 64, rand.nextInt(5)+5, 0, camera);
 		}
     }
 
@@ -44,10 +47,14 @@ public abstract class State {
         gameObjects.forEach(gameObject -> gameObject.update());
         for(int i = 0; i < rect.length; i++) {
 			rect[i].moveLeft(rect[i].getVelx());
-			if(rect[i].getX() <= 64) {		
-				rect[i] = new Rect(1200, (rand.nextInt(9)+1)*64, 64, 64, rand.nextInt(5)+5, 0);
+			if(rect[i].getX() <= 64 ) {		
+				rect[i] = new Rect(1200 - (int) Math.abs(camera.getPosition().getX()) , 
+						((rand.nextInt(9)+1)*64)- (int) Math.abs(camera.getPosition().getY()),
+						64, 64, rand.nextInt(5)+5, 0, camera);
 				health--;
+				System.out.println(String.format("RECT[%d] x: %d, y: %d",i, rect[i].getX(),rect[i].getY()));
 			}
+			camera.update(this);
 		}
     }
 
@@ -60,7 +67,9 @@ public abstract class State {
         return gameMap;
     }
     
-    
+    public Camera getCamera() {
+    	return this.camera;
+    }
     
     
     

@@ -84,6 +84,9 @@ public class GameLoop implements Runnable{
 	private void printDetails() {
 		if(System.currentTimeMillis() > nextConsoleLog) {
 			System.out.println(String.format("FPS: %d  UPS: %d", fps, ups));
+			System.out.println(String.format("Camera x: %d, y: %d", 
+					(int)game.getState().getCamera().getPosition().getX(), 
+					(int)game.getState().getCamera().getPosition().getY()));
 			fps = 0;
 			ups = 0;
 			nextConsoleLog = System.currentTimeMillis() + 1000;

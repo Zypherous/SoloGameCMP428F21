@@ -45,7 +45,7 @@ public class Display extends JFrame {
 		Font font = new Font("Serif", Font.PLAIN, 32);
 		
 		graphics.setFont(font);
-		graphics.setColor(Color.BLACK);
+		graphics.setColor(Color.LIGHT_GRAY);
 		graphics.fillRect(0,0, canvas.getWidth(),canvas.getHeight());
 		
 		renderer.render(state, graphics /*, canvas*/);

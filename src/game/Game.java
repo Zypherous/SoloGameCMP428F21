@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Random;
 
 import controller.PlayerController;
+import core.Size;
 import display.Display;
 import entity.GameObject;
 import entity.Player;
@@ -23,16 +24,17 @@ public class Game {
 	private Input input;
 	private State state;
 	
-	
+	private Size size;
 
 	
 	
 	public Game(int width, int height) {
+		size = new Size(width, height);
 		input = new Input();
 		
 		display = new Display(width, height, input);
 		
-		state = new GameState(input);
+		state = new GameState(size,input);
 		
 	}
 
@@ -47,7 +49,11 @@ public class Game {
 		
 	}
 	
-	
+	public State getState() {
+		return state;
+	}
+
+
 	
 
 }

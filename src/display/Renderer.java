@@ -20,11 +20,13 @@ public class Renderer {
 //				graphics.drawImage(backgroundTest, row,col, null);
 //			}
 //		}
+		
+		Camera camera = state.getCamera();
 		renderMap(state, graphics);
 		state.getGameObjects().forEach(gameObject -> graphics.drawImage(
 				gameObject.getSprite(),
-				(int)gameObject.getPosition().getX(),
-				(int)gameObject.getPosition().getY(),
+				(int)gameObject.getPosition().getX() - (int)camera.getPosition().getX(),
+				(int)gameObject.getPosition().getY() - (int)camera.getPosition().getY(),
 //				gameObject.getSize().getWidth(),
 //				gameObject.getSize().getHeight(), 
 				null
@@ -33,25 +35,29 @@ public class Renderer {
 		
 		for(int i = 0; i < state.getRectArr().length; i++) {
 			state.getRect(i).draw(graphics);
-			graphics.drawImage(testImage, state.getRect(i).getX(),state.getRect(i).getY(), 64, 64, null);
+			graphics.drawImage(testImage, 
+					state.getRect(i).getX() - (int)camera.getPosition().getX(),
+					state.getRect(i).getY() - (int)camera.getPosition().getY(), 
+					64, 64, null);
 		}
 		graphics.setColor(Color.BLUE);
 		for(int row = 1; row < 10; row++) {
-			graphics.fillRect(64, row*64, 64, 64);
+			graphics.fillRect(64- (int)camera.getPosition().getX(), row*64- (int)camera.getPosition().getY(), 64, 64);
 		}
 		graphics.setColor(Color.RED);
 		for(int row = 1; row < 10; row++) {
-			graphics.drawRect(64, row*64, 64 , 64);
+			graphics.drawRect(64 - (int)camera.getPosition().getX(), row*64- (int)camera.getPosition().getY(), 64 , 64);
 		}
 		graphics.setColor(Color.GREEN);
 		for(int row = 1; row < 10; row++) {
-			graphics.drawRect(64 + 16, row*64 + 16, 32 , 32);
+			graphics.drawRect(64 + 16 - (int)camera.getPosition().getX(), row*64 + 16- (int)camera.getPosition().getY(), 32 , 32);
 		}
 		
 	}
 
 	private void renderMap(State state, Graphics graphics) {
 		Tile[][] tiles = state.getGameMap().getTiles();
+		graphics.setColor(Color.LIGHT_GRAY);
 		for(int x = 0; x < tiles.length; x++) {
 			for (int y = 0; y< tiles[x].length; y++) {
 				graphics.drawImage(tiles[x][y].getSprite(),

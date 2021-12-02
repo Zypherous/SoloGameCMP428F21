@@ -1,5 +1,8 @@
 package entity;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Graphics;
+
+import display.Camera;
 
 // Class to represent Axis-Aligned Rectangles
 
@@ -9,13 +12,15 @@ public class Rect
 	private int x;
 	private int y;
 	
+	private Camera camera;
+	
 	int w;
 	int h;
 	
 	private int velx;
 	int vely;
 	
-	Color color = Color.BLACK;
+	Color color = Color.LIGHT_GRAY;
 	
 	public Rect(int x, int y, int w, int h)
 	{
@@ -29,10 +34,11 @@ public class Rect
 		this.vely = 5;
 	}
 	
-	public Rect(int x, int y, int w, int h, int velx, int vely)
+	public Rect(int x, int y, int w, int h, int velx, int vely, Camera camera)
 	{
-		this.setX(x);
-		this.setY(y);
+		this.camera = camera;
+		this.setX(x - (int)camera.getPosition().getX());
+		this.setY(y - (int)camera.getPosition().getY());
 		
 		this.w = w;
 		this.h = h;
@@ -119,7 +125,7 @@ public class Rect
 	{
 		pen.setColor(color);
 		
-		pen.drawRect(getX(), getY(), w, h);
+		pen.drawRect(getX() - (int)camera.getPosition().getX(), getY() - (int)camera.getPosition().getY(), w, h);
 	}
 
 	public int getX() {
