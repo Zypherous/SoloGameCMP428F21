@@ -63,6 +63,8 @@ public class Renderer {
 				graphics.drawImage(tiles[x][y].getSprite(),
 						x * Game.SPRITE_SIZE - (int)state.getCamera().getPosition().getX(),
 						y * Game.SPRITE_SIZE - (int)state.getCamera().getPosition().getY(),
+						Game.SPRITE_SIZE,
+						Game.SPRITE_SIZE,
 						null
 						);
 			}

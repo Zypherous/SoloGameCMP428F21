@@ -1,15 +1,16 @@
 package map;
 
-import gfx.SpriteLibrary;
+import java.awt.Image;
 
-import java.awt.*;
+
+import gfx.SpriteLibrary;
 
 public class Tile {
 
     private Image sprite;
 
     public Tile(SpriteLibrary spriteLibrary) {
-        this.sprite = spriteLibrary.getTile("default");
+        this.sprite = spriteLibrary.getTile("floor_sand_stone_1");
     }
 
     public Image getSprite() {

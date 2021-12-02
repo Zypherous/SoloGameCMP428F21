@@ -29,7 +29,8 @@ public class Game {
 	
 	
 	public Game(int width, int height) {
-		size = new Size(width, height);
+//		size = new Size(1280, 832);
+		size = new Size(800, 600);
 		input = new Input();
 		
 		display = new Display(width, height, input);

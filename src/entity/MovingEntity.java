@@ -12,7 +12,7 @@ public abstract class MovingEntity extends GameObject {
 	
 	private Controller controller;
 	private Movement movement;
-	private AnimationManager animationManager;
+	protected AnimationManager animationManager;
 	private Direction direction;
 	
 	public MovingEntity(Controller controller, SpriteLibrary spriteLibrary) {
