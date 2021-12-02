@@ -10,10 +10,10 @@ import gfx.SpriteLibrary;
 
 public abstract class MovingEntity extends GameObject {
 	
-	private Controller controller;
-	private Movement movement;
+	protected Controller controller;
+	protected Movement movement;
 	protected AnimationManager animationManager;
-	private Direction direction;
+	protected Direction direction;
 	
 	public MovingEntity(Controller controller, SpriteLibrary spriteLibrary) {
 		super();

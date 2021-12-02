@@ -1,6 +1,7 @@
 package game.state;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
 
@@ -44,6 +45,7 @@ public abstract class State {
     }
 
     public void update() {
+    	sortObjectsByPosition();
         gameObjects.forEach(gameObject -> gameObject.update());
         for(int i = 0; i < rect.length; i++) {
 			rect[i].moveLeft(rect[i].getVelx());
@@ -59,7 +61,12 @@ public abstract class State {
     }
 
 
-    public List<GameObject> getGameObjects() {
+    private void sortObjectsByPosition() {
+    	// Pre built function that allows you to compare simple things like integers in a lambda function
+		gameObjects.sort(Comparator.comparing(gameObject -> gameObject.getPosition().getY()));
+	}
+
+	public List<GameObject> getGameObjects() {
         return gameObjects;
     }
 
