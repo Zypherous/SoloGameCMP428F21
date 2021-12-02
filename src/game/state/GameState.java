@@ -11,6 +11,6 @@ public class GameState extends State {
     public GameState(Input input) {
         super(input);
         gameObjects.add(new Player(new PlayerController(input), spriteLibrary));
-        gameMap = new GameMap(new Size(20, 20), spriteLibrary);
+        gameMap = new GameMap(new Size(20, 13), spriteLibrary);
     }
 }

@@ -15,6 +15,7 @@ public class GameMap {
     }
 
     private void initializeTiles(SpriteLibrary spriteLibrary) {
+    	// For each array row in side array tile
         for(Tile[] row: tiles) {
             Arrays.fill(row, new Tile(spriteLibrary));
         }
