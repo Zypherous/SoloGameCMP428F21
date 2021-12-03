@@ -54,5 +54,12 @@ public class Movement {
 	public void setVelocity(double velocity) {
 		this.velocity = velocity;
 	}
+
+
+
+	public boolean isMoving() {
+		
+		return vector.length() > 0;
+	}
 }
 

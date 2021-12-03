@@ -12,6 +12,9 @@ import gfx.SpriteLibrary;
 import input.Input;
 
 public class Game {
+	
+	public static int SPRITE_SIZE = 64;
+	
 	private Display display;
 	private Rect rect[];
 	private Random rand;
@@ -29,8 +32,9 @@ public class Game {
 		display = new Display(width, height, input);
 		rect = new Rect[10];
 		gameObjects = new ArrayList<>();
-		gameObjects.add(new Player(new PlayerController(input)));
 		spriteLibrary = new SpriteLibrary();
+		gameObjects.add(new Player(new PlayerController(input), spriteLibrary));
+		
 		for(int i = 0; i < rect.length;i++) {
 			rect[i] = new Rect(1200, (rand.nextInt(9)+1) * 64, 64, 64, rand.nextInt(5)+5, 0);
 		}
