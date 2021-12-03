@@ -6,10 +6,10 @@ import core.Size;
 public abstract class GameObject {
 	protected Position position;
 	protected Size size;
-	
+
 	public GameObject() {
-		position = new Position(50, 50);
-		size = new Size (50, 50);
+		position = new Position(0, 0);
+		size = new Size (64, 64);
 	}
 	public abstract void update();
 	public abstract Image getSprite();
