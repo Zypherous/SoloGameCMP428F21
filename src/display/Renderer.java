@@ -25,8 +25,8 @@ public class Renderer {
 		renderMap(state, graphics);
 		state.getGameObjects().forEach(gameObject -> graphics.drawImage(
 				gameObject.getSprite(),
-				(int)gameObject.getPosition().getX() - (int)camera.getPosition().getX(),
-				(int)gameObject.getPosition().getY() - (int)camera.getPosition().getY(),
+				(int)gameObject.getPosition().getX() - (int)camera.getPosition().getX() - gameObject.getSize().getWidth()/2,
+				(int)gameObject.getPosition().getY() - (int)camera.getPosition().getY() - gameObject.getSize().getHeight()/2,
 //				gameObject.getSize().getWidth(),
 //				gameObject.getSize().getHeight(), 
 				null
@@ -61,8 +61,10 @@ public class Renderer {
 		for(int x = 0; x < tiles.length; x++) {
 			for (int y = 0; y< tiles[x].length; y++) {
 				graphics.drawImage(tiles[x][y].getSprite(),
-						x * Game.SPRITE_SIZE,
-						y * Game.SPRITE_SIZE,
+						x * Game.SPRITE_SIZE - (int)state.getCamera().getPosition().getX(),
+						y * Game.SPRITE_SIZE - (int)state.getCamera().getPosition().getY(),
+						Game.SPRITE_SIZE,
+						Game.SPRITE_SIZE,
 						null
 						);
 			}

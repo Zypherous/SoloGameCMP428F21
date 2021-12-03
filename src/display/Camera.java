@@ -27,6 +27,21 @@ public class Camera {
 			
 			this.position.setX((int)objectPosition.getX() - windowSize.getWidth()  / 2);
 			this.position.setY((int)objectPosition.getY() - windowSize.getHeight() / 2);
+			clampWithinBounds(state);
+		}
+	}
+	private void clampWithinBounds(State state) {
+		if(position.getX() < 0) {
+			position.setX(0);
+		}
+		if(position.getY() < 0) {
+			position.setY(0);
+		}
+		if(position.getX() + windowSize.getWidth() > state.getGameMap().getWidth()) {
+			position.setX(state.getGameMap().getWidth() - windowSize.getWidth());
+		}
+		if(position.getY() + windowSize.getHeight() > state.getGameMap().getHeight()) {
+			position.setY(state.getGameMap().getHeight() - windowSize.getHeight());
 		}
 	}
 	public Position getPosition() {

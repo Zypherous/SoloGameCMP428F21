@@ -11,7 +11,7 @@ import java.util.Map;
 
 public class SpriteLibrary {
 
-    private final static String PATH_TO_UNITS = "/sprites/units";
+
 
     private Map<String, SpriteSheet> units;
     private Map<String, Image> tiles;
@@ -23,28 +23,27 @@ public class SpriteLibrary {
     }
 
     private void loadSpritesFromDisk() {
-        loadUnits();
-        loadTiles();
+        loadUnits( "/sprites/units");
+        loadTiles( "/tiles/");
     }
 
-    private void loadTiles() {
-        BufferedImage image = new BufferedImage(Game.SPRITE_SIZE, Game.SPRITE_SIZE, BufferedImage.TYPE_INT_RGB);
-        Graphics2D graphics = image.createGraphics();
+    private void loadTiles(String path) {
+    	String[] imagesInFolder = getImagesInFolder(path);
 
-        graphics.setColor(Color.red);
-        graphics.drawRect(0, 0, Game.SPRITE_SIZE, Game.SPRITE_SIZE);
-
-        graphics.dispose();
-        tiles.put("default", image);
+        for(String fileName: imagesInFolder) {
+            tiles.put(
+                    fileName.substring(0, fileName.length() - 4),
+                    ImageUtils.loadImage(path + "/" + fileName));
+        }
     }
 
-    private void loadUnits() {
-        String[] folderNames = getFolderNames(PATH_TO_UNITS);
+    private void loadUnits(String path) {
+        String[] folderNames = getFolderNames(path);
 
         for(String folderName: folderNames) {
             SpriteSheet SpriteSheet = new SpriteSheet();
-            String pathToFolder = PATH_TO_UNITS + "/" + folderName;
-            String[] sheetsInFolder = getSheetsInFolder(pathToFolder);
+            String pathToFolder = path + "/" + folderName;
+            String[] sheetsInFolder = getImagesInFolder(pathToFolder);
 
             for(String sheetName: sheetsInFolder) {
                 SpriteSheet.addSheet(
@@ -56,14 +55,14 @@ public class SpriteLibrary {
         }
     }
 
-    private String[] getSheetsInFolder(String basePath) {
+    private String[] getImagesInFolder(String basePath) {
         URL resource = SpriteLibrary.class.getResource(basePath);
         File file = new File(resource.getFile());
         return file.list((current, name) -> new File(current, name).isFile());
     }
 
     private String[] getFolderNames(String basePath) {
-        URL resource = SpriteLibrary.class.getResource("/sprites/units");
+        URL resource = SpriteLibrary.class.getResource(basePath);
         File file = new File(resource.getFile());
         return file.list((current, name) -> new File(current, name).isDirectory());
     }

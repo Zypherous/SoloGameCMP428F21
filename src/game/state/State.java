@@ -38,7 +38,7 @@ public abstract class State {
         rand = new Random();
 		for(int i = 0; i < rect.length;i++) {
 			rect[i] = new Rect(1200 - (int) Math.abs(camera.getPosition().getX()), 
-					((rand.nextInt(9)+1) * 64 )- (int) Math.abs(camera.getPosition().getY()),
+					((rand.nextInt(9)+1) * 64 ) + (int) Math.abs(camera.getPosition().getY()),
 					64, 64, rand.nextInt(5)+5, 0, camera);
 		}
     }
@@ -48,8 +48,8 @@ public abstract class State {
         for(int i = 0; i < rect.length; i++) {
 			rect[i].moveLeft(rect[i].getVelx());
 			if(rect[i].getX() <= 64 ) {		
-				rect[i] = new Rect(1200 - (int) Math.abs(camera.getPosition().getX()) , 
-						((rand.nextInt(9)+1)*64)- (int) Math.abs(camera.getPosition().getY()),
+				rect[i] = new Rect(camera.getPosition().getY() < 0 ? 1200 - (int) Math.abs(camera.getPosition().getX()) : 1200 + (int) camera.getPosition().getX() , 
+						camera.getPosition().getY() > 0 ? ((rand.nextInt(9)+1)*64) + (int) Math.abs(camera.getPosition().getY()) :  ((rand.nextInt(9)+1)*64) - (int) Math.abs(camera.getPosition().getY()),
 						64, 64, rand.nextInt(5)+5, 0, camera);
 				health--;
 				System.out.println(String.format("RECT[%d] x: %d, y: %d",i, rect[i].getX(),rect[i].getY()));
