@@ -1,13 +1,16 @@
 package game.state;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
 
+import core.Position;
 import core.Size;
 import display.Camera;
 import entity.GameObject;
 import entity.Rect;
+import game.Time;
 import gfx.SpriteLibrary;
 import input.Input;
 import map.GameMap;
@@ -20,6 +23,7 @@ public abstract class State {
     protected SpriteLibrary spriteLibrary;
     protected Input input;
     protected Camera camera;
+    protected Time time;
     
 	private Random rand;
     
@@ -33,7 +37,7 @@ public abstract class State {
         gameObjects = new ArrayList<>();
         spriteLibrary = new SpriteLibrary();
         camera = new Camera(windowSize);
-        
+        time = new Time();
         rect = new Rect[10];
         rand = new Random();
 		for(int i = 0; i < rect.length;i++) {
@@ -43,8 +47,10 @@ public abstract class State {
 		}
     }
 
-    public void update() {
-        gameObjects.forEach(gameObject -> gameObject.update());
+    
+	public void update() {
+    	sortObjectsByPosition();
+        gameObjects.forEach(gameObject -> gameObject.update(this));
         for(int i = 0; i < rect.length; i++) {
 			rect[i].moveLeft(rect[i].getVelx());
 			if(rect[i].getX() <= 64 ) {		
@@ -58,8 +64,16 @@ public abstract class State {
 		}
     }
 
+	public  Position getRandomPosition() {
+		return gameMap.getRandomPosition();
+	}	
+	
+    private void sortObjectsByPosition() {
+    	// Pre built function that allows you to compare simple things like integers in a lambda function
+		gameObjects.sort(Comparator.comparing(gameObject -> gameObject.getPosition().getY()));
+	}
 
-    public List<GameObject> getGameObjects() {
+	public List<GameObject> getGameObjects() {
         return gameObjects;
     }
 
@@ -71,7 +85,14 @@ public abstract class State {
     	return this.camera;
     }
     
-    
+    public Time getTime() {
+		return time;
+	}
+
+	public void setTime(Time time) {
+		this.time = time;
+	}
+
     
     // Custom 
     public Rect []getRectArr() {
@@ -105,4 +126,6 @@ public abstract class State {
 	public void setHealth(int health) {
 		this.health = health;
 	}
+
 }
+	

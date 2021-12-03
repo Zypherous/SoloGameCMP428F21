@@ -5,15 +5,16 @@ import java.awt.Image;
 import controller.Controller;
 import core.Direction;
 import core.Movement;
+import game.state.State;
 import gfx.AnimationManager;
 import gfx.SpriteLibrary;
 
 public abstract class MovingEntity extends GameObject {
 	
-	private Controller controller;
-	private Movement movement;
+	protected Controller controller;
+	protected Movement movement;
 	protected AnimationManager animationManager;
-	private Direction direction;
+	protected Direction direction;
 	
 	public MovingEntity(Controller controller, SpriteLibrary spriteLibrary) {
 		super();
@@ -24,7 +25,7 @@ public abstract class MovingEntity extends GameObject {
 	}
 	
 	@Override
-	public void update() {
+	public void update(State state) {
 		movement.update(controller);
 		position.apply(movement);
 		manageDirection();
@@ -50,5 +51,9 @@ private void animation() {
 	@Override
 	public Image getSprite() {
 		return animationManager.getSprite();
+	}
+	
+	public Controller getController() {
+		return this.controller;
 	}
 }
