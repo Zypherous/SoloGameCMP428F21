@@ -1,10 +1,14 @@
 package display;
 
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.Toolkit;
+
+import core.Position;
 import game.Game;
 import game.state.State;
-import map.Tile;
-
-import java.awt.*;
+import map.GameMap;
 
 public class Renderer {
 	private Image testImage = Toolkit.getDefaultToolkit().getImage("C:\\Users\\Jonat\\soloGame\\Resources\\Image\\Dungeon Crawl Stone Soup Full\\monster\\cyclops_old.png");
@@ -23,7 +27,12 @@ public class Renderer {
 		
 		Camera camera = state.getCamera();
 		renderMap(state, graphics);
-		state.getGameObjects().forEach(gameObject -> graphics.drawImage(
+		state.getGameObjects().stream()
+				// This stream allows use of useful functions such as filter which will return only the 
+		        //  elements that return true without modifying original collection
+		        // here we are filtering the positions of the gameobjects that are not in view of the camera in order to not render them.
+				.filter(gameObject -> camera.isInView(gameObject))
+				.forEach(gameObject -> graphics.drawImage(
 				gameObject.getSprite(),
 				(int)gameObject.getPosition().getX() - (int)camera.getPosition().getX() - gameObject.getSize().getWidth()/2,
 				(int)gameObject.getPosition().getY() - (int)camera.getPosition().getY() - gameObject.getSize().getHeight()/2,
@@ -56,11 +65,16 @@ public class Renderer {
 	}
 
 	private void renderMap(State state, Graphics graphics) {
-		Tile[][] tiles = state.getGameMap().getTiles();
+		GameMap map = state.getGameMap();
+		Camera camera = state.getCamera();
+		
+		//		Tile[][] tiles = state.getGameMap().getTiles();
 		graphics.setColor(Color.LIGHT_GRAY);
-		for(int x = 0; x < tiles.length; x++) {
-			for (int y = 0; y< tiles[x].length; y++) {
-				graphics.drawImage(tiles[x][y].getSprite(),
+		Position start = map.getViewableStartingGridPosition(camera);
+		Position end = map.getviewableEndingGridPosition(camera);
+		for(int x = (int)start.getX(); x < (int)end.getX(); x++) {
+			for (int y = (int)start.getY(); y< (int)end.getY(); y++) {
+				graphics.drawImage(map.getTiles()[x][y].getSprite(),
 						x * Game.SPRITE_SIZE - (int)state.getCamera().getPosition().getX(),
 						y * Game.SPRITE_SIZE - (int)state.getCamera().getPosition().getY(),
 						Game.SPRITE_SIZE,

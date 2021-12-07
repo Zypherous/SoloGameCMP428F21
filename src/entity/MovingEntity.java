@@ -5,6 +5,7 @@ import java.awt.Image;
 import controller.Controller;
 import core.Direction;
 import core.Movement;
+import display.Camera;
 import game.state.State;
 import gfx.AnimationManager;
 import gfx.SpriteLibrary;
@@ -16,8 +17,8 @@ public abstract class MovingEntity extends GameObject {
 	protected AnimationManager animationManager;
 	protected Direction direction;
 	
-	public MovingEntity(Controller controller, SpriteLibrary spriteLibrary) {
-		super();
+	public MovingEntity(Controller controller, SpriteLibrary spriteLibrary, Camera camera) {
+		super(camera);
 		this.controller = controller;
 		this.movement = new Movement(4);
 		this.direction = Direction.S;
@@ -31,6 +32,8 @@ public abstract class MovingEntity extends GameObject {
 		manageDirection();
 		animation();
 		animationManager.update(direction);
+		this.getRect().setX((int)this.getPosition().getX());
+    	this.getRect().setY((int)this.getPosition().getY());
 	}
 	
 private void animation() {

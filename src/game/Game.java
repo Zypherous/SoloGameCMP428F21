@@ -22,7 +22,7 @@ public class Game {
 	
 
 	private Input input;
-	private State state;
+	private GameState state;
 	
 	private Size size;
 
@@ -30,7 +30,9 @@ public class Game {
 	
 	public Game(int width, int height) {
 //		size = new Size(1280, 832);
-		size = new Size(800, 600);
+//		size = new Size(800	, 600);
+//		size = new Size(200,200);
+		size = new Size(width, height);
 		input = new Input();
 		
 		display = new Display(width, height, input);
@@ -50,7 +52,7 @@ public class Game {
 		
 	}
 	
-	public State getState() {
+	public GameState getState() {
 		return state;
 	}
 

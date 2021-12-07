@@ -9,6 +9,7 @@ import core.Position;
 import core.Size;
 import display.Camera;
 import entity.GameObject;
+import entity.Player;
 import entity.Rect;
 import game.Time;
 import gfx.SpriteLibrary;
@@ -37,6 +38,7 @@ public abstract class State {
         gameObjects = new ArrayList<>();
         spriteLibrary = new SpriteLibrary();
         camera = new Camera(windowSize);
+//        camera = new Camera(new Size(200, 200));
         time = new Time();
         rect = new Rect[10];
         rand = new Random();
@@ -58,7 +60,7 @@ public abstract class State {
 						camera.getPosition().getY() > 0 ? ((rand.nextInt(9)+1)*64) + (int) Math.abs(camera.getPosition().getY()) :  ((rand.nextInt(9)+1)*64) - (int) Math.abs(camera.getPosition().getY()),
 						64, 64, rand.nextInt(5)+5, 0, camera);
 				health--;
-				System.out.println(String.format("RECT[%d] x: %d, y: %d",i, rect[i].getX(),rect[i].getY()));
+				//System.out.println(String.format("RECT[%d] x: %d, y: %d",i, rect[i].getX(),rect[i].getY()));
 			}
 			camera.update(this);
 		}
@@ -126,6 +128,14 @@ public abstract class State {
 	public void setHealth(int health) {
 		this.health = health;
 	}
+
+
+	public abstract Player getPlayer();
+	
+//	public Player getPlayer(List<GameObject> gameObjects) {
+//		return (Player)(gameObjects.stream().filter(gameObject -> (gameObject.getID() == 0)));
+//	}
+
 
 }
 	

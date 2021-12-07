@@ -62,8 +62,8 @@ public class GameLoop implements Runnable{
 //					}
 					accumulator -= updateRate;
 				}
-				render();
 			}
+			render();
 			
 			// Render to the screen
 			
@@ -89,7 +89,7 @@ public class GameLoop implements Runnable{
 			System.out.println(String.format("Camera x: %d, y: %d", 
 					(int)game.getState().getCamera().getPosition().getX(), 
 					(int)game.getState().getCamera().getPosition().getY()));
-			fps = 0;
+			game.getState().getPlayer().playerLoc();
 			ups = 0;
 			nextConsoleLog = System.currentTimeMillis() + 1000;
 		}

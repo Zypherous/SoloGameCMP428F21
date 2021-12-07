@@ -5,19 +5,34 @@ import java.util.Optional;
 import core.Position;
 import core.Size;
 import entity.GameObject;
+import entity.Rect;
+import game.Game;
 import game.state.State;
 
 public class Camera {
 
+	private static final int RENDER_BUFFER = 2 * Game.SPRITE_SIZE ;
 	private Position position;
 	private Size windowSize;
+	private Rect viewbounds;
 	
 	private Optional<GameObject> objectWithFocus;
 	
 	public  Camera (Size windowSize){
 		this.position = new Position(0,0);
 		this.windowSize = windowSize;
+		calculateViewBounds();
+		
 	}
+	
+	private void calculateViewBounds() {
+		viewbounds = new Rect(
+				(int)position.getX(),
+				(int) position.getY(),
+				(int) windowSize.getWidth() + RENDER_BUFFER,
+				(int) windowSize.getHeight() + RENDER_BUFFER);
+	}
+	
 	public void focudOn(GameObject object) {
 		this.objectWithFocus = Optional.of(object);
 	}
@@ -28,6 +43,7 @@ public class Camera {
 			this.position.setX((int)objectPosition.getX() - windowSize.getWidth()  / 2);
 			this.position.setY((int)objectPosition.getY() - windowSize.getHeight() / 2);
 			clampWithinBounds(state);
+			calculateViewBounds();
 		}
 	}
 	private void clampWithinBounds(State state) {
@@ -46,5 +62,16 @@ public class Camera {
 	}
 	public Position getPosition() {
 		return position;
+	}
+	public boolean isInView(GameObject gameObject) {
+		return viewbounds.overlaps(gameObject.getRect());
+	}
+
+	public Size getWindowSize() {
+		return windowSize;
+	}
+
+	public void setWindowSize(Size windowSize) {
+		this.windowSize = windowSize;
 	}
 }
