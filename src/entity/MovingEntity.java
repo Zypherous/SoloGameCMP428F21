@@ -111,4 +111,7 @@ public abstract class MovingEntity extends GameObject {
 	public void perform(Action action) {
 		this.action = Optional.of(action);
 	}
+	public void addEffect(Effect effect) {
+		effects.add(effect);
+	}
 }
