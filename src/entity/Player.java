@@ -3,7 +3,7 @@ package entity;
 import controller.Controller;
 import core.Position;
 import display.Camera;
-import game.state.State;
+import entity.effect.Caffeinated;
 import gfx.SpriteLibrary;
 
 
@@ -17,6 +17,7 @@ public class Player extends MovingEntity{
 		this.setPosition(new Position(1080/2,720/2));
 		//TESTING RECT
 		this.setRect(new Rect((int)this.position.getX(), (int) this.position.getY(), this.size.getWidth(), this.getSize().getHeight(),0,0, camera));
+		effects.add(new Caffeinated());
 	}
 //	@Override
 //	public void update(State state) {

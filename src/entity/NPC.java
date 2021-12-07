@@ -3,6 +3,7 @@ package entity;
 import ai.AIManager;
 import controller.Controller;
 import display.Camera;
+import entity.action.Cough;
 import game.state.State;
 import gfx.AnimationManager;
 import gfx.SpriteLibrary;

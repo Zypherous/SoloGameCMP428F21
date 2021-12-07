@@ -10,6 +10,7 @@ import core.Size;
 import entity.GameObject;
 import entity.NPC;
 import entity.Player;
+import entity.action.Cough;
 import game.Game;
 import input.Input;
 import map.GameMap;
@@ -37,6 +38,7 @@ public class GameState extends State {
     	for(int i = 0; i < numberOfNPCs; i++) {
     		NPC npc = new NPC(new NPCController(), spriteLibrary, camera);
     		npc.setPosition(gameMap.getRandomPosition());
+    		npc.perform(new Cough());
     		gameObjects.add(npc);
     	}
     }

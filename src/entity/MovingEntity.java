@@ -1,11 +1,16 @@
 package entity;
 
 import java.awt.Image;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 import controller.Controller;
 import core.Direction;
 import core.Movement;
 import display.Camera;
+import entity.action.Action;
+import entity.effect.Effect;
 import game.state.State;
 import gfx.AnimationManager;
 import gfx.SpriteLibrary;
@@ -16,6 +21,8 @@ public abstract class MovingEntity extends GameObject {
 	protected Movement movement;
 	protected AnimationManager animationManager;
 	protected Direction direction;
+	protected List<Effect> effects;
+	protected Optional<Action> action;
 	
 	public MovingEntity(Controller controller, SpriteLibrary spriteLibrary, Camera camera) {
 		super(camera);
@@ -23,21 +30,59 @@ public abstract class MovingEntity extends GameObject {
 		this.movement = new Movement(4);
 		this.direction = Direction.S;
 		animationManager = new AnimationManager(spriteLibrary.getUnit("dave"));
+		effects = new ArrayList<>();
+		action = Optional.empty();
 	}
 	
 	@Override
 	public void update(State state) {
-		movement.update(controller);
-		position.apply(movement);
+		handleAction(state);
+		handleMovement();
+		
+		animationManager.update(direction);
+		effects.forEach(effect -> effect.update(state, this));
+		
 		manageDirection();
 		animation();
-		animationManager.update(direction);
+		
+		position.apply(movement);
 		this.getRect().setX((int)this.getPosition().getX());
     	this.getRect().setY((int)this.getPosition().getY());
+    	
+    	cleanup();
 	}
 	
-private void animation() {
-		if(movement.isMoving()) {
+	protected  void handleMovement() {
+		if(!action.isPresent()) {
+			movement.update(controller);
+		}
+		else {
+			movement.stop();
+		}
+	}
+
+	protected  void handleAction(State state) {
+		if(action.isPresent()) {
+			action.get().update(state, this);
+		}
+	}
+
+	private void cleanup() {
+        List.copyOf(effects).stream()
+        		// Effect::shouldDelete - References the shouldDelete method in the EFFECTs class since we know the List
+        		// Only contains effects. Then it goes through the original list to remove the effects. 
+                .filter(Effect::shouldDelete)
+                .forEach(effects::remove);
+        if(action.isPresent() && action.get().isDone()) {
+        	action = Optional.empty();
+        	System.out.println("ACTION DONE");
+        }
+    }
+
+	private void animation() {
+		if(action.isPresent()){
+			animationManager.playAnimation(action.get().getAnimationName());
+		}else if(movement.isMoving()) {
 			animationManager.playAnimation("walk");
 		}
 		else {
@@ -58,5 +103,12 @@ private void animation() {
 	
 	public Controller getController() {
 		return this.controller;
+	}
+	
+	public void multiplySpeed(double multiplier) {
+        movement.multiply(multiplier);
+    }
+	public void perform(Action action) {
+		this.action = Optional.of(action);
 	}
 }
