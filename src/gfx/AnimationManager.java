@@ -1,12 +1,11 @@
 package gfx;
 
-import game.Game;
-
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 
 import core.Direction;
-
-import java.awt.*;
+import core.Size;
+import game.Game;
 
 
 public class AnimationManager {
@@ -56,8 +55,19 @@ public class AnimationManager {
 		if(!name.equals(currentAnimationName)) {
 			this.currentAnimationSheet = (BufferedImage) spriteSheet.get(name);
 			currentAnimationName = name;
+			
+			
 			frameIndex = 0;
 			
 		}
 	}
+
+//	public Image getSprite(Size size) {
+//		return currentAnimationSheet.getSubimage(
+//				frameIndex * Game.SPRITE_SIZE,
+//				directionIndex * Game.SPRITE_SIZE,
+//				size.getWidth(),
+//				size.getHeight()
+//			);
+//	}
 }

@@ -9,6 +9,7 @@ import controller.Controller;
 import core.CollisionBox;
 import core.Direction;
 import core.Movement;
+import core.Size;
 import display.Camera;
 import entity.action.Action;
 import entity.effect.Effect;
@@ -82,7 +83,7 @@ public abstract class MovingEntity extends GameObject {
                 .forEach(effects::remove);
         if(action.isPresent() && action.get().isDone()) {
         	action = Optional.empty();
-        	System.out.println("ACTION DONE");
+//        	System.out.println("MovingEntity.java Line 86 ==> ACTION DONE");
         }
     }
 
@@ -137,5 +138,11 @@ public abstract class MovingEntity extends GameObject {
 	}
 	public void addEffect(Effect effect) {
 		effects.add(effect);
+	}
+	public void clearEffect() {
+		effects.clear();
+	}
+	public void setSize(Size size) {
+		this.size.setSize(size.getWidth(), size.getHeight());
 	}
 }

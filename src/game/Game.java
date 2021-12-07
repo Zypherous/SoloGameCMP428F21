@@ -23,6 +23,7 @@ public class Game {
 
 	private Input input;
 	private GameState state;
+	private GameSettings settings;
 	
 	private Size size;
 

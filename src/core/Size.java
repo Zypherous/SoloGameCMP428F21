@@ -23,5 +23,10 @@ public class Size {
 	public String toString() {
 		return "Size [width=" + width + ", height=" + height + "]";
 	}
+	
+	public void setSize(int w, int h) {
+		this.height = h;
+		this.width = w;
+	}
 }
 	
