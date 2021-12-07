@@ -57,6 +57,7 @@ public class AnimationManager {
 			this.currentAnimationSheet = (BufferedImage) spriteSheet.get(name);
 			currentAnimationName = name;
 			frameIndex = 0;
+			
 		}
 	}
 }
