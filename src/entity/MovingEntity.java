@@ -9,6 +9,7 @@ import controller.Controller;
 import core.CollisionBox;
 import core.Direction;
 import core.Movement;
+import core.Position;
 import core.Size;
 import display.Camera;
 import entity.action.Action;
@@ -45,12 +46,14 @@ public abstract class MovingEntity extends GameObject {
 	@Override
 	public void update(State state) {
 		handleAction(state);
+
 		handleMovement();
 		
 		animationManager.update(direction);
 		this.collisionBox = getCollider();
 		effects.forEach(effect -> effect.update(state, this));
 		this.collisionBox = getCurrentCollider();
+		
 		handleCollisions(state);
 		manageDirection();
 		animation();
@@ -118,6 +121,8 @@ public abstract class MovingEntity extends GameObject {
 	}
 	@Override
 	public CollisionBox getCollider() {
+		Position positionWithMovement = position.copyOf(position);
+		positionWithMovement.apply(movement);
 		return new CollisionBox(
 				new Rect(
 					(int)position.getX() - ((int)this.size.getWidth()/4) +4,
@@ -161,5 +166,12 @@ public abstract class MovingEntity extends GameObject {
 	}
 	public void setSize(Size size) {
 		this.size.setSize(size.getWidth(), size.getHeight());
+	}
+	
+	public boolean willCollideX(GameObject other) {
+		return false;
+	}
+	public boolean willCollideY(GameObject other) {
+		return false;
 	}
 }

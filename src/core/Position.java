@@ -32,8 +32,13 @@ public class Position {
 	}
 
 	public boolean isInRangeOf(Position position) {
-		// TODO Auto-generated method stub
+
 		return Math.abs(x - position.getX()) < Position.PROXIMITY_RANGE&& Math.abs(y - position.getY()) < Position.PROXIMITY_RANGE;
+	}
+
+	public Position copyOf(Position position) {
+		
+		return new Position(position.getX(), position.getY());
 	}
 	
 	

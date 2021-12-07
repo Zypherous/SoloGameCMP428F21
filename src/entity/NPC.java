@@ -33,7 +33,8 @@ public class NPC extends MovingEntity {
 	@Override
 	protected void handleCollision(GameObject other) {
 		if(other instanceof Player) {
-			movement.stop();
+			movement.stop(willCollideX(other), willCollideY(other));
+			this.dead = true;
 		}
 	}
 
