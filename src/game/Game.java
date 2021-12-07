@@ -1,17 +1,8 @@
 package game;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
-import controller.PlayerController;
 import core.Size;
 import display.Display;
-import entity.GameObject;
-import entity.Player;
-import entity.Rect;
+import game.settings.GameSettings;
 import game.state.GameState;
-import game.state.State;
-import gfx.SpriteLibrary;
 import input.Input;
 
 public class Game {
@@ -39,6 +30,7 @@ public class Game {
 		display = new Display(width, height, input);
 		
 		state = new GameState(size,input);
+		settings = new GameSettings(true);
 		
 	}
 
@@ -49,7 +41,7 @@ public class Game {
 
 	public void render() {
 
-		display.render( state);
+		display.render(state, settings.isDebugMode());
 		
 	}
 	

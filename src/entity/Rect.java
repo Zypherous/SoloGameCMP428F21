@@ -95,8 +95,8 @@ public class Rect
 	
 	public void resizeBy(int dw, int dh)
 	{
-		w += dw;
-		h += dh;
+		w *= dw;
+		h *= dh;
 	}
 	
 	public boolean overlaps(Rect r)
@@ -146,6 +146,22 @@ public class Rect
 
 	public int getVelx() {
 		return velx;
+	}
+
+	public int getW() {
+		return w;
+	}
+
+	public void setW(int w) {
+		this.w = w;
+	}
+
+	public int getH() {
+		return h;
+	}
+
+	public void setH(int h) {
+		this.h = h;
 	}
 
 	public void setVelx(int velx) {

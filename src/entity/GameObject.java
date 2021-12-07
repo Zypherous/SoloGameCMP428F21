@@ -23,9 +23,9 @@ public abstract class GameObject {
 	}
 	public abstract void update(State state);
 	public abstract Image getSprite();
-	public abstract CollisionBox getCollisionBox();
+	public abstract CollisionBox getCollider();
 	public abstract boolean collidesWith(GameObject other);
-	
+	public abstract CollisionBox getCurrentCollider();
 	public Position getPosition() {
 		return position;
 	}

@@ -26,6 +26,10 @@ public abstract class MovingEntity extends GameObject {
 	protected List<Effect> effects;
 	protected Optional<Action> action;
 	
+	protected Size collisionBoxSize;
+	protected CollisionBox collisionBox;
+	
+	
 	public MovingEntity(Controller controller, SpriteLibrary spriteLibrary, Camera camera) {
 		super(camera);
 		this.controller = controller;
@@ -34,6 +38,8 @@ public abstract class MovingEntity extends GameObject {
 		animationManager = new AnimationManager(spriteLibrary.getUnit("dave"));
 		effects = new ArrayList<>();
 		action = Optional.empty();
+		this.collisionBoxSize = new Size(32,32);
+		this.collisionBox = getCollider();
 	}
 	
 	@Override
@@ -42,8 +48,9 @@ public abstract class MovingEntity extends GameObject {
 		handleMovement();
 		
 		animationManager.update(direction);
+		this.collisionBox = getCollider();
 		effects.forEach(effect -> effect.update(state, this));
-		
+		this.collisionBox = getCurrentCollider();
 		handleCollisions(state);
 		manageDirection();
 		animation();
@@ -107,18 +114,28 @@ public abstract class MovingEntity extends GameObject {
 	
 	@Override
 	public boolean collidesWith(GameObject other) {
-		return getCollisionBox().collidesWith(other.getCollisionBox());
+		return getCollider().collidesWith(other.getCollider());
 	}
 	@Override
-	public CollisionBox getCollisionBox() {
+	public CollisionBox getCollider() {
 		return new CollisionBox(
 				new Rect(
-					(int)position.getX(),
-					(int)position.getY(),
-					size.getWidth(),
-					size.getHeight()
+					(int)position.getX() - ((int)this.size.getWidth()/4) +4,
+					(int)position.getY() - ((int)this.size.getHeight()/2) +4,
+					collisionBoxSize.getWidth()-8,
+					collisionBoxSize.getHeight() +16
 						)
 				);
+	}
+	public CollisionBox getCurrentCollider() {
+		return this.collisionBox;
+	}
+	public CollisionBox getCollisionBox(CollisionBox collisionBox) {
+		return collisionBox;
+	}
+	
+	public void setCollisionBox(CollisionBox collisionBox) {
+		this.collisionBox = collisionBox;
 	}
 	
 	@Override

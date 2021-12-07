@@ -1,8 +1,10 @@
 
 	package entity.effect;
 
-	import core.Size;
+	import core.CollisionBox;
+import core.Size;
 import entity.MovingEntity;
+import entity.Rect;
 import game.GameLoop;
 import game.state.State;
 
@@ -17,6 +19,15 @@ import game.state.State;
 	    	super.update(state, entity);
 	        if(this.getLifeSpanInUpdates() == 0) {
 	        	entity.setSize(new Size(64, 64));
+	        	
+	        	// Attempting to have collider grow and shrink with effect.
+	        	entity.setCollisionBox(new CollisionBox(
+	    				new Rect(
+	    						(int)(entity.getPosition().getX() - (entity.getSize().getWidth()/4) +4) ,
+	    						(int)(entity.getPosition().getY() - (entity.getSize().getHeight()/2) +4) ,
+						32-8,
+						32 +16
+						)));
 	        }
 	        else if(this.getLifeSpanInUpdates() <= 15) {
 	        	entity.setSize(new Size(72,72));
@@ -38,6 +49,16 @@ import game.state.State;
 	        }
 	        else {
 	        	entity.setSize(new Size(256,256));
+	        	
+	        	// Attempting to have collider grow and shrink with effect.
+	        	entity.setCollisionBox(new CollisionBox( 
+	        			new Rect(
+		        			(int)entity.getPosition().getX() - ((entity.getSize().getWidth()/4)) + 16,
+							(int)entity.getPosition().getY() - ((entity.getSize().getHeight())/2) + 16 ,
+							entity.getSize().getWidth()/2 -32, 
+							entity.getSize().getHeight()/2 + (16*4))
+	        			)
+	        		);
 	        }
 	    }
 	}
