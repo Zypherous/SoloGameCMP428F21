@@ -30,6 +30,7 @@ public class GameState extends State {
 //        listOf.add(player); 
         gameObjects.add(player);
         camera.focudOn(player);
+<<<<<<< HEAD
         play = player;     
     }
     private void initializeNPCs(int numberOfNPCs){
@@ -41,5 +42,17 @@ public class GameState extends State {
     }
     public Player getPlayer() {
     	return this.play;
+=======
+        
+        
+       
+    }
+    private void initializeNPCs(int numberOfNPCs){
+    	for(int i = 0; i < numberOfNPCs; i++) {
+    		NPC npc = new NPC(new NPCController(), spriteLibrary);
+    		npc.setPosition(gameMap.getRandomPosition());
+    		gameObjects.add(npc);
+    	}
+>>>>>>> main
     }
 }
