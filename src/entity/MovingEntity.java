@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 import controller.Controller;
+import core.CollisionBox;
 import core.Direction;
 import core.Movement;
 import display.Camera;
@@ -42,6 +43,7 @@ public abstract class MovingEntity extends GameObject {
 		animationManager.update(direction);
 		effects.forEach(effect -> effect.update(state, this));
 		
+		handleCollisions(state);
 		manageDirection();
 		animation();
 		
@@ -52,7 +54,12 @@ public abstract class MovingEntity extends GameObject {
     	cleanup();
 	}
 	
-	protected  void handleMovement() {
+	private void handleCollisions(State state) {
+		state.getCollidingGameObjects(this).forEach(this::handleCollision);
+	}
+	protected abstract void handleCollision(GameObject other);
+	
+	private void handleMovement() {
 		if(!action.isPresent()) {
 			movement.update(controller);
 		}
@@ -61,7 +68,7 @@ public abstract class MovingEntity extends GameObject {
 		}
 	}
 
-	protected  void handleAction(State state) {
+	private void handleAction(State state) {
 		if(action.isPresent()) {
 			action.get().update(state, this);
 		}
@@ -96,6 +103,23 @@ public abstract class MovingEntity extends GameObject {
 			this.direction = Direction.fromMotion(movement);
 		}
 	}
+	
+	@Override
+	public boolean collidesWith(GameObject other) {
+		return getCollisionBox().collidesWith(other.getCollisionBox());
+	}
+	@Override
+	public CollisionBox getCollisionBox() {
+		return new CollisionBox(
+				new Rect(
+					(int)position.getX(),
+					(int)position.getY(),
+					size.getWidth(),
+					size.getHeight()
+						)
+				);
+	}
+	
 	@Override
 	public Image getSprite() {
 		return animationManager.getSprite();

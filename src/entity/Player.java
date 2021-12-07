@@ -34,5 +34,11 @@ public class Player extends MovingEntity{
 				(int)this.getPosition().getY()));
 	}
 
+	@Override
+	protected void handleCollision(GameObject other) {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 }

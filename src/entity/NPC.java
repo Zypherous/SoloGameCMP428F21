@@ -27,4 +27,9 @@ public class NPC extends MovingEntity {
     	
     	aiManager.update(state, this);
     }
+	@Override
+	protected void handleCollision(GameObject other) {
+		// TODO Auto-generated method stub
+		
+	}
 }
