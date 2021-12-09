@@ -36,10 +36,18 @@ public class Position {
 		return Math.abs(x - position.getX()) < Position.PROXIMITY_RANGE&& Math.abs(y - position.getY()) < Position.PROXIMITY_RANGE;
 	}
 
-	public Position copyOf(Position position) {
+	public static Position copyOf(Position position) {
 		
 		return new Position(position.getX(), position.getY());
 	}
-	
+
+	public void applyX(Movement movement) {
+		Vector2D vector = movement.getVector();
+		x += vector.getX();
+	}
+	public void applyY(Movement movement) {
+		Vector2D vector = movement.getVector();
+		y += vector.getY();
+	}
 	
 }

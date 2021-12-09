@@ -75,7 +75,8 @@ public abstract class MovingEntity extends GameObject {
 			movement.update(controller);
 		}
 		else {
-			movement.stop();
+			// To make it stop on both axis
+			movement.stop(true,true);
 		}
 	}
 
@@ -125,8 +126,8 @@ public abstract class MovingEntity extends GameObject {
 		positionWithMovement.apply(movement);
 		return new CollisionBox(
 				new Rect(
-					(int)position.getX() - ((int)this.size.getWidth()/4) +4,
-					(int)position.getY() - ((int)this.size.getHeight()/2) +4,
+					(int)positionWithMovement.getX() - ((int)this.size.getWidth()/4) +4,
+					(int)positionWithMovement.getY() - ((int)this.size.getHeight()/2) +4,
 					collisionBoxSize.getWidth()-8,
 					collisionBoxSize.getHeight() +16
 						)
@@ -169,9 +170,15 @@ public abstract class MovingEntity extends GameObject {
 	}
 	
 	public boolean willCollideX(GameObject other) {
-		return false;
+		CollisionBox otherBox = other.getCurrentCollider();
+		Position positionWithXApplied = Position.copyOf(position);
+		positionWithXApplied.applyX(movement);
+		return CollisionBox.of(positionWithXApplied, collisionBoxSize).collidesWith(other.getCollider());
 	}
 	public boolean willCollideY(GameObject other) {
-		return false;
+		CollisionBox otherBox = other.getCurrentCollider();
+		Position positionWithYApplied = Position.copyOf(position);
+		positionWithYApplied.applyY(movement);
+		return CollisionBox.of(positionWithYApplied, collisionBoxSize).collidesWith(other.getCollider());
 	}
 }

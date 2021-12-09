@@ -19,4 +19,15 @@ public class CollisionBox {
     public Rect getBounds() {
         return bounds;
     }
+
+	public static CollisionBox of(Position position, Size size) {
+		return new CollisionBox(
+				new Rect(
+						(int)position.getX(),
+						(int)position.getY(),
+						size.getWidth(),
+						size.getHeight()
+						)
+				);
+	}
 }
