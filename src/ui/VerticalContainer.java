@@ -4,7 +4,11 @@ import core.Position;
 import core.Size;
 
 public class VerticalContainer extends UIContainer {
-    @Override
+    public VerticalContainer(Size windowSize) {
+		super(windowSize);
+	}
+
+	@Override
     protected Size calculateContentSize() {
         int combinedChildHeight = 0;
         int widestChildWidth = 0;

@@ -8,11 +8,14 @@ import core.Size;
 import entity.NPC;
 import entity.Player;
 import entity.effect.Sick;
+import game.ui.UIGameTime;
 import input.Input;
 import map.GameMap;
+import ui.Alignment;
 import ui.HorizontalContainer;
 import ui.Spacing;
 import ui.UIContainer;
+import ui.UIText;
 import ui.VerticalContainer;
 
 public class GameState extends State {
@@ -22,12 +25,13 @@ public class GameState extends State {
         super(windowSize, input);
         gameMap = new GameMap(new Size(20, 15)/*(30,30)*/, spriteLibrary);
         initializeCharacters();
+        initializeUI(windowSize);
     }
     
     private void initializeCharacters() {
         Player player = new Player(new PlayerController(input), spriteLibrary, this.getCamera(),  new Size(128,128));
         initializeNPCs(100);
-        initializeUI();
+        
 //        List<GameObject> listOf = new ArrayList<>();
 //        listOf.add(player); 
         gameObjects.add(player);
@@ -37,28 +41,21 @@ public class GameState extends State {
     }
     
     // Intialization of UI with spacing and positions etc
-    private void initializeUI() {
-    	UIContainer containerV = new VerticalContainer();
-    	
-    	UIContainer containerH0 = new HorizontalContainer();
-    	containerH0.setMargin(new Spacing(10));
-    	UIContainer containerH1 = new HorizontalContainer();
-    	containerH1.setMargin(new Spacing(10));
-    	UIContainer containerH2 = new HorizontalContainer();
-    	containerH2.setMargin(new Spacing(10));
-    	
+    private void initializeUI(Size windowSize) {
+    	UIContainer containerV = new VerticalContainer(windowSize);
     	containerV.setPadding(new Spacing(20));
-    	containerH0.setBackgroundColor(Color.GRAY);
-    	containerH1.setBackgroundColor(Color.GRAY);
-    	containerH2.setBackgroundColor(Color.GRAY);
-    	containerH0.addUicomponent(new HorizontalContainer());
-    	containerH1.addUicomponent(new HorizontalContainer());
-    	containerH2.addUicomponent(new HorizontalContainer());
-    	containerH2.addUicomponent(new HorizontalContainer());
-    	containerV.addUicomponent(containerH0);
-    	containerV.addUicomponent(containerH1);
-    	containerV.addUicomponent(containerH2);
+    	containerV.setBackgroundColor(new Color(0,0,0,0));
+    	containerV.addUIComponent(new UIText("Hello  World!"));
+    	
+    	UIContainer containerV2 = new VerticalContainer(windowSize);
+    	containerV2.setPadding(new Spacing(20));
+    	containerV2.setBackgroundColor(new Color(0,0,0,0));
+    	containerV2.addUIComponent(new UIText("Hello  World!"));
+    	
+    	containerV2.setAlignment(new Alignment(Alignment.Position.CENTER, Alignment.Position.END));
     	uiContainers.add(containerV);
+    	uiContainers.add(containerV2);
+    	uiContainers.add(new UIGameTime(windowSize));
 	}
 
 	private void initializeNPCs(int numberOfNPCs){

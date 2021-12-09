@@ -39,12 +39,14 @@ public class UIText extends UIComponent {
         Graphics2D graphics = image.createGraphics();
         graphics.setFont(font);
 
+     // Since text gets drawn from bottom left we need to add an offset
         if(dropShadow) {
             graphics.setColor(shadowColor);
             graphics.drawString(text, padding.getLeft() + dropShadowOffset, fontSize + padding.getTop() + dropShadowOffset);
         }
 
         graphics.setColor(color);
+        
         graphics.drawString(text, padding.getLeft(), fontSize + padding.getTop());
 
         graphics.dispose();
@@ -57,16 +59,24 @@ public class UIText extends UIComponent {
         calculateSize();
     }
 
-    private void calculateSize() {
-    	// "Hacky" way to get fontmetrics. Since depending on font the width of the string will vary
-        FontMetrics fontMetrics = new Canvas().getFontMetrics(font);
-        size = new Size(
-                fontMetrics.stringWidth(text) + padding.getHorizontal(),
-                fontMetrics.getHeight() + padding.getVertical()
-        );
-    }
 
     private void createFont() {
         font = new Font(fontFamily, fontStyle, fontSize);
+    }
+
+	public void setText(String text) {
+		this.text = text;
+	}
+	private void calculateSize() {
+		// "Hacky" way to get fontmetrics. Since depending on font the width of the string will vary
+        FontMetrics fontMetrics = new Canvas().getFontMetrics(font);
+        int width = fontMetrics.stringWidth(text) + padding.getHorizontal();
+        int height = fontMetrics.getHeight() + padding.getVertical();
+
+        if(dropShadow) {
+            width += dropShadowOffset;
+        }
+
+        size = new Size(width, height);
     }
 }
