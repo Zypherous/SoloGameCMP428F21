@@ -4,11 +4,13 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 import core.Position;
 import core.Size;
 import display.Camera;
 import entity.GameObject;
+import entity.MovingEntity;
 import entity.Player;
 import entity.Rect;
 import game.Time;
@@ -131,11 +133,21 @@ public abstract class State {
 
 
 	public abstract Player getPlayer();
+
+
+	public List<GameObject> getCollidingGameObjects(GameObject gameObject) {
+		return gameObjects.stream()
+				.filter(other -> other.collidesWith(gameObject))
+				.collect(Collectors.toList());
+	}
 	
 //	public Player getPlayer(List<GameObject> gameObjects) {
 //		return (Player)(gameObjects.stream().filter(gameObject -> (gameObject.getID() == 0)));
 //	}
 
 
+	public void handleDead() {
+		
+	}
 }
 	

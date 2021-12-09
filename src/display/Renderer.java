@@ -36,8 +36,8 @@ public class Renderer {
 				gameObject.getSprite(),
 				(int)gameObject.getPosition().getX() - (int)camera.getPosition().getX() - gameObject.getSize().getWidth()/2,
 				(int)gameObject.getPosition().getY() - (int)camera.getPosition().getY() - gameObject.getSize().getHeight()/2,
-//				gameObject.getSize().getWidth(),
-//				gameObject.getSize().getHeight(), 
+				gameObject.getSize().getWidth(),
+				gameObject.getSize().getHeight(), 
 				null
 				));
 		

@@ -1,7 +1,7 @@
 package entity;
 import java.awt.Image;
-import java.util.List;
 
+import core.CollisionBox;
 import core.Position;
 import core.Size;
 import display.Camera;
@@ -13,17 +13,21 @@ public abstract class GameObject {
 	protected static int ID = 0;
 	protected int thisID;
 	protected Camera camera;
+	protected boolean dead;
 	
 	public GameObject(Camera camera) {
 		this.camera = camera;
 		position = new Position(0, 0);
 		size = new Size (64, 64);
 		this.thisID = ID;
+		this.dead = false;
 		ID++;
 	}
 	public abstract void update(State state);
 	public abstract Image getSprite();
-	
+	public abstract CollisionBox getCollider();
+	public abstract boolean collidesWith(GameObject other);
+	public abstract CollisionBox getCurrentCollider();
 	public Position getPosition() {
 		return position;
 	}

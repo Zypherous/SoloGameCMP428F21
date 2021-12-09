@@ -19,7 +19,7 @@ public class GameState extends State {
     }
     
     private void initializeCharacters() {
-        Player player = new Player(new PlayerController(input), spriteLibrary, this.getCamera());
+        Player player = new Player(new PlayerController(input), spriteLibrary, this.getCamera(),  new Size(128,128));
         initializeNPCs(100);
 //        List<GameObject> listOf = new ArrayList<>();
 //        listOf.add(player); 

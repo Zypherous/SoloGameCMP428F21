@@ -1,7 +1,10 @@
 package entity;
 
+import java.awt.Image;
+
 import ai.AIManager;
 import controller.Controller;
+import core.Size;
 import display.Camera;
 import entity.action.Cough;
 import game.state.State;
@@ -27,4 +30,13 @@ public class NPC extends MovingEntity {
     	
     	aiManager.update(state, this);
     }
+	@Override
+	protected void handleCollision(GameObject other) {
+		if(other instanceof Player) {
+			movement.stop(willCollideX(other), willCollideY(other));
+			this.dead = true;
+		}
+	}
+
 }
+	
