@@ -1,5 +1,7 @@
 package game.state;
 
+import java.awt.Color;
+
 import controller.NPCController;
 import controller.PlayerController;
 import core.Size;
@@ -8,8 +10,10 @@ import entity.Player;
 import entity.effect.Sick;
 import input.Input;
 import map.GameMap;
+import ui.HorizontalContainer;
 import ui.Spacing;
 import ui.UIContainer;
+import ui.VerticalContainer;
 
 public class GameState extends State {
 
@@ -31,10 +35,30 @@ public class GameState extends State {
 
         play = player;     
     }
+    
+    // Intialization of UI with spacing and positions etc
     private void initializeUI() {
-    	UIContainer container = new UIContainer();
-    	container.setPadding(new Spacing(50));
-    	uiContainers.add(container);
+    	UIContainer containerV = new VerticalContainer();
+    	
+    	UIContainer containerH0 = new HorizontalContainer();
+    	containerH0.setMargin(new Spacing(10));
+    	UIContainer containerH1 = new HorizontalContainer();
+    	containerH1.setMargin(new Spacing(10));
+    	UIContainer containerH2 = new HorizontalContainer();
+    	containerH2.setMargin(new Spacing(10));
+    	
+    	containerV.setPadding(new Spacing(20));
+    	containerH0.setBackgroundColor(Color.GRAY);
+    	containerH1.setBackgroundColor(Color.GRAY);
+    	containerH2.setBackgroundColor(Color.GRAY);
+    	containerH0.addUicomponent(new HorizontalContainer());
+    	containerH1.addUicomponent(new HorizontalContainer());
+    	containerH2.addUicomponent(new HorizontalContainer());
+    	containerH2.addUicomponent(new HorizontalContainer());
+    	containerV.addUicomponent(containerH0);
+    	containerV.addUicomponent(containerH1);
+    	containerV.addUicomponent(containerH2);
+    	uiContainers.add(containerV);
 	}
 
 	private void initializeNPCs(int numberOfNPCs){
