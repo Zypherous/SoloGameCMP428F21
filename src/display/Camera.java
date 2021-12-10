@@ -33,7 +33,7 @@ public class Camera {
 				(int) windowSize.getHeight() + RENDER_BUFFER);
 	}
 	
-	public void focudOn(GameObject object) {
+	public void focusOn(GameObject object) {
 		this.objectWithFocus = Optional.of(object);
 	}
 	public void update(State state) {

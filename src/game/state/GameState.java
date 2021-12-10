@@ -7,12 +7,12 @@ import controller.PlayerController;
 import core.Size;
 import entity.NPC;
 import entity.Player;
+import entity.SelectionCircle;
 import entity.effect.Sick;
 import game.ui.UIGameTime;
 import input.Input;
 import map.GameMap;
 import ui.Alignment;
-import ui.HorizontalContainer;
 import ui.Spacing;
 import ui.UIContainer;
 import ui.UIText;
@@ -35,8 +35,11 @@ public class GameState extends State {
 //        List<GameObject> listOf = new ArrayList<>();
 //        listOf.add(player); 
         gameObjects.add(player);
-        camera.focudOn(player);
+        camera.focusOn(player);
 
+        SelectionCircle sc = new SelectionCircle(this.camera);
+        sc.setParent(player);
+        gameObjects.add(sc);
         play = player;     
     }
     

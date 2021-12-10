@@ -1,6 +1,6 @@
 package entity;
 
-import controller.Controller;
+import controller.EntityController;
 import core.Position;
 import core.Size;
 import display.Camera;
@@ -14,7 +14,7 @@ import gfx.SpriteLibrary;
 public class Player extends MovingEntity{
 
 	
-	public Player(Controller controller, SpriteLibrary spriteLibrary, Camera camera, Size size) {
+	public Player(EntityController controller, SpriteLibrary spriteLibrary, Camera camera, Size size) {
 		super(controller, spriteLibrary, camera);
 		this.size = size;
 		this.setPosition(new Position(1280/2,720/2));
@@ -33,9 +33,65 @@ public class Player extends MovingEntity{
 
 	public void playerLoc() {
 		
-		System.out.println(String.format("Player.java Line 36 ==> Player x: %d y:%d", 
-				(int)this.getPosition().getX(), 
-				(int)this.getPosition().getY()));
+//		
+
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 	}
 
 	@Override

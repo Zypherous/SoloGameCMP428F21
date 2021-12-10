@@ -49,5 +49,11 @@ public class Position {
 		Vector2D vector = movement.getVector();
 		y += vector.getY();
 	}
+
+	public void add(Position position) {
+		x+= position.getX();
+		y+= position.getY();
+		
+	}
 	
 }

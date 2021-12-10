@@ -11,8 +11,8 @@ import game.state.State;
 import map.GameMap;
 
 public class Renderer {
-	private Image testImage = Toolkit.getDefaultToolkit().getImage("C:\\Users\\Jonat\\soloGame\\Resources\\Image\\Dungeon Crawl Stone Soup Full\\monster\\cyclops_old.png");
-	private Image backgroundTest = Toolkit.getDefaultToolkit().getImage("C:\\Users\\Jonat\\soloGame\\Resources\\Image\\monster2_combat_backgrounds\\mountains.png");
+//	private Image testImage = Toolkit.getDefaultToolkit().getImage("C:\\Users\\Jonat\\soloGame\\Resources\\Image\\Dungeon Crawl Stone Soup Full\\monster\\cyclops_old.png");
+//	private Image backgroundTest = Toolkit.getDefaultToolkit().getImage("C:\\Users\\Jonat\\soloGame\\Resources\\Image\\monster2_combat_backgrounds\\mountains.png");
 	
 	public void render(State state, Graphics graphics ) {  
 		renderMap(state, graphics);
@@ -38,8 +38,8 @@ public class Renderer {
 				.filter(gameObject -> camera.isInView(gameObject))
 				.forEach(gameObject -> graphics.drawImage(
 				gameObject.getSprite(),
-				(int)gameObject.getPosition().getX() - (int)camera.getPosition().getX() - gameObject.getSize().getWidth()/2,
-				(int)gameObject.getPosition().getY() - (int)camera.getPosition().getY() - gameObject.getSize().getHeight()/2,
+				(int)gameObject.getRenderPosition(camera).getX(),
+				(int)gameObject.getRenderPosition(camera).getY(),
 				gameObject.getSize().getWidth(),
 				gameObject.getSize().getHeight(), 
 				null
