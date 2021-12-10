@@ -48,7 +48,7 @@ public class GameLoop implements Runnable{
 			double lastRenderInSeconds = (currentTime - lastUpdate) /1000d;
 			
 			// Set an accumulator to the last time a render was made
-			accumulator += lastRenderInSeconds;
+			accumulator += lastRenderInSeconds * game.getSettings().getGameSpeedMultiplier();
 			
 			// Grab the time at which the last update was made
 			lastUpdate = currentTime;
@@ -86,9 +86,9 @@ public class GameLoop implements Runnable{
 	private void printDetails() {
 		if(System.currentTimeMillis() > nextConsoleLog) {
 			System.out.println(String.format("Loop Line 88 ==> FPS: %d  UPS: %d", fps, ups));
-			System.out.println(String.format("Loop Line 89 ==> Camera x: %d, y: %d", 
-					(int)game.getState().getCamera().getPosition().getX(), 
-					(int)game.getState().getCamera().getPosition().getY()));
+//			System.out.println(String.format("Loop Line 89 ==> Camera x: %d, y: %d", 
+//					(int)game.getState().getCamera().getPosition().getX(), 
+//					(int)game.getState().getCamera().getPosition().getY()));
 			game.getState().getPlayer().playerLoc();
 			ups = 0;
 			nextConsoleLog = System.currentTimeMillis() + 1000;

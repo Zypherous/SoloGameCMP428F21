@@ -14,24 +14,41 @@ public abstract class GameObject {
 	protected int thisID;
 	protected Camera camera;
 	protected boolean dead;
+	protected GameObject parent;
+	protected Position renderOffset;
 	
 	public GameObject(Camera camera) {
 		this.camera = camera;
 		position = new Position(0, 0);
+		renderOffset = new Position(0,0);
 		size = new Size (64, 64);
 		this.thisID = ID;
 		this.dead = false;
+		this.rect = new Rect((int)this.getRenderPosition(camera).getX(),(int)this.getRenderPosition(camera).getY(),this.size.getWidth(),this.size.getHeight());
 		ID++;
+	}
+	public  boolean collidesWith(GameObject other) {
+		return getCollider().collidesWith(other.getCollider());
 	}
 	public abstract void update(State state);
 	public abstract Image getSprite();
 	public abstract CollisionBox getCollider();
-	public abstract boolean collidesWith(GameObject other);
 	public abstract CollisionBox getCurrentCollider();
 	public Position getPosition() {
-		return position;
+		Position finalPosition = Position.copyOf(position);
+		
+		if(parent != null) {
+			finalPosition.add(parent.getPosition());
+		}
+		return finalPosition;
 	}
 
+	public GameObject getParent() {
+		return parent;
+	}
+	public void setParent(GameObject parent) {
+		this.parent = parent;
+	}
 	public void setPosition(Position position) {
 		this.position = position;
 	}
@@ -60,6 +77,10 @@ public abstract class GameObject {
 		return this.thisID;
 	}
 	
-	
-	
+	public Position getRenderPosition(Camera camera) {
+		 return new Position(
+				 getPosition().getX() - camera.getPosition().getX(),
+				 getPosition().getY() - camera.getPosition().getY()
+				 );
+	}
 }

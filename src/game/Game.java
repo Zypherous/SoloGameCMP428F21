@@ -1,4 +1,5 @@
 package game;
+import controller.GameController;
 import core.Size;
 import display.Display;
 import game.settings.GameSettings;
@@ -18,6 +19,7 @@ public class Game {
 	
 	private Size size;
 
+	private GameController gameController;
 	
 	
 	public Game(int width, int height) {
@@ -31,14 +33,17 @@ public class Game {
 		
 		state = new GameState(size,input);
 		settings = new GameSettings(true);
+		gameController = new GameController(input);
 		
 	}
 
 	public void update() {
 		
 		state.update();
+		gameController.update(this);
 	}
 
+	
 	public void render() {
 
 		display.render(state, settings.isDebugMode());
@@ -49,6 +54,9 @@ public class Game {
 		return state;
 	}
 
+	public GameSettings getSettings() {
+		return settings;
+	}
 
 	
 

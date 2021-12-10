@@ -3,7 +3,7 @@ package entity;
 import java.awt.Image;
 
 import ai.AIManager;
-import controller.Controller;
+import controller.EntityController;
 import core.Size;
 import display.Camera;
 import entity.action.Cough;
@@ -14,7 +14,7 @@ import gfx.SpriteLibrary;
 public class NPC extends MovingEntity {
 	private AIManager aiManager;
 	
-    public NPC(Controller controller, SpriteLibrary spriteLibrary, Camera camera) {
+    public NPC(EntityController controller, SpriteLibrary spriteLibrary, Camera camera) {
         super(controller, spriteLibrary, camera);
         this.setRect(new Rect(
         		(int)this.getPosition().getX(),

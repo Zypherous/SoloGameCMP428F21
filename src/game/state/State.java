@@ -10,19 +10,20 @@ import core.Position;
 import core.Size;
 import display.Camera;
 import entity.GameObject;
-import entity.MovingEntity;
 import entity.Player;
 import entity.Rect;
 import game.Time;
 import gfx.SpriteLibrary;
 import input.Input;
 import map.GameMap;
+import ui.UIContainer;
 
 public abstract class State {
 
 	// Gives option to pan around with a camera if you want.
     protected GameMap gameMap;
     protected List<GameObject> gameObjects;
+    protected List<UIContainer> uiContainers;
     protected SpriteLibrary spriteLibrary;
     protected Input input;
     protected Camera camera;
@@ -38,34 +39,26 @@ public abstract class State {
     public State(Size windowSize, Input input) {
         this.input = input;
         gameObjects = new ArrayList<>();
+        uiContainers = new ArrayList<>();
         spriteLibrary = new SpriteLibrary();
         camera = new Camera(windowSize);
 //        camera = new Camera(new Size(200, 200));
         time = new Time();
         rect = new Rect[10];
         rand = new Random();
-		for(int i = 0; i < rect.length;i++) {
-			rect[i] = new Rect(1200 - (int) Math.abs(camera.getPosition().getX()), 
-					((rand.nextInt(9)+1) * 64 ) + (int) Math.abs(camera.getPosition().getY()),
-					64, 64, rand.nextInt(5)+5, 0, camera);
-		}
+		
     }
 
     
+	
+
 	public void update() {
+		time.update();
     	sortObjectsByPosition();
         gameObjects.forEach(gameObject -> gameObject.update(this));
-        for(int i = 0; i < rect.length; i++) {
-			rect[i].moveLeft(rect[i].getVelx());
-			if(rect[i].getX() <= 64 ) {		
-				rect[i] = new Rect(camera.getPosition().getY() < 0 ? 1200 - (int) Math.abs(camera.getPosition().getX()) : 1200 + (int) camera.getPosition().getX() , 
-						camera.getPosition().getY() > 0 ? ((rand.nextInt(9)+1)*64) + (int) Math.abs(camera.getPosition().getY()) :  ((rand.nextInt(9)+1)*64) - (int) Math.abs(camera.getPosition().getY()),
-						64, 64, rand.nextInt(5)+5, 0, camera);
-				health--;
-				//System.out.println(String.format("RECT[%d] x: %d, y: %d",i, rect[i].getX(),rect[i].getY()));
-			}
-			camera.update(this);
-		}
+        uiContainers.forEach(uiContainer -> uiContainer.update(this));
+        camera.update(this);
+//        
     }
 
 	public  Position getRandomPosition() {
@@ -149,5 +142,49 @@ public abstract class State {
 	public void handleDead() {
 		
 	}
+	
+	public List<UIContainer> getUiContainers() {
+		return uiContainers;
+	}
+
+
+	public void setUiContainers(List<UIContainer> uiContainers) {
+		this.uiContainers = uiContainers;
+	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	// CYCLOPS RECTS IN INITIALIZE AREA DONT USE
+//	for(int i = 0; i < rect.length;i++) {
+//		rect[i] = new Rect(1200 - (int) Math.abs(camera.getPosition().getX()), 
+//				((rand.nextInt(9)+1) * 64 ) + (int) Math.abs(camera.getPosition().getY()),
+//				64, 64, rand.nextInt(5)+5, 0, camera);
+//	}
+	
+	
+	
+	
+	
+	
+	//CYCLOPS ARMY MOVEMENT CODE DO NOT USE
+//	for(int i = 0; i < rect.length; i++) {
+//		rect[i].moveLeft(rect[i].getVelx());
+//		if(rect[i].getX() <= 64 ) {		
+//			rect[i] = new Rect(camera.getPosition().getY() < 0 ? 1200 - (int) Math.abs(camera.getPosition().getX()) : 1200 + (int) camera.getPosition().getX() , 
+//					camera.getPosition().getY() > 0 ? ((rand.nextInt(9)+1)*64) + (int) Math.abs(camera.getPosition().getY()) :  ((rand.nextInt(9)+1)*64) - (int) Math.abs(camera.getPosition().getY()),
+//					64, 64, rand.nextInt(5)+5, 0, camera);
+//			health--;
+//			//System.out.println(String.format("RECT[%d] x: %d, y: %d",i, rect[i].getX(),rect[i].getY()));
+//		}
+//		camera.update(this);
+//	}
 }
 	

@@ -63,7 +63,7 @@ public class Display extends JFrame {
 
 		
 		
-		graphics.drawString(String.format("Health: %d", state.getHealth()), 64, 64);
+		graphics.drawString(String.format("Health: %d", state.getHealth()), 64*4, 64);
 		
 		
 		// Free Memory

@@ -15,7 +15,7 @@ import game.state.State;
 
 	    @Override
 	    public void update(State state, MovingEntity entity) {
-	    	System.out.println(String.format("Giant.java Line 20 ==> Updates Alive: %d", this.getLifeSpanInUpdates()));
+//	    	System.out.println(String.format("Giant.java Line 20 ==> Updates Alive: %d", this.getLifeSpanInUpdates()));
 	    	super.update(state, entity);
 	        if(this.getLifeSpanInUpdates() == 0) {
 	        	entity.setSize(new Size(64, 64));

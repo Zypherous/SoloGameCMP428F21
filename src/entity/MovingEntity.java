@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import controller.Controller;
+import controller.EntityController;
 import core.CollisionBox;
 import core.Direction;
 import core.Movement;
@@ -20,7 +20,7 @@ import gfx.SpriteLibrary;
 
 public abstract class MovingEntity extends GameObject {
 	
-	protected Controller controller;
+	protected EntityController controller;
 	protected Movement movement;
 	protected AnimationManager animationManager;
 	protected Direction direction;
@@ -31,7 +31,7 @@ public abstract class MovingEntity extends GameObject {
 	protected CollisionBox collisionBox;
 	
 	
-	public MovingEntity(Controller controller, SpriteLibrary spriteLibrary, Camera camera) {
+	public MovingEntity(EntityController controller, SpriteLibrary spriteLibrary, Camera camera) {
 		super(camera);
 		this.controller = controller;
 		this.movement = new Movement(4);
@@ -41,6 +41,7 @@ public abstract class MovingEntity extends GameObject {
 		action = Optional.empty();
 		this.collisionBoxSize = new Size(32,32);
 		this.collisionBox = getCollider();
+		this.renderOffset = new Position(size.getWidth()/2, size.getHeight());
 	}
 	
 	@Override
@@ -117,17 +118,13 @@ public abstract class MovingEntity extends GameObject {
 	}
 	
 	@Override
-	public boolean collidesWith(GameObject other) {
-		return getCollider().collidesWith(other.getCollider());
-	}
-	@Override
 	public CollisionBox getCollider() {
-		Position positionWithMovement = position.copyOf(position);
+		Position positionWithMovement = position.copyOf(getPosition());
 		positionWithMovement.apply(movement);
 		return new CollisionBox(
 				new Rect(
-					(int)positionWithMovement.getX() - ((int)this.size.getWidth()/4) +4,
-					(int)positionWithMovement.getY() - ((int)this.size.getHeight()/2) +4,
+					(int)positionWithMovement.getX() - collisionBoxSize.getWidth()/2,
+					(int)positionWithMovement.getY() - collisionBoxSize.getHeight(),
 					collisionBoxSize.getWidth()-8,
 					collisionBoxSize.getHeight() +16
 						)
@@ -149,7 +146,7 @@ public abstract class MovingEntity extends GameObject {
 		return animationManager.getSprite();
 	}
 	
-	public Controller getController() {
+	public EntityController getController() {
 		return this.controller;
 	}
 	
