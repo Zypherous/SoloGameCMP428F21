@@ -6,8 +6,9 @@ import java.util.Optional;
 import controller.EntityController;
 import core.Position;
 import core.Size;
-import entity.effect.Caffeinated;
-import entity.effect.Giant;
+import entity.humanoid.Humanoid;
+import entity.humanoid.effect.Caffeinated;
+import entity.humanoid.effect.Giant;
 import game.Game;
 import game.state.State;
 import gfx.AnimationManager;
@@ -16,7 +17,7 @@ import gfx.SpriteLibrary;
 
 
 
-public class Player extends MovingEntity{
+public class Player extends Humanoid{
 
 	private NPC target;
 	private double targetRange;
@@ -27,7 +28,7 @@ public class Player extends MovingEntity{
 		this.size = size;
 		this.setPosition(new Position(1280/2,960/2));
 		this.selectionCircle = selectionCirlce;
-		animationManager = new AnimationManager(spriteLibrary.getUnit("dave"));
+		animationManager = new AnimationManager(spriteLibrary.getSpriteSheet("dave"));
 		
 		this.targetRange = Game.SPRITE_SIZE;
 		//TESTING RECT
@@ -70,18 +71,11 @@ public class Player extends MovingEntity{
 	}
 
 	@Override
-	public void handleCollision(GameObject other) {
-		if(other instanceof NPC) {
-//			this.movement.stop();
-			NPC npc = (NPC) other;
-			npc.clearEffects();
-		}
+	public void handleCollision(GameObject other) {}
 		
-	}	
+}	
 	
 //	@Override
 //	public Image getSprite() {
 //		return animationManager.getSprite(size);
 //	}
-
-}

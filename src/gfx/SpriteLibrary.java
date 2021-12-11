@@ -1,9 +1,6 @@
 package gfx;
 
-import game.Game;
-
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.net.URL;
 import java.util.HashMap;
@@ -11,47 +8,46 @@ import java.util.Map;
 
 public class SpriteLibrary {
 
-
-
-    private Map<String, SpriteSheet> units;
-    private Map<String, Image> tiles;
+    private Map<String, SpriteSheet> spriteSheets;
+    private Map<String, Image> images;
 
     public SpriteLibrary() {
-        units = new HashMap<>();
-        tiles = new HashMap<>();
+        spriteSheets = new HashMap<>();
+        images = new HashMap<>();
         loadSpritesFromDisk();
     }
 
     private void loadSpritesFromDisk() {
-        loadUnits( "/sprites/units");
-        loadTiles( "/tiles/");
+        loadSpriteSets("/sprites/units");
+        loadImages("/sprites/tiles");
+        loadImages("/sprites/effects");
     }
 
-    private void loadTiles(String path) {
-    	String[] imagesInFolder = getImagesInFolder(path);
+    private void loadImages(String path) {
+        String[] imagesInFolder = getImagesInFolder(path);
 
-        for(String fileName: imagesInFolder) {
-            tiles.put(
-                    fileName.substring(0, fileName.length() - 4),
-                    ImageUtils.loadImage(path + "/" + fileName));
+        for(String filename: imagesInFolder) {
+            images.put(
+                    filename.substring(0, filename.length() - 4),
+                    ImageUtils.loadImage(path + "/" + filename));
         }
     }
 
-    private void loadUnits(String path) {
+    private void loadSpriteSets(String path) {
         String[] folderNames = getFolderNames(path);
 
         for(String folderName: folderNames) {
-            SpriteSheet SpriteSheet = new SpriteSheet();
+            SpriteSheet spriteSet = new SpriteSheet();
             String pathToFolder = path + "/" + folderName;
             String[] sheetsInFolder = getImagesInFolder(pathToFolder);
 
             for(String sheetName: sheetsInFolder) {
-                SpriteSheet.addSheet(
+                spriteSet.addSheet(
                         sheetName.substring(0, sheetName.length() - 4),
                         ImageUtils.loadImage(pathToFolder + "/" + sheetName));
             }
 
-            units.put(folderName, SpriteSheet);
+            spriteSheets.put(folderName, spriteSet);
         }
     }
 
@@ -67,11 +63,11 @@ public class SpriteLibrary {
         return file.list((current, name) -> new File(current, name).isDirectory());
     }
 
-    public SpriteSheet getUnit(String name) {
-        return units.get(name);
+    public SpriteSheet getSpriteSheet(String name) {
+        return spriteSheets.get(name);
     }
 
-    public Image getTile(String name) {
-        return tiles.get(name);
+    public Image getImage(String name) {
+        return images.get(name);
     }
 }

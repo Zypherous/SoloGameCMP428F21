@@ -1,7 +1,6 @@
 package game.state;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
@@ -11,10 +10,8 @@ import core.Position;
 import core.Size;
 import display.Camera;
 import entity.GameObject;
-import entity.NPC;
 import entity.Player;
 import entity.Rect;
-import entity.effect.Effect;
 import game.Time;
 import gfx.SpriteLibrary;
 import input.Input;

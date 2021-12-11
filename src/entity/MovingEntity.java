@@ -1,8 +1,6 @@
 package entity;
 
 import java.awt.Image;
-import java.awt.Rectangle;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,9 +11,8 @@ import core.Movement;
 import core.Position;
 import core.Size;
 import core.Vector2D;
-import display.Camera;
-import entity.action.Action;
-import entity.effect.Effect;
+import entity.humanoid.action.Action;
+import entity.humanoid.effect.Effect;
 import game.state.State;
 import gfx.AnimationManager;
 import gfx.SpriteLibrary;
@@ -39,29 +36,20 @@ public abstract class MovingEntity extends GameObject {
         this.movement = new Movement(2);
         this.direction = Direction.S;
         this.directionVector = new Vector2D(0,0);
-        this.animationManager = new AnimationManager(spriteLibrary.getUnit("matt"));
-        effects = new ArrayList<>();
-        action = Optional.empty();
-        this.collisionBoxSize = new Size(16, 28);
-        this.renderOffset = new Position(size.getWidth() / 2, size.getHeight() - 12);
-        // half width to draw from middle of sprite
-        this.collisionBoxOffset = new Position(collisionBoxSize.getWidth()/2, collisionBoxSize.getHeight());
+        this.animationManager = new AnimationManager(spriteLibrary.getSpriteSheet("matt"));
     }
 
     @Override
     public void update(State state) {
-        handleAction(state);
+        movement.update(entityController);
         handleMovement();
         animationManager.update(direction);
-        effects.forEach(effect -> effect.update(state, this));
 
         handleCollisions(state);
         manageDirection();
-        decideAnimation();
-
+        animationManager.playAnimation(decideAnimation());
         position.apply(movement);
 
-        cleanup();
     }
 
     private void handleCollisions(State state) {
@@ -70,39 +58,9 @@ public abstract class MovingEntity extends GameObject {
 
     protected abstract void handleCollision(GameObject other);
 
-    private void handleMovement() {
-        if(!action.isPresent()) {
-            movement.update(entityController);
-        } else {
-            movement.stop(true, true);
-        }
-    }
+    protected abstract void handleMovement();
 
-    private void handleAction(State state) {
-        if(action.isPresent()) {
-            action.get().update(state, this);
-        }
-    }
-
-    private void cleanup() {
-        List.copyOf(effects).stream()
-                .filter(Effect::shouldDelete)
-                .forEach(effects::remove);
-
-        if(action.isPresent() && action.get().isDone()) {
-            action = Optional.empty();
-        }
-    }
-
-    private void decideAnimation() {
-        if(action.isPresent()) {
-            animationManager.playAnimation(action.get().getAnimationName());
-        } else if(movement.isMoving()) {
-            animationManager.playAnimation("walk");
-        } else {
-            animationManager.playAnimation("stand");
-        }
-    }
+    protected abstract String decideAnimation();
 
     private void manageDirection() {
         if(movement.isMoving()) {
@@ -135,18 +93,6 @@ public abstract class MovingEntity extends GameObject {
         return entityController;
     }
 
-    public void perform(Action action) {
-        this.action = Optional.of(action);
-    }
-
-    public void addEffect(Effect effect) {
-        effects.add(effect);
-    }
-
-    protected void clearEffects() {
-        effects.clear();
-    }
-
     public boolean willCollideX(GameObject other) {
         CollisionBox otherBox = other.getCollisionBox();
         Position positionWithXApplied = Position.copyOf(position);
@@ -164,11 +110,6 @@ public abstract class MovingEntity extends GameObject {
 
 
         return CollisionBox.of(positionWithYApplied, collisionBoxSize).collidesWith(otherBox);
-    }
-
-    public boolean isAffectedBy(Class<?> clazz) {
-        return effects.stream()
-                .anyMatch(effect -> clazz.isInstance(effect));
     }
     
     public boolean isFacing(Position other) {

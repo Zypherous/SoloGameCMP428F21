@@ -89,4 +89,10 @@ public abstract class GameObject {
 	public void clearParent() {
 		parent = null;
 	}
+
+
+	public Position getRenderOffset() {
+		return renderOffset;
+	}
+
 }
