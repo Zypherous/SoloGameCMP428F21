@@ -6,8 +6,10 @@ import java.util.Optional;
 import controller.EntityController;
 import core.Position;
 import core.Size;
+import core.Vector2D;
 import entity.humanoid.Humanoid;
 import entity.humanoid.action.BlowBubble;
+import entity.humanoid.action.WalkInDirection;
 import entity.humanoid.effect.Caffeinated;
 import entity.humanoid.effect.Giant;
 import entity.humanoid.effect.Isolated;
@@ -28,8 +30,10 @@ public class Player extends Humanoid{
 	public Player(EntityController controller, SpriteLibrary spriteLibrary, Size size, SelectionCircle selectionCirlce) {
 		super(controller, spriteLibrary);
 		this.size = size;
-		this.setPosition(new Position(1280/2,960/2));
 		this.selectionCircle = selectionCirlce;
+		
+		this.setPosition(new Position(1280/2,960 - Game.SPRITE_SIZE));
+		perform(new WalkInDirection(new Vector2D(0, -1)));
 		animationManager = new AnimationManager(spriteLibrary.getSpriteSheet("dave"));
 		
 		this.targetRange = Game.SPRITE_SIZE;

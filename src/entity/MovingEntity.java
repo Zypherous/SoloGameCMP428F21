@@ -47,10 +47,9 @@ public abstract class MovingEntity extends GameObject {
         animationManager.update(direction);
 
         handleCollisions(state);
-        manageDirection();
         animationManager.playAnimation(decideAnimation());
-        position.apply(movement);
 
+        apply(movement);
     }
 
     private void handleCollisions(State state) {
@@ -63,7 +62,7 @@ public abstract class MovingEntity extends GameObject {
 
     protected abstract String decideAnimation();
 
-    private void manageDirection() {
+    private void manageDirection(Movement movement) {
         if(movement.isMoving()) {
             this.direction = Direction.fromMovement(movement);
             this.directionVector = movement.getDirection();
@@ -118,5 +117,15 @@ public abstract class MovingEntity extends GameObject {
     	double dotProduct = Vector2D.dotProduct(direction, directionVector);
     	
     	return dotProduct >0;
+    }
+    
+    public void apply(Movement movement) {
+        manageDirection(movement);
+        position.apply(movement);
+    }
+    
+    public void multiplySpeed(double speed) {
+    	movement.multiply(speed);
+    	apply(movement);
     }
 }

@@ -9,14 +9,13 @@ public class Caffeinated extends Effect {
     private double speedMultiplier;
 
     public Caffeinated() {
-        super(GameLoop.UPDATES_PER_SECOND * 5);
-        speedMultiplier = 2.5;
+        super(GameLoop.UPDATES_PER_SECOND * 15);
+        speedMultiplier = 4.5;
     }
 
     @Override
     public void update(State state, Humanoid humanoid) {
         super.update(state, humanoid);
-
-//        entity.multiplySpeed(speedMultiplier);
+        humanoid.multiplySpeed(speedMultiplier);
     }
 }
