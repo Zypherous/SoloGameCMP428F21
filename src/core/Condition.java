@@ -1,5 +1,5 @@
 package core;
 
-public class Condition {
-
+public interface Condition {
+	boolean isMet();
 }
