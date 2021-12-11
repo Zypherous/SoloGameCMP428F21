@@ -4,7 +4,9 @@ import core.Size;
 import display.Display;
 import game.settings.GameSettings;
 import input.Input;
+import state.State;
 import state.game.GameState;
+import state.menu.MenuState;
 
 public class Game {
 	
@@ -14,7 +16,7 @@ public class Game {
 	
 
 	private Input input;
-	private GameState state;
+	private State state;
 	private GameSettings settings;
 	
 	private Size size;
@@ -31,7 +33,7 @@ public class Game {
 		
 		display = new Display(width, height, input);
 		
-		state = new GameState(size,input);
+		state = new MenuState(new Size(width, height), input);
 		settings = new GameSettings(false);
 		gameController = new GameController(input);
 		
@@ -39,7 +41,7 @@ public class Game {
 
 	public void update() {
 		
-		state.update();
+		state.update(this);
 		gameController.update(this);
 	}
 
@@ -50,7 +52,7 @@ public class Game {
 		
 	}
 	
-	public GameState getState() {
+	public State getState() {
 		return state;
 	}
 
@@ -58,6 +60,8 @@ public class Game {
 		return settings;
 	}
 
-	
+	public void enterState(State nextState) {
+        state = nextState;
+    }
 
 }

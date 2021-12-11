@@ -1,6 +1,7 @@
 package state.menu;
 
 import core.Size;
+import entity.Player;
 import input.Input;
 import map.GameMap;
 import state.State;
@@ -19,4 +20,9 @@ public class MenuState extends State {
         uiContainers.clear();
         uiContainers.add(container);
     }
+
+	@Override
+	public Player getPlayer() {
+		return null;
+	}
 }
