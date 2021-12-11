@@ -13,7 +13,7 @@ public class UIMainMenu extends VerticalContainer {
         super(windowSize);
         alignment = new Alignment(Alignment.Position.CENTER, Alignment.Position.CENTER);
 
-        addUIComponent(new UIText("ISOBUBBLER"));
+        addUIComponent(new UIText("MOLLYSWORLD"));
         addUIComponent(new UIButton("PLAY", (state) -> state.setNextState(new GameState(windowSize, state.getInput()))));
         addUIComponent(new UIButton("OPTIONS", (state) -> ((MenuState)state).enterMenu(new UIOptionMenu(windowSize))));
         addUIComponent(new UIButton("EXIT", (state) -> System.exit(0)));
