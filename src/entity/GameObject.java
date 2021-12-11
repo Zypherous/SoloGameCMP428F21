@@ -8,32 +8,42 @@ import display.Camera;
 import game.state.State;
 public abstract class GameObject {
 	protected Position position;
+	protected Position renderOffset;
+	protected Position collisionBoxOffset;
 	protected Size size;
-	protected Rect rect;
+//	protected Rect rect;
 	protected static int ID = 0;
 	protected int thisID;
 	protected Camera camera;
 	protected boolean dead;
 	protected GameObject parent;
-	protected Position renderOffset;
+	protected int renderOrder;
 	
-	public GameObject(Camera camera) {
-		this.camera = camera;
+	public GameObject() {
 		position = new Position(0, 0);
-		renderOffset = new Position(0,0);
 		size = new Size (64, 64);
+		renderOffset = new Position(0,0);
+		collisionBoxOffset = new Position(0,0);
+		
+		
 		this.thisID = ID;
 		this.dead = false;
-		this.rect = new Rect((int)this.getRenderPosition(camera).getX(),(int)this.getRenderPosition(camera).getY(),this.size.getWidth(),this.size.getHeight());
+//		this.rect = new Rect((int)this.getRenderPosition(camera).getX(),(int)this.getRenderPosition(camera).getY(),this.size.getWidth(),this.size.getHeight());
 		ID++;
+		renderOrder = 5;
 	}
-	public  boolean collidesWith(GameObject other) {
-		return getCollider().collidesWith(other.getCollider());
-	}
+	
+	
 	public abstract void update(State state);
 	public abstract Image getSprite();
-	public abstract CollisionBox getCollider();
-	public abstract CollisionBox getCurrentCollider();
+	public abstract CollisionBox getCollisionBox();
+//	public abstract CollisionBox getCurrentCollider();
+	
+	public  boolean collidesWith(GameObject other) {
+		return getCollisionBox().collidesWith(other.getCollisionBox());
+		
+		
+	}
 	public Position getPosition() {
 		Position finalPosition = Position.copyOf(position);
 		
@@ -60,18 +70,7 @@ public abstract class GameObject {
 	public void setSize(Size size) {
 		this.size = size;
 	}
-	public Rect getRect() {
-		return rect;
-	}
-	public void setRect(Rect rect) {
-		this.rect = rect;
-	}
-	public Camera getCamera() {
-		return camera;
-	}
-	public void setCamera(Camera camera) {
-		this.camera = camera;
-	}
+	
 
 	public int getID() {
 		return this.thisID;
@@ -79,8 +78,15 @@ public abstract class GameObject {
 	
 	public Position getRenderPosition(Camera camera) {
 		 return new Position(
-				 getPosition().getX() - camera.getPosition().getX(),
-				 getPosition().getY() - camera.getPosition().getY()
+				 getPosition().getX() - camera.getPosition().getX() - renderOffset.getX(),
+				 getPosition().getY() - camera.getPosition().getY()- renderOffset.getY()
 				 );
+	}
+	public int getRenderOrder() {
+		return renderOrder;
+	}
+	
+	public void clearParent() {
+		parent = null;
 	}
 }

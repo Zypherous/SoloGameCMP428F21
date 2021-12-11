@@ -1,66 +1,51 @@
 package entity;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.image.BufferedImage;
-
 import core.CollisionBox;
+import core.Position;
 import core.Size;
-import display.Camera;
 import game.state.State;
 import gfx.ImageUtils;
-import java.awt.Graphics;
+
+import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public class SelectionCircle extends GameObject {
-	
-	private Color color;
-	private BufferedImage sprite;
 
-	public SelectionCircle(Camera camera) {
-		super(camera);
-		color = Color.ORANGE;
-		this.size = new Size(32, 16);
-		initializeSprite();
-	}
+    private Color color;
+    private BufferedImage sprite;
 
-	private void initializeSprite() {
-		sprite =  (BufferedImage) ImageUtils.createCompatibleImage(size, ImageUtils.ALPHA_BIT_MASKED);
-		Graphics2D graphics = sprite.createGraphics();
-		
-		graphics.setColor(color);
-		graphics.fillOval(0, 0, size.getWidth(), size.getHeight());
-		graphics.dispose();
-	}
+    public SelectionCircle() {
+        color = Color.ORANGE;
+        size = new Size(32, 16);
+        renderOffset = new Position(size.getWidth() / 2, size.getHeight());
+        collisionBoxOffset = renderOffset;
+        renderOrder = 4;
+        initializeSprite();
+    }
 
-	@Override
-	public void update(State state) {
-		// TODO Auto-generated method stub
-		
-	}
+    private void initializeSprite() {
+        sprite = (BufferedImage) ImageUtils.createCompatibleImage(size, ImageUtils.ALPHA_BIT_MASKED);
+        Graphics2D graphics = sprite.createGraphics();
 
-	@Override
-	public Image getSprite() {
-		// TODO Auto-generated method stub
-		return sprite;
-	}
+        graphics.setColor(color);
+        graphics.fillOval(0, 0, size.getWidth(), size.getHeight());
 
-	@Override
-	public CollisionBox getCollider() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+        graphics.dispose();
+    }
 
-	@Override
-	public boolean collidesWith(GameObject other) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+    @Override
+    public void update(State state) {}
 
-	@Override
-	public CollisionBox getCurrentCollider() {
-		// TODO Auto-generated method stub
-		return CollisionBox.of(getPosition(), getSize());
-	}
-	
+    @Override
+    public Image getSprite() {
+        return parent != null ? sprite : null;
+    }
+
+    @Override
+    public CollisionBox getCollisionBox() {
+        Position position = getPosition();
+        position.subtract(collisionBoxOffset);
+
+        return CollisionBox.of(position, getSize());
+    }
 }

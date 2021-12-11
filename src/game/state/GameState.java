@@ -29,7 +29,8 @@ public class GameState extends State {
     }
     
     private void initializeCharacters() {
-        Player player = new Player(new PlayerController(input), spriteLibrary, this.getCamera(),  new Size(128,128));
+    	SelectionCircle sc = new SelectionCircle();
+        Player player = new Player(new PlayerController(input), spriteLibrary,  new Size(64,64), sc);
         initializeNPCs(100);
         
 //        List<GameObject> listOf = new ArrayList<>();
@@ -37,7 +38,6 @@ public class GameState extends State {
         gameObjects.add(player);
         camera.focusOn(player);
 
-        SelectionCircle sc = new SelectionCircle(this.camera);
         sc.setParent(player);
         gameObjects.add(sc);
         play = player;     
@@ -63,7 +63,7 @@ public class GameState extends State {
 
 	private void initializeNPCs(int numberOfNPCs){
     	for(int i = 0; i < numberOfNPCs; i++) {
-    		NPC npc = new NPC(new NPCController(), spriteLibrary, camera);
+    		NPC npc = new NPC(new NPCController(), spriteLibrary);
     		npc.setPosition(gameMap.getRandomPosition());
     		npc.addEffect(new Sick());
     		gameObjects.add(npc);

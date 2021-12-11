@@ -12,7 +12,6 @@ public class Rect
 	private int x;
 	private int y;
 	
-	private Camera camera;
 	
 	int w;
 	int h;
@@ -20,7 +19,7 @@ public class Rect
 	private int velx;
 	int vely;
 	
-	Color color = Color.LIGHT_GRAY;
+	Color color = Color.RED;
 	
 	public Rect(int x, int y, int w, int h)
 	{
@@ -36,7 +35,6 @@ public class Rect
 	
 	public Rect(int x, int y, int w, int h, int velx, int vely, Camera camera)
 	{
-		this.camera = camera;
 		this.setX(x - (int)camera.getPosition().getX());
 		this.setY(y - (int)camera.getPosition().getY());
 		
@@ -106,6 +104,13 @@ public class Rect
 			   (getY() + h >= r.getY()      ) &&
 			   (getY()     <= r.getY() + r.h);
 	}
+	public boolean overlaps(GameObject gameObject)
+	{
+		return (getX() + w >= (int)gameObject.getPosition().getX()) &&
+			   (getX()     <= (int)gameObject.getPosition().getX() + (int)gameObject.getSize().getWidth()) &&
+			   (getY() + h >= (int)gameObject.getPosition().getY()      ) &&
+			   (getY()     <= (int)gameObject.getPosition().getY() + (int)gameObject.getSize().getHeight());
+	}
 	
 	public boolean contains(int mx, int my)
 	{
@@ -121,11 +126,11 @@ public class Rect
 	}
 	
 	
-	public void draw(Graphics pen)
+	public void draw(Graphics pen, Color color, Camera camera)
 	{
 		pen.setColor(color);
 		
-		pen.drawRect(getX() - (int)camera.getPosition().getX(), getY() - (int)camera.getPosition().getY(), w, h);
+		pen.drawRect(getX()- (int)camera.getPosition().getX(), getY()-(int)camera.getPosition().getY() , w, h);
 	}
 
 	public int getX() {
