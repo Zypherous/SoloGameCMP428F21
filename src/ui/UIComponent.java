@@ -13,8 +13,11 @@ public abstract class UIComponent {
     protected Size size;
     protected Spacing margin;
     protected Spacing padding;
+    
+    protected UIContainer parent;
 
-    public UIComponent() {
+
+	public UIComponent() {
         relativePosition = new Position(0, 0);
         absolutePosition = new Position(0, 0);
         size = new Size(1, 1);
@@ -64,4 +67,8 @@ public abstract class UIComponent {
     public void setAbsolutePosition(Position absolutePosition) {
         this.absolutePosition = absolutePosition;
     }
+    
+    public void setParent(UIContainer parent) {
+		this.parent = parent;
+	}
 }

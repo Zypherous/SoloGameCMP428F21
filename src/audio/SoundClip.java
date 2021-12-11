@@ -2,18 +2,15 @@ package audio;
 
 import javax.sound.sampled.Clip;
 
-import game.settings.GameSettings;
+import game.settings.AudioSettings;
 
-public class SoundClip extends AudioClip{
+public class SoundClip extends AudioClip {
+    public SoundClip(Clip clip) {
+        super(clip);
+    }
 
-	public SoundClip(Clip clip) {
-		super(clip);
-		// TODO Auto-generated constructor stub
-	}
-
-	@Override
-	protected float getSoundVolume(GameSettings gameSettings) {
-		return gameSettings.getSoundVolume();
-	}
-
+    @Override
+    protected float getVolume(AudioSettings audioSettings) {
+        return audioSettings.getSoundVolume();
+    }
 }

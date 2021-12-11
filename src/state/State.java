@@ -15,6 +15,7 @@ import entity.Player;
 import entity.Rect;
 import game.Game;
 import game.Time;
+import game.settings.GameSettings;
 import gfx.SpriteLibrary;
 import input.Input;
 import map.GameMap;
@@ -23,6 +24,7 @@ import ui.UIContainer;
 public abstract class State {
 
 	// Gives option to pan around with a camera if you want.
+	protected GameSettings gameSettings;
 	protected AudioPlayer audioPlayer;
     protected GameMap gameMap;
     protected List<GameObject> gameObjects;
@@ -40,10 +42,11 @@ public abstract class State {
     private Rect rect[];
     private int health = 100;
 
-    public State(Size windowSize, Input input) {
+    public State(Size windowSize, Input input, GameSettings gameSettings) {
     	this.windowSize = windowSize;
         this.input = input;
-        audioPlayer = new AudioPlayer();
+        this.gameSettings = gameSettings;
+        audioPlayer = new AudioPlayer(gameSettings.getAudioSettings());
         gameObjects = new ArrayList<>();
         uiContainers = new ArrayList<>();
         spriteLibrary = new SpriteLibrary();
@@ -58,6 +61,7 @@ public abstract class State {
 	
 
 	public void update(Game game) {
+		audioPlayer.update(gameSettings.getAudioSettings());
 		time.update();
     	sortObjectsByPosition();
     	updateGameObjects();
@@ -162,6 +166,13 @@ public abstract class State {
 	public void setNextState(State nextState) {
         this.nextState = nextState;
     }
+
+
+
+
+	public GameSettings getGameSettings() {
+		return gameSettings;
+	}
 	
 }
 	

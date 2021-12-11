@@ -11,46 +11,56 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
+import game.settings.AudioSettings;
 import game.settings.GameSettings;
 
 public class AudioPlayer {
-	private List<AudioClip> audioClips;
 
-    public AudioPlayer() {
+    private List<AudioClip> audioClips;
+    private AudioSettings audioSettings;
+
+    public AudioPlayer(AudioSettings audioSettings) {
+    	this.audioSettings = audioSettings;
         audioClips = new ArrayList<>();
     }
-    
-    public void update(GameSettings gameSettings) {
-    	audioClips.forEach(audioClip -> audioClip.update(gameSettings));
-    	
-    	List.copyOf(audioClips).forEach(audioClip -> {
-    		if(audioClip.hasFinishedPlaying()) {
-    			audioClip.cleanUp();
-    			audioClips.remove(audioClip);
-    		}
-    	});
+
+    public void update(AudioSettings audioSettings) {
+        audioClips.forEach(audioClip -> audioClip.update(audioSettings));
+
+        List.copyOf(audioClips).forEach(audioClip -> {
+            if(audioClip.hasFinishedPlaying()) {
+                audioClip.cleanUp();
+                audioClips.remove(audioClip);
+            }
+        });
     }
-    
+
     public void playMusic(String fileName) {
-    	final Clip clip = getClip(fileName);
-    	audioClips.add(new MusicClip(clip));
+        final Clip clip = getClip(fileName);
+        MusicClip musicClip = new MusicClip(clip);
+        musicClip.setVolume(audioSettings);
+		audioClips.add(musicClip);
     }
+
     public void playSound(String fileName) {
-    	final Clip clip = getClip(fileName);
-    	audioClips.add(new SoundClip(clip));
+        final Clip clip = getClip(fileName);
+        SoundClip soundClip = new SoundClip(clip);
+        soundClip.setVolume(audioSettings);
+		audioClips.add(soundClip);
     }
-    
-    private Clip getClip(String fileName)   {
-    	final URL soundFile = AudioPlayer.class.getResource("/sounds/" + fileName);
-    	try(AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(soundFile)){
-    		final Clip clip = AudioSystem.getClip();
-    		clip.open(audioInputStream);
-    		clip.setMicrosecondPosition(0);
-    		return clip;
-    	}
-    	catch(UnsupportedAudioFileException | IOException | LineUnavailableException e) {
-    		System.out.println(e);
-    	}
-    	return null;
+
+    private Clip getClip(String fileName) {
+        final URL soundFile = AudioPlayer.class.getResource("/sounds/" + fileName);
+        try(AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(soundFile)) {
+            final Clip clip = AudioSystem.getClip();
+            clip.open(audioInputStream);
+            clip.setMicrosecondPosition(0);
+            return clip;
+
+        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+            System.out.println(e);
+        }
+
+        return null;
     }
 }
