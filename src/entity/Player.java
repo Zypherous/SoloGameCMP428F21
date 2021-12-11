@@ -12,9 +12,9 @@ import entity.humanoid.effect.Caffeinated;
 import entity.humanoid.effect.Giant;
 import entity.humanoid.effect.Isolated;
 import game.Game;
-import game.state.State;
 import gfx.AnimationManager;
 import gfx.SpriteLibrary;
+import state.State;
 
 
 

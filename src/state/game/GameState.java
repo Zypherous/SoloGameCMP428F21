@@ -1,7 +1,6 @@
-package game.state;
+package state.game;
 
 import java.awt.Color;
-import java.util.ArrayList;
 import java.util.List;
 
 import controller.NPCController;
@@ -11,18 +10,21 @@ import core.Size;
 import entity.NPC;
 import entity.Player;
 import entity.SelectionCircle;
-import entity.humanoid.Humanoid;
 import entity.humanoid.effect.Isolated;
 import entity.humanoid.effect.Sick;
-import game.ui.UIGameTime;
-import game.ui.UISicknessStatistics;
+import game.Game;
 import input.Input;
 import map.GameMap;
+import state.State;
+import state.game.ui.UIGameTime;
+import state.game.ui.UISicknessStatistics;
+import state.menu.MenuState;
 import ui.Alignment;
 import ui.Spacing;
 import ui.UIContainer;
 import ui.UIText;
 import ui.VerticalContainer;
+import ui.clickable.UIButton;
 
 public class GameState extends State {
 
@@ -58,7 +60,7 @@ public class GameState extends State {
         sc.parent(player);
         gameObjects.add(sc);
         play = player;     
-        makeNumberOfNPCsSick(10);
+        makeNumberOfNPCsSick(0);
     }
     
     // Intialization of UI with spacing and positions etc
@@ -90,8 +92,8 @@ public class GameState extends State {
     }
 	
 	@Override
-	public void update() {
-		super.update();
+	public void update(Game game) {
+		super.update(game);
 		
 		if(playing) {
 			if(victoryConditions.stream().allMatch(Condition::isMet)) {
@@ -107,7 +109,7 @@ public class GameState extends State {
 	private void lose() {
 		playing = false;
 
-        VerticalContainer loseContainer = new VerticalContainer(camera.getSize());
+        VerticalContainer loseContainer = new VerticalContainer(camera.getWindowSize());
         loseContainer.setAlignment(new Alignment(Alignment.Position.CENTER, Alignment.Position.CENTER));
         loseContainer.addUIComponent(new UIText("DEFEAT"));
         uiContainers.add(loseContainer);
@@ -116,9 +118,12 @@ public class GameState extends State {
 	private void win() {
 		playing = false;
 
-        VerticalContainer winContainer = new VerticalContainer(camera.getSize());
+        VerticalContainer winContainer = new VerticalContainer(camera.getWindowSize());
         winContainer.setAlignment(new Alignment(Alignment.Position.CENTER, Alignment.Position.CENTER));
-        winContainer.addUIComponent(new UIText("VICTORY"));
+        winContainer.setBackgroundColor(Color.DARK_GRAY);
+        winContainer.addUIComponent(new UIButton("Menu", (state) -> state.setNextState(new MenuState(windowSize, input))));
+        winContainer.addUIComponent(new UIButton("Options", (state) -> state.setNextState(new MenuState(windowSize, input))));
+        winContainer.addUIComponent(new UIButton("Exit", (state) -> System.exit(0)));
         uiContainers.add(winContainer);
 	}
 

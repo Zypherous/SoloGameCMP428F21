@@ -4,8 +4,8 @@ import java.awt.image.BufferStrategy;
 import javax.swing.*;
 
 import game.Game;
-import game.state.State;
 import input.Input;
+import state.State;
 
 
 public class Display extends JFrame {
@@ -26,6 +26,8 @@ public class Display extends JFrame {
 		canvas = new Canvas();
 		canvas.setPreferredSize(new Dimension(width, height));
 		canvas.setFocusable(false);
+		canvas.addMouseListener(input);
+		canvas.addMouseMotionListener(input);
 		
 		add(canvas);
 		addKeyListener(input);
@@ -47,16 +49,13 @@ public class Display extends JFrame {
 		Font font = new Font("Serif", Font.PLAIN, 32);
 		
 		graphics.setFont(font);
-		graphics.setColor(Color.LIGHT_GRAY);
+		graphics.setColor(Color.BLACK);
 		graphics.fillRect(0,0, canvas.getWidth(),canvas.getHeight());
 		
 		renderer.render(state, graphics );
 		if(debug) {
 			debugRenderer.render(state, graphics);
 		}
-		graphics.setColor(Color.GREEN);		
-		graphics.drawString(String.format("Health: %d", state.getHealth()), 64*4, 64);
-		
 		
 		// Free Memory
 		graphics.dispose();

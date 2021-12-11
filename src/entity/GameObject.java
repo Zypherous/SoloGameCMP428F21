@@ -5,7 +5,7 @@ import core.CollisionBox;
 import core.Position;
 import core.Size;
 import display.Camera;
-import game.state.State;
+import state.State;
 public abstract class GameObject {
 	protected Position position;
 	protected Position renderOffset;

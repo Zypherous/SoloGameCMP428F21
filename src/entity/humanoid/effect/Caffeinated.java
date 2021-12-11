@@ -2,7 +2,7 @@ package entity.humanoid.effect;
 
 import entity.humanoid.Humanoid;
 import game.GameLoop;
-import game.state.State;
+import state.State;
 
 public class Caffeinated extends Effect {
 

@@ -89,7 +89,7 @@ public class GameLoop implements Runnable{
 //			System.out.println(String.format("Loop Line 89 ==> Camera x: %d, y: %d", 
 //					(int)game.getState().getCamera().getPosition().getX(), 
 //					(int)game.getState().getCamera().getPosition().getY()));
-			game.getState().getPlayer().playerLoc();
+//			game.getState().getPlayer().playerLoc();
 			ups = 0;
 			nextConsoleLog = System.currentTimeMillis() + 1000;
 		}

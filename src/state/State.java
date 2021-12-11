@@ -1,4 +1,4 @@
-package game.state;
+package state;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -12,6 +12,7 @@ import display.Camera;
 import entity.GameObject;
 import entity.Player;
 import entity.Rect;
+import game.Game;
 import game.Time;
 import gfx.SpriteLibrary;
 import input.Input;
@@ -28,15 +29,17 @@ public abstract class State {
     protected Input input;
     protected Camera camera;
     protected Time time;
-    
+    protected Size windowSize;
 	private Random rand;
     
+	private State nextState;
     
     //Custom
     private Rect rect[];
     private int health = 100;
 
     public State(Size windowSize, Input input) {
+    	this.windowSize = windowSize;
         this.input = input;
         gameObjects = new ArrayList<>();
         uiContainers = new ArrayList<>();
@@ -46,19 +49,30 @@ public abstract class State {
         time = new Time();
         rect = new Rect[10];
         rand = new Random();
-		
     }
 
     
 	
 
-	public void update() {
+	public void update(Game game) {
 		time.update();
     	sortObjectsByPosition();
     	updateGameObjects();
-        uiContainers.forEach(uiContainer -> uiContainer.update(this));
+    	List.copyOf(uiContainers).forEach(uiContainer -> uiContainer.update(this));
         camera.update(this);
-//        
+        handleMouseInput();
+        if(nextState != null) {
+            game.enterState(nextState);
+        }
+    }
+	
+	private void handleMouseInput() {
+
+        if(input.isMouseClicked()) {
+            System.out.println(String.format("MOUSE CLICKED AT POSITION x:%d y:%d", input.getMousePosition().intX(), input.getMousePosition().intY()));
+        }
+
+        input.clearMouseClick();
     }
 	
 	private void updateGameObjects() {
@@ -134,7 +148,17 @@ public abstract class State {
 	public int getHealth() {
 		return health;
 	}
+
+
+
+
+	public Input getInput() {
+		return this.input;
+	}
 	
+	public void setNextState(State nextState) {
+        this.nextState = nextState;
+    }
 	
 }
 	

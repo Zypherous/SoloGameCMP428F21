@@ -2,13 +2,12 @@ package display;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.Toolkit;
 
 import core.Position;
 import game.Game;
-import game.state.State;
 import map.GameMap;
+import state.State;
+import state.game.GameState;
 
 public class Renderer {
 //	private Image testImage = Toolkit.getDefaultToolkit().getImage("C:\\Users\\Jonat\\soloGame\\Resources\\Image\\Dungeon Crawl Stone Soup Full\\monster\\cyclops_old.png");
@@ -21,12 +20,12 @@ public class Renderer {
 	}
 	
 	private void renderUI(State state, Graphics graphics) {
-		state.getUiContainers().forEach(uiContainer -> graphics.drawImage(
-					uiContainer.getSprite(),
-					(int)uiContainer.getPosition().getX(),
-					(int)uiContainer.getPosition().getY(),
-					null
-				));
+        state.getUiContainers().forEach(uiContainer -> graphics.drawImage(
+                uiContainer.getSprite(),
+                uiContainer.getRelativePosition().intX(),
+                uiContainer.getRelativePosition().intY(),
+                null
+        ));
 	}
 
 	private void renderGameObjects(State state, Graphics graphics) {
@@ -46,17 +45,19 @@ public class Renderer {
 				));
 		
 
-		graphics.setColor(Color.BLUE);
-		for(int row = 1; row < 10; row++) {
-			graphics.fillRect(64- (int)camera.getPosition().getX(), row*64- (int)camera.getPosition().getY(), 64, 64);
-		}
-		graphics.setColor(Color.RED);
-		for(int row = 1; row < 10; row++) {
-			graphics.drawRect(64 - (int)camera.getPosition().getX(), row*64- (int)camera.getPosition().getY(), 64 , 64);
-		}
-		graphics.setColor(Color.GREEN);
-		for(int row = 1; row < 10; row++) {
-			graphics.drawRect(64 + 16 - (int)camera.getPosition().getX(), row*64 + 16- (int)camera.getPosition().getY(), 32 , 32);
+		if(state instanceof GameState) {
+			graphics.setColor(Color.BLUE);
+			for(int row = 1; row < 10; row++) {
+				graphics.fillRect(64- (int)camera.getPosition().getX(), row*64- (int)camera.getPosition().getY(), 64, 64);
+			}
+			graphics.setColor(Color.RED);
+			for(int row = 1; row < 10; row++) {
+				graphics.drawRect(64 - (int)camera.getPosition().getX(), row*64- (int)camera.getPosition().getY(), 64 , 64);
+			}
+			graphics.setColor(Color.GREEN);
+			for(int row = 1; row < 10; row++) {
+				graphics.drawRect(64 + 16 - (int)camera.getPosition().getX(), row*64 + 16- (int)camera.getPosition().getY(), 32 , 32);
+			}
 		}
 	}
 

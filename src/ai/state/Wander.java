@@ -7,7 +7,7 @@ import ai.AITransition;
 import controller.NPCController;
 import core.Position;
 import entity.NPC;
-import game.state.State;
+import state.State;
 
 public class Wander  extends AIState {
     private List<Position> targets;
