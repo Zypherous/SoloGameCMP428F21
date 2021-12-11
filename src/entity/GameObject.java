@@ -101,4 +101,9 @@ public abstract class GameObject {
 		this.renderOrder = renderOrder;
 	}
 
+
+	public Position getCollisionBoxOffset() {
+		return collisionBoxOffset;
+	}
+
 }

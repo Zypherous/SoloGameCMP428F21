@@ -1,7 +1,9 @@
 package entity;
 
 import controller.NPCController;
+import core.Direction;
 import core.Position;
+import core.Vector2D;
 import gfx.AnimationManager;
 import gfx.SpriteLibrary;
 import gfx.SpriteSheet;
@@ -9,6 +11,7 @@ import gfx.SpriteSheet;
 public class Bubble extends MovingEntity {
 
     private NPCController controller;
+    private boolean halted;
 
     public Bubble(NPCController npcController, SpriteLibrary spriteLibrary) {
         super(npcController, spriteLibrary);
@@ -24,7 +27,12 @@ public class Bubble extends MovingEntity {
 
     @Override
     protected void handleMovement() {
-        movement.update(controller);
+    	if(!halted) {
+    		movement.add(new Vector2D(0,-0.5 ));
+    		// Since only one row in the sprite sheet
+    	}
+    	setHalted(false);
+    	direction = Direction.S;
     }
 
     @Override
@@ -35,6 +43,15 @@ public class Bubble extends MovingEntity {
     public void insert(GameObject gameObject) {
         this.position = gameObject.getPosition();
         this.renderOffset = gameObject.getRenderOffset();
+        this.collisionBoxOffset = this.renderOffset;
         gameObject.parent(this);
     }
+
+	public boolean isHalted() {
+		return halted;
+	}
+
+	public void setHalted(boolean halted) {
+		this.halted = halted;
+	}
 }
