@@ -90,43 +90,11 @@ public abstract class State {
 		this.time = time;
 	}
 
-    
-    // Custom 
-    public Rect []getRectArr() {
-		return this.rect;
-	}
-	public Rect getRect(int i) {
-		return rect[i];
-	}
-	
-	public int getHealth() {
-		return this.health;
-	}
-	
-	public Rect[] getRect() {
-		return rect;
-	}
-
-	public void setRect(Rect[] rect) {
-		this.rect = rect;
-	}
-
-	public Random getRand() {
-		return rand;
-	}
-
-	public void setRand(Random rand) {
-		this.rand = rand;
-	}
-
-
 	public void setHealth(int health) {
 		this.health = health;
 	}
 
-
 	public abstract Player getPlayer();
-
 
 	public List<GameObject> getCollidingGameObjects(GameObject gameObject) {
 		return gameObjects.stream()
@@ -134,26 +102,13 @@ public abstract class State {
 				.collect(Collectors.toList());
 	}
 	
-//	public Player getPlayer(List<GameObject> gameObjects) {
-//		return (Player)(gameObjects.stream().filter(gameObject -> (gameObject.getID() == 0)));
-//	}
-
-
-	public void handleDead() {
-		
-	}
-	
 	public List<UIContainer> getUiContainers() {
 		return uiContainers;
 	}
 
-
 	public void setUiContainers(List<UIContainer> uiContainers) {
 		this.uiContainers = uiContainers;
 	}
-
-
-
 
 	public <T extends GameObject> List<T> getGameObjectsOfClass(Class<T> clazz) {
         return gameObjects.stream()
@@ -162,6 +117,10 @@ public abstract class State {
                 .collect(Collectors.toList());
     }
 
+	public SpriteLibrary getSpriteLibrary() {
+		return spriteLibrary;
+	}
+
 	
 	
 	
@@ -172,19 +131,22 @@ public abstract class State {
 	
 	
 	
-	// CYCLOPS RECTS IN INITIALIZE AREA DONT USE
+}
+	
+
+// CYCLOPS RECTS IN INITIALIZE AREA DONT USE
 //	for(int i = 0; i < rect.length;i++) {
 //		rect[i] = new Rect(1200 - (int) Math.abs(camera.getPosition().getX()), 
 //				((rand.nextInt(9)+1) * 64 ) + (int) Math.abs(camera.getPosition().getY()),
 //				64, 64, rand.nextInt(5)+5, 0, camera);
 //	}
-	
-	
-	
-	
-	
-	
-	//CYCLOPS ARMY MOVEMENT CODE DO NOT USE
+
+
+
+
+
+
+//CYCLOPS ARMY MOVEMENT CODE DO NOT USE
 //	for(int i = 0; i < rect.length; i++) {
 //		rect[i].moveLeft(rect[i].getVelx());
 //		if(rect[i].getX() <= 64 ) {		
@@ -196,5 +158,3 @@ public abstract class State {
 //		}
 //		camera.update(this);
 //	}
-}
-	

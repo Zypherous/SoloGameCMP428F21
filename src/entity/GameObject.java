@@ -95,4 +95,9 @@ public abstract class GameObject {
 		return renderOffset;
 	}
 
+
+	public void setRenderOrder(int renderOrder) {
+		this.renderOrder = renderOrder;
+	}
+
 }
