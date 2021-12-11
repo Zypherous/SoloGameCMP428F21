@@ -7,6 +7,7 @@ import game.state.State;
 
 public class Sick extends Effect {
 
+	// Every 1/10th of a second
     private static final double COUGH_RATE = 1d / GameLoop.UPDATES_PER_SECOND / 10;
 
     public Sick() {

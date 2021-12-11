@@ -82,5 +82,11 @@ public class Movement {
 		
 		return direction;
 	}
+
+
+
+	public void add(Vector2D vector) {
+		this.vector.add(vector);
+	}
 }
 
