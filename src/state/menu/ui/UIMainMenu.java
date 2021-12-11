@@ -1,6 +1,7 @@
 package state.menu.ui;
 
 import core.Size;
+import state.editor.EditorState;
 import state.game.GameState;
 import state.menu.MenuState;
 import ui.Alignment;
@@ -16,6 +17,7 @@ public class UIMainMenu extends VerticalContainer {
         addUIComponent(new UIText("MollysWorld"));
         addUIComponent(new UIButton("PLAY", (state) -> state.setNextState(new GameState(windowSize, state.getInput(), state.getGameSettings()))));
         addUIComponent(new UIButton("OPTIONS", (state) -> ((MenuState)state).enterMenu(new UIOptionMenu(windowSize, state.getGameSettings()))));
+        addUIComponent(new UIButton("EDITOR", (state) -> state.setNextState(new EditorState(windowSize, state.getInput(), state.getGameSettings()))));
         addUIComponent(new UIButton("EXIT", (state) -> System.exit(0)));
     }
 }

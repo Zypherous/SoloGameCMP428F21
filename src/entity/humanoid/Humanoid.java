@@ -18,7 +18,7 @@ import state.State;
 
 public class Humanoid extends MovingEntity {
     protected List<Effect> effects;
-    private static List<String> availableCharacters = new ArrayList<>(List.of("dave", "matt", "melissa", "roger"));
+    private static List<String> availableCharacters = new ArrayList<>(List.of( "matt", "melissa", "roger"));
     protected Optional<Action> action;
 
     public Humanoid(EntityController entityController, SpriteLibrary spriteLibrary) {

@@ -45,20 +45,7 @@ public class Renderer {
 				));
 		
 
-		if(state instanceof GameState) {
-			graphics.setColor(Color.BLUE);
-			for(int row = 1; row < 10; row++) {
-				graphics.fillRect(64- (int)camera.getPosition().getX(), row*64- (int)camera.getPosition().getY(), 64, 64);
-			}
-			graphics.setColor(Color.RED);
-			for(int row = 1; row < 10; row++) {
-				graphics.drawRect(64 - (int)camera.getPosition().getX(), row*64- (int)camera.getPosition().getY(), 64 , 64);
-			}
-			graphics.setColor(Color.GREEN);
-			for(int row = 1; row < 10; row++) {
-				graphics.drawRect(64 + 16 - (int)camera.getPosition().getX(), row*64 + 16- (int)camera.getPosition().getY(), 32 , 32);
-			}
-		}
+		
 	}
 
 	private void renderMap(State state, Graphics graphics) {
@@ -78,15 +65,41 @@ public class Renderer {
 						Game.SPRITE_SIZE,
 						null
 						);
+				if(state.getGameSettings().getRenderSettings().getShouldRenderGrid().getValue()) {
+				graphics.setColor(Color.BLACK);
+				graphics.drawRect(
+						x * Game.SPRITE_SIZE - (int)state.getCamera().getPosition().getX(),
+						y * Game.SPRITE_SIZE - (int)state.getCamera().getPosition().getY(),
+						Game.SPRITE_SIZE,
+						Game.SPRITE_SIZE
+						);
+				}
 			}
 		}
 		
 	}
 	
+	
+	
 }
 
 
+//BLUE SQUARES TEST
 
+//if(state instanceof GameState) {
+//	graphics.setColor(Color.BLUE);
+//	for(int row = 1; row < 10; row++) {
+//		graphics.fillRect(64- (int)camera.getPosition().getX(), row*64- (int)camera.getPosition().getY(), 64, 64);
+//	}
+//	graphics.setColor(Color.RED);
+//	for(int row = 1; row < 10; row++) {
+//		graphics.drawRect(64 - (int)camera.getPosition().getX(), row*64- (int)camera.getPosition().getY(), 64 , 64);
+//	}
+//	graphics.setColor(Color.GREEN);
+//	for(int row = 1; row < 10; row++) {
+//		graphics.drawRect(64 + 16 - (int)camera.getPosition().getX(), row*64 + 16- (int)camera.getPosition().getY(), 32 , 32);
+//	}
+//}
 
 //This is for the pink Sprite Background/*,Canvas canvas*/
 
