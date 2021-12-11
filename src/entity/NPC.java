@@ -12,7 +12,7 @@ public class NPC extends Humanoid {
 
     public NPC(EntityController entityController, SpriteLibrary spriteLibrary) {
         super(entityController, spriteLibrary);
-        animationManager = new AnimationManager(spriteLibrary.getSpriteSheet("matt"));
+        
         aiManager = new AIManager();
     }
 

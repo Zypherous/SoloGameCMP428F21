@@ -33,8 +33,8 @@ public class Game {
 		
 		display = new Display(width, height, input);
 		
-		state = new MenuState(new Size(width, height), input);
 		settings = new GameSettings(false);
+		state = new MenuState(new Size(width, height), input, settings);
 		gameController = new GameController(input);
 		
 	}
@@ -61,6 +61,7 @@ public class Game {
 	}
 
 	public void enterState(State nextState) {
+		state.cleanUp();
         state = nextState;
     }
 

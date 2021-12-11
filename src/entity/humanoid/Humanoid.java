@@ -1,5 +1,10 @@
 package entity.humanoid;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+
 import controller.EntityController;
 import core.Position;
 import core.Size;
@@ -7,15 +12,13 @@ import entity.GameObject;
 import entity.MovingEntity;
 import entity.humanoid.action.Action;
 import entity.humanoid.effect.Effect;
+import gfx.AnimationManager;
 import gfx.SpriteLibrary;
 import state.State;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
 public class Humanoid extends MovingEntity {
     protected List<Effect> effects;
+    private static List<String> availableCharacters = new ArrayList<>(List.of("dave", "matt", "melissa", "roger"));
     protected Optional<Action> action;
 
     public Humanoid(EntityController entityController, SpriteLibrary spriteLibrary) {
@@ -23,6 +26,9 @@ public class Humanoid extends MovingEntity {
 
         effects = new ArrayList<>();
         action = Optional.empty();
+        
+        this.animationManager = new AnimationManager(spriteLibrary.getSpriteSheet(getRandomCharacter()));
+
 
         this.collisionBoxSize = new Size(16, 28);
         this.renderOffset = new Position(size.getWidth() / 2, size.getHeight() - 12);
@@ -60,9 +66,10 @@ public class Humanoid extends MovingEntity {
     }
 
     private void handleAction(State state) {
-        if(action.isPresent()) {
-            action.get().update(state, this);
-        }
+    	action.ifPresent(value -> {
+            value.update(state, this);
+            value.playSound(state.getAudioPlayer());
+        });
     }
 
     protected void handleMovement() {
@@ -97,4 +104,10 @@ public class Humanoid extends MovingEntity {
 	public List<Effect> getEffects() {
 		return effects;
 	}
+	
+	private String getRandomCharacter() {
+        Collections.shuffle(availableCharacters);
+        return availableCharacters.get(0);
+    }
+	
 }
