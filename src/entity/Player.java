@@ -10,7 +10,7 @@ import entity.humanoid.Humanoid;
 import entity.humanoid.action.BlowBubble;
 import entity.humanoid.effect.Caffeinated;
 import entity.humanoid.effect.Giant;
-import entity.humanoid.effect.Untargetable;
+import entity.humanoid.effect.Isolated;
 import game.Game;
 import game.state.State;
 import gfx.AnimationManager;
@@ -70,7 +70,7 @@ public class Player extends Humanoid{
         return state.getGameObjectsOfClass(NPC.class).stream()
                 .filter(npc -> getPosition().distanceTo(npc.getPosition()) < targetRange)
                 .filter(npc -> isFacing(npc.getPosition()))
-                .filter(npc -> !npc.isAffectedBy(Untargetable.class))
+                .filter(npc -> !npc.isAffectedBy(Isolated.class))
                 .min(Comparator.comparingDouble(npc -> position.distanceTo(npc.getPosition())));
     }
 	public void playerLoc() {
