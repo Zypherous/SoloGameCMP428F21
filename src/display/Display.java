@@ -16,7 +16,7 @@ public class Display extends JFrame {
 	private DebugRenderer debugRenderer;
 	
 	public Display(int width, int height, Input input) {
-		setTitle("Tower Defense F21");
+		setTitle("Molly's Worlds");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setResizable(false);
 		
@@ -50,19 +50,11 @@ public class Display extends JFrame {
 		graphics.setColor(Color.LIGHT_GRAY);
 		graphics.fillRect(0,0, canvas.getWidth(),canvas.getHeight());
 		
-		renderer.render(state, graphics /*, canvas*/);
+		renderer.render(state, graphics );
 		if(debug) {
 			debugRenderer.render(state, graphics);
 		}
-		graphics.setColor(Color.GREEN);
-//		graphics.fillRect(  rect.x + 5,
-//							rect.y + 5,
-//							rect.h - 10,
-//							rect.w - 10);
-		
-
-		
-		
+		graphics.setColor(Color.GREEN);		
 		graphics.drawString(String.format("Health: %d", state.getHealth()), 64*4, 64);
 		
 		

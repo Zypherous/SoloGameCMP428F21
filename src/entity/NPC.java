@@ -1,42 +1,33 @@
 package entity;
 
-import java.awt.Image;
-
 import ai.AIManager;
 import controller.EntityController;
-import core.Size;
-import display.Camera;
-import entity.action.Cough;
+import entity.humanoid.Humanoid;
 import game.state.State;
 import gfx.AnimationManager;
 import gfx.SpriteLibrary;
 
-public class NPC extends MovingEntity {
-	private AIManager aiManager;
-	
-    public NPC(EntityController controller, SpriteLibrary spriteLibrary, Camera camera) {
-        super(controller, spriteLibrary, camera);
-        this.setRect(new Rect(
-        		(int)this.getPosition().getX(),
-        		(int)this.getPosition().getY(),
-        		(int)this.getSize().getWidth(),
-        		(int)this.getSize().getHeight()));
-        animationManager = new AnimationManager(spriteLibrary.getUnit("matt"));
+public class NPC extends Humanoid {
+    private AIManager aiManager;
+
+    public NPC(EntityController entityController, SpriteLibrary spriteLibrary) {
+        super(entityController, spriteLibrary);
+        animationManager = new AnimationManager(spriteLibrary.getSpriteSheet("matt"));
         aiManager = new AIManager();
     }
+
     @Override
     public void update(State state) {
-    	super.update(state);
-    	
-    	aiManager.update(state, this);
+        super.update(state);
+        aiManager.update(state, this);
     }
-	@Override
-	protected void handleCollision(GameObject other) {
-		if(other instanceof Player) {
-			movement.stop(willCollideX(other), willCollideY(other));
-			this.dead = true;
-		}
-	}
 
+    @Override
+    protected void handleCollision(GameObject other) {
+        if(other instanceof Player) {
+            movement.stop(willCollideX(other), willCollideY(other));
+        }
+    }
+    
+    
 }
-	

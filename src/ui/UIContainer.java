@@ -1,71 +1,63 @@
- package ui;
-
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.Image;
-import java.util.List;
-import java.awt.image.BufferedImage;
-import java.util.ArrayList;
+package ui;
 
 import core.Position;
 import core.Size;
 import game.state.State;
 import gfx.ImageUtils;
 
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.List;
+
 public abstract class UIContainer extends UIComponent {
 
-    private Color backgroundColor;
-    
+    protected Color backgroundColor;
+
     protected Alignment alignment;
     protected Size windowSize;
-    
+
     protected List<UIComponent> children;
-    
+
     public UIContainer(Size windowSize) {
         super();
         this.windowSize = windowSize;
-        alignment = new Alignment(Alignment.Position.CENTER, Alignment.Position.START);
+        alignment = new Alignment(Alignment.Position.START, Alignment.Position.START);
         backgroundColor = new Color(0, 0, 0, 0);
-        margin = new Spacing(15);
+        margin = new Spacing(5);
         padding = new Spacing(5);
         children = new ArrayList<>();
         calculateSize();
         calculatePosition();
     }
-    
+
     protected abstract Size calculateContentSize();
     protected abstract void calculateContentPosition();
 
     private void calculateSize() {
-    	Size calculatedContentSize = calculateContentSize();
+        Size calculatedContentSize = calculateContentSize();
         size = new Size(
-	        		padding.getHorizontal() + calculatedContentSize.getWidth(), 
-	        		padding.getVertical() + calculatedContentSize.getHeight()
-        		);
+                padding.getHorizontal() + calculatedContentSize.getWidth(),
+                padding.getVertical() + calculatedContentSize.getHeight());
     }
 
     private void calculatePosition() {
-    	
-    	int x = padding.getLeft();
-    	if(alignment.getHorizontal().equals(Alignment.Position.CENTER)) {
-    		// Places at center since things are drawn from left top
-    		x = windowSize.getWidth()/2 - size.getWidth()/2;
-    	}
-    	if(alignment.getHorizontal().equals(Alignment.Position.END)) {
-    		// Places at end
-    		x = windowSize.getWidth() - size.getWidth() - margin.getRight();
-    	}
-    	
-    	int y = padding.getTop();
-    	if(alignment.getVertical().equals(Alignment.Position.CENTER)) {
-    		// Places at center since things are drawn from left top
-    		y = windowSize.getHeight()/2 - size.getHeight()/2;
-    	}
-    	if(alignment.getVertical().equals(Alignment.Position.END)) {
-    		// Places at end
-    		y = windowSize.getHeight() - size.getHeight() - margin.getTop();
-    	}
-    	
+        int x = padding.getLeft();
+        if(alignment.getHorizontal().equals(Alignment.Position.CENTER)) {
+            x = windowSize.getWidth() / 2 - size.getWidth() / 2;
+        }
+        if(alignment.getHorizontal().equals(Alignment.Position.END)) {
+            x = windowSize.getWidth() - size.getWidth() - margin.getRight();
+        }
+
+        int y = padding.getTop();
+        if(alignment.getVertical().equals(Alignment.Position.CENTER)) {
+            y = windowSize.getHeight() / 2 - size.getHeight() / 2;
+        }
+        if(alignment.getVertical().equals(Alignment.Position.END)) {
+            y = windowSize.getHeight() - size.getHeight() - margin.getBottom();
+        }
+
         this.position = new Position(x, y);
         calculateContentPosition();
     }
@@ -77,14 +69,14 @@ public abstract class UIContainer extends UIComponent {
 
         graphics.setColor(backgroundColor);
         graphics.fillRect(0, 0, size.getWidth(), size.getHeight());
-        
+
         for(UIComponent uiComponent : children) {
-        	graphics.drawImage(
-        			uiComponent.getSprite(),
-        			(int)uiComponent.getPosition().getX(),
-        			(int)uiComponent.getPosition().getY(),
-        			null
-        	);
+            graphics.drawImage(
+                    uiComponent.getSprite(),
+                    uiComponent.getPosition().intX(),
+                    uiComponent.getPosition().intY(),
+                    null
+            );
         }
 
         graphics.dispose();
@@ -93,27 +85,20 @@ public abstract class UIContainer extends UIComponent {
 
     @Override
     public void update(State state) {
-    	children.forEach(component -> component.update(state));
+        children.forEach(component -> component.update(state));
         calculateSize();
         calculatePosition();
     }
-    
+
     public void addUIComponent(UIComponent uiComponent) {
-    	children.add(uiComponent);
+        children.add(uiComponent);
     }
 
-	public void setBackgroundColor(Color color) {
-		this.backgroundColor = color;
-		
-	}
+    public void setBackgroundColor(Color color) {
+        backgroundColor = color;
+    }
 
-	public Alignment getAlignment() {
-		return alignment;
-	}
-
-	public void setAlignment(Alignment alignment) {
-		this.alignment = alignment;
-	}
-	
-	
+    public void setAlignment(Alignment alignment) {
+        this.alignment = alignment;
+    }
 }

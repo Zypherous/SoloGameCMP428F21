@@ -32,7 +32,7 @@ public class Game {
 		display = new Display(width, height, input);
 		
 		state = new GameState(size,input);
-		settings = new GameSettings(true);
+		settings = new GameSettings(false);
 		gameController = new GameController(input);
 		
 	}

@@ -28,7 +28,7 @@ public class Wander  extends AIState {
         if(targets.isEmpty()) {
         	targets.add(state.getRandomPosition());
         }
-        NPCController controller = (NPCController) currentCharacter.getController();
+        NPCController controller = (NPCController) currentCharacter.getEntityController();
         controller.moveToTarget(targets.get(0), currentCharacter.getPosition());
         
         if(arrived(currentCharacter)) {

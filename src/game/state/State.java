@@ -67,7 +67,7 @@ public abstract class State {
 	
     private void sortObjectsByPosition() {
     	// Pre built function that allows you to compare simple things like integers in a lambda function
-		gameObjects.sort(Comparator.comparing(gameObject -> gameObject.getPosition().getY()));
+		gameObjects.sort(Comparator.comparing(GameObject::getRenderOrder).thenComparing(gameObject -> gameObject.getPosition().getY()));
 	}
 
 	public List<GameObject> getGameObjects() {
@@ -151,6 +151,16 @@ public abstract class State {
 	public void setUiContainers(List<UIContainer> uiContainers) {
 		this.uiContainers = uiContainers;
 	}
+
+
+
+
+	public <T extends GameObject> List<T> getGameObjectsOfClass(Class<T> clazz) {
+        return gameObjects.stream()
+                .filter(clazz::isInstance)
+                .map(gameObject -> (T) gameObject)
+                .collect(Collectors.toList());
+    }
 
 	
 	

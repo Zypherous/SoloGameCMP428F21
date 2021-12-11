@@ -8,8 +8,9 @@ import core.Size;
 import entity.NPC;
 import entity.Player;
 import entity.SelectionCircle;
-import entity.effect.Sick;
+import entity.humanoid.effect.Sick;
 import game.ui.UIGameTime;
+import game.ui.UISicknessStatistics;
 import input.Input;
 import map.GameMap;
 import ui.Alignment;
@@ -29,7 +30,8 @@ public class GameState extends State {
     }
     
     private void initializeCharacters() {
-        Player player = new Player(new PlayerController(input), spriteLibrary, this.getCamera(),  new Size(128,128));
+    	SelectionCircle sc = new SelectionCircle();
+        Player player = new Player(new PlayerController(input), spriteLibrary,  new Size(64,64), sc);
         initializeNPCs(100);
         
 //        List<GameObject> listOf = new ArrayList<>();
@@ -37,10 +39,10 @@ public class GameState extends State {
         gameObjects.add(player);
         camera.focusOn(player);
 
-        SelectionCircle sc = new SelectionCircle(this.camera);
         sc.setParent(player);
         gameObjects.add(sc);
         play = player;     
+        makeNumberOfNPCsSick(10);
     }
     
     // Intialization of UI with spacing and positions etc
@@ -49,6 +51,7 @@ public class GameState extends State {
     	containerV.setPadding(new Spacing(20));
     	containerV.setBackgroundColor(new Color(0,0,0,0));
     	containerV.addUIComponent(new UIText("Hello  World!"));
+    	containerV.setAlignment(new Alignment(Alignment.Position.CENTER, Alignment.Position.START));
     	
     	UIContainer containerV2 = new VerticalContainer(windowSize);
     	containerV2.setPadding(new Spacing(20));
@@ -59,15 +62,21 @@ public class GameState extends State {
     	uiContainers.add(containerV);
     	uiContainers.add(containerV2);
     	uiContainers.add(new UIGameTime(windowSize));
+    	uiContainers.add(new UISicknessStatistics(windowSize));
 	}
 
 	private void initializeNPCs(int numberOfNPCs){
     	for(int i = 0; i < numberOfNPCs; i++) {
-    		NPC npc = new NPC(new NPCController(), spriteLibrary, camera);
+    		NPC npc = new NPC(new NPCController(), spriteLibrary);
     		npc.setPosition(gameMap.getRandomPosition());
     		npc.addEffect(new Sick());
     		gameObjects.add(npc);
     	}
+    }
+	private void makeNumberOfNPCsSick(int number) {
+        getGameObjectsOfClass(NPC.class).stream()
+                .limit(number)
+                .forEach(npc -> npc.addEffect(new Sick()));
     }
     public Player getPlayer() {
     	return this.play;   
