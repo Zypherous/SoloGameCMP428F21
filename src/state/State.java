@@ -61,7 +61,7 @@ public abstract class State {
 	
 
 	public void update(Game game) {
-		audioPlayer.update(gameSettings.getAudioSettings());
+		audioPlayer.update();
 		time.update();
     	sortObjectsByPosition();
     	updateGameObjects();
@@ -172,6 +172,21 @@ public abstract class State {
 
 	public GameSettings getGameSettings() {
 		return gameSettings;
+	}
+
+
+
+
+	public AudioPlayer getAudioPlayer() {
+		return this.audioPlayer;
+	}
+
+
+
+
+	public void cleanUp() {
+		audioPlayer.clear();
+		
 	}
 	
 }

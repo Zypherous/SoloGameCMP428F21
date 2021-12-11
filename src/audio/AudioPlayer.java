@@ -1,30 +1,25 @@
 package audio;
 
+import game.settings.AudioSettings;
+import game.settings.GameSettings;
+
+import javax.sound.sampled.*;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
-
-import game.settings.AudioSettings;
-import game.settings.GameSettings;
-
 public class AudioPlayer {
 
-    private List<AudioClip> audioClips;
     private AudioSettings audioSettings;
+    private List<AudioClip> audioClips;
 
     public AudioPlayer(AudioSettings audioSettings) {
-    	this.audioSettings = audioSettings;
+        this.audioSettings = audioSettings;
         audioClips = new ArrayList<>();
     }
 
-    public void update(AudioSettings audioSettings) {
+    public void update() {
         audioClips.forEach(audioClip -> audioClip.update(audioSettings));
 
         List.copyOf(audioClips).forEach(audioClip -> {
@@ -37,16 +32,16 @@ public class AudioPlayer {
 
     public void playMusic(String fileName) {
         final Clip clip = getClip(fileName);
-        MusicClip musicClip = new MusicClip(clip);
+        final MusicClip musicClip = new MusicClip(clip);
         musicClip.setVolume(audioSettings);
-		audioClips.add(musicClip);
+        audioClips.add(musicClip);
     }
 
     public void playSound(String fileName) {
         final Clip clip = getClip(fileName);
-        SoundClip soundClip = new SoundClip(clip);
+        final SoundClip soundClip = new SoundClip(clip);
         soundClip.setVolume(audioSettings);
-		audioClips.add(soundClip);
+        audioClips.add(soundClip);
     }
 
     private Clip getClip(String fileName) {
@@ -62,5 +57,10 @@ public class AudioPlayer {
         }
 
         return null;
+    }
+
+    public void clear() {
+        audioClips.forEach(AudioClip::cleanUp);
+        audioClips.clear();
     }
 }

@@ -1,9 +1,10 @@
 package audio;
 
+import game.settings.AudioSettings;
+import game.settings.GameSettings;
+
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.FloatControl;
-
-import game.settings.AudioSettings;
 
 public abstract class AudioClip {
 
