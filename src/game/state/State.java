@@ -121,14 +121,13 @@ public abstract class State {
 		return spriteLibrary;
 	}
 
-	
-	
-	
-	
-	
-	
-	
-	
+	public void spawn(GameObject gameObject) {
+        gameObjects.add(gameObject);
+    }
+
+	public int getHealth() {
+		return health;
+	}
 	
 	
 }
