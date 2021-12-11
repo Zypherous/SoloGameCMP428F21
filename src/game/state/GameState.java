@@ -1,7 +1,6 @@
 package game.state;
 
 import java.awt.Color;
-import java.util.ArrayList;
 import java.util.List;
 
 import controller.NPCController;
@@ -11,7 +10,6 @@ import core.Size;
 import entity.NPC;
 import entity.Player;
 import entity.SelectionCircle;
-import entity.humanoid.Humanoid;
 import entity.humanoid.effect.Isolated;
 import entity.humanoid.effect.Sick;
 import game.ui.UIGameTime;
@@ -23,6 +21,7 @@ import ui.Spacing;
 import ui.UIContainer;
 import ui.UIText;
 import ui.VerticalContainer;
+import ui.clickable.UIButton;
 
 public class GameState extends State {
 
@@ -58,7 +57,7 @@ public class GameState extends State {
         sc.parent(player);
         gameObjects.add(sc);
         play = player;     
-        makeNumberOfNPCsSick(10);
+        makeNumberOfNPCsSick(0);
     }
     
     // Intialization of UI with spacing and positions etc
@@ -118,7 +117,10 @@ public class GameState extends State {
 
         VerticalContainer winContainer = new VerticalContainer(camera.getWindowSize());
         winContainer.setAlignment(new Alignment(Alignment.Position.CENTER, Alignment.Position.CENTER));
-        winContainer.addUIComponent(new UIText("VICTORY"));
+        winContainer.setBackgroundColor(Color.DARK_GRAY);
+        winContainer.addUIComponent(new UIButton("Menu", () -> System.out.println("Button 1 pressed!")));
+        winContainer.addUIComponent(new UIButton("Options", () -> System.out.println("Button 2 pressed!")));
+        winContainer.addUIComponent(new UIButton("Exit", () -> System.exit(0)));
         uiContainers.add(winContainer);
 	}
 

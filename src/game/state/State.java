@@ -142,6 +142,13 @@ public abstract class State {
 	public int getHealth() {
 		return health;
 	}
+
+
+
+
+	public Input getInput() {
+		return this.input;
+	}
 	
 	
 }

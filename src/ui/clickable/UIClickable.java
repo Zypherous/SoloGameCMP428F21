@@ -1,10 +1,11 @@
 package ui.clickable;
 
+import java.awt.Rectangle;
+
 import core.Position;
+import entity.Rect;
 import game.state.State;
 import ui.UIComponent;
-
-import java.awt.*;
 
 public abstract class UIClickable extends UIComponent {
 
@@ -25,10 +26,10 @@ public abstract class UIClickable extends UIComponent {
 
     protected abstract void onClick();
 
-    private Rectangle getBounds() {
-        return new Rectangle(
-                absolutePosition.intX(),
-                absolutePosition.intY(),
+    private Rect getBounds() {
+        return new Rect(
+                (int)absolutePosition.getX(),
+                (int)absolutePosition.getY(),
                 size.getWidth(),
                 size.getHeight()
         );
