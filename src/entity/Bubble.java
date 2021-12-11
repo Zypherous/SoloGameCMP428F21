@@ -1,6 +1,7 @@
 package entity;
 
 import controller.NPCController;
+import core.Position;
 import gfx.AnimationManager;
 import gfx.SpriteLibrary;
 import gfx.SpriteSheet;
@@ -14,6 +15,8 @@ public class Bubble extends MovingEntity {
         this.controller = npcController;
 
         this.animationManager = new AnimationManager(new SpriteSheet(spriteLibrary.getImage("bubble")), false);
+        renderOffset = new Position(size.getWidth() / 2, size.getHeight() - 12);
+        collisionBoxOffset = renderOffset;
     }
 
     @Override
