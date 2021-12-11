@@ -42,6 +42,8 @@ public class GameState extends State {
         initializeCharacters();
         initializeUI(windowSize);
         initializeConditions();
+        
+        audioPlayer.playMusic("MollysWorld.wav");
     }
     
     private void initializeConditions() {
@@ -51,7 +53,7 @@ public class GameState extends State {
 	private void initializeCharacters() {
     	SelectionCircle sc = new SelectionCircle();
         Player player = new Player(new PlayerController(input), spriteLibrary,  new Size(64,64), sc);
-        initializeNPCs(100);
+        initializeNPCs(50);
         
 //        List<GameObject> listOf = new ArrayList<>();
 //        listOf.add(player); 
@@ -61,7 +63,7 @@ public class GameState extends State {
         sc.parent(player);
         gameObjects.add(sc);
         play = player;     
-        makeNumberOfNPCsSick(0);
+        makeNumberOfNPCsSick(5);
     }
     
     // Intialization of UI with spacing and positions etc

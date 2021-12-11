@@ -23,4 +23,10 @@ public class Levitate extends Action {
     public String getAnimationName() {
         return "levitate";
     }
+    @Override
+  	public String getSoundName() {
+  		// TODO Auto-generated method stub
+  		return null;
+  	}
+
 }
