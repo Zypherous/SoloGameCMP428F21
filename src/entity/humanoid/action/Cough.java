@@ -35,6 +35,7 @@ public class Cough extends Action {
             state.getGameObjectsOfClass(Humanoid.class).stream()
                     .filter(humanoid -> humanoid.getCollisionBox().collidesWith(spreadArea))
                     .filter(humanoid -> !humanoid.isAffectedBy(Sick.class))
+                    .filter(humanoid -> !humanoid.isAffectedBy(Levitate.class))
                     .forEach(humanoid -> {
                         if(Math.random() < risk) {
                             humanoid.addEffect(new Sick());

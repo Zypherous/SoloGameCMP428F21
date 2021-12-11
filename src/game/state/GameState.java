@@ -39,7 +39,7 @@ public class GameState extends State {
         gameObjects.add(player);
         camera.focusOn(player);
 
-        sc.setParent(player);
+        sc.parent(player);
         gameObjects.add(sc);
         play = player;     
         makeNumberOfNPCsSick(10);

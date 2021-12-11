@@ -10,6 +10,7 @@ import entity.humanoid.Humanoid;
 import entity.humanoid.action.BlowBubble;
 import entity.humanoid.effect.Caffeinated;
 import entity.humanoid.effect.Giant;
+import entity.humanoid.effect.Untargetable;
 import game.Game;
 import game.state.State;
 import gfx.AnimationManager;
@@ -57,7 +58,7 @@ public class Player extends Humanoid{
         if(closestNPC.isPresent()) {
             NPC npc = closestNPC.get();
             if(!npc.equals(target)) {
-                selectionCircle.setParent(npc);
+                selectionCircle.parent(npc);
                 target = npc;
             }
         } else {
@@ -69,6 +70,7 @@ public class Player extends Humanoid{
         return state.getGameObjectsOfClass(NPC.class).stream()
                 .filter(npc -> getPosition().distanceTo(npc.getPosition()) < targetRange)
                 .filter(npc -> isFacing(npc.getPosition()))
+                .filter(npc -> !npc.isAffectedBy(Untargetable.class))
                 .min(Comparator.comparingDouble(npc -> position.distanceTo(npc.getPosition())));
     }
 	public void playerLoc() {

@@ -35,6 +35,6 @@ public class Bubble extends MovingEntity {
     public void insert(GameObject gameObject) {
         this.position = gameObject.getPosition();
         this.renderOffset = gameObject.getRenderOffset();
-        gameObject.setParent(this);
+        gameObject.parent(this);
     }
 }

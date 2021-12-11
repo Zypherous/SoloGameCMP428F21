@@ -56,7 +56,8 @@ public abstract class GameObject {
 	public GameObject getParent() {
 		return parent;
 	}
-	public void setParent(GameObject parent) {
+	public void parent(GameObject parent) {
+		this.position = new Position(0,0);
 		this.parent = parent;
 	}
 	public void setPosition(Position position) {

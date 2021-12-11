@@ -36,6 +36,7 @@ public class BlowBubble extends Action {
     private void bubbleTarget(State state) {
         target.perform(new Levitate());
         target.addEffect(new Untargetable());
+        
 
         bubble = new Bubble(new NPCController(), state.getSpriteLibrary());
         bubble.insert(target);
