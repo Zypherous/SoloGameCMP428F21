@@ -107,7 +107,7 @@ public class GameState extends State {
 	private void lose() {
 		playing = false;
 
-        VerticalContainer loseContainer = new VerticalContainer(camera.getSize());
+        VerticalContainer loseContainer = new VerticalContainer(camera.getWindowSize());
         loseContainer.setAlignment(new Alignment(Alignment.Position.CENTER, Alignment.Position.CENTER));
         loseContainer.addUIComponent(new UIText("DEFEAT"));
         uiContainers.add(loseContainer);
@@ -116,7 +116,7 @@ public class GameState extends State {
 	private void win() {
 		playing = false;
 
-        VerticalContainer winContainer = new VerticalContainer(camera.getSize());
+        VerticalContainer winContainer = new VerticalContainer(camera.getWindowSize());
         winContainer.setAlignment(new Alignment(Alignment.Position.CENTER, Alignment.Position.CENTER));
         winContainer.addUIComponent(new UIText("VICTORY"));
         uiContainers.add(winContainer);

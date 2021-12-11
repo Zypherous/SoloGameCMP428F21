@@ -17,6 +17,8 @@ public abstract class UIContainer extends UIComponent {
     protected Alignment alignment;
     protected Size windowSize;
 
+    protected Size fixedSize;
+
     protected List<UIComponent> children;
 
     public UIContainer(Size windowSize) {
@@ -36,7 +38,9 @@ public abstract class UIContainer extends UIComponent {
 
     private void calculateSize() {
         Size calculatedContentSize = calculateContentSize();
-        size = new Size(
+        size = fixedSize != null
+                ? fixedSize
+                : new Size(
                 padding.getHorizontal() + calculatedContentSize.getWidth(),
                 padding.getVertical() + calculatedContentSize.getHeight());
     }
@@ -58,7 +62,8 @@ public abstract class UIContainer extends UIComponent {
             y = windowSize.getHeight() - size.getHeight() - margin.getBottom();
         }
 
-        this.position = new Position(x, y);
+        this.relativePosition = new Position(x, y);
+        this.absolutePosition = new Position(x, y);
         calculateContentPosition();
     }
 
@@ -73,8 +78,8 @@ public abstract class UIContainer extends UIComponent {
         for(UIComponent uiComponent : children) {
             graphics.drawImage(
                     uiComponent.getSprite(),
-                    uiComponent.getPosition().intX(),
-                    uiComponent.getPosition().intY(),
+                    uiComponent.getRelativePosition().intX(),
+                    uiComponent.getRelativePosition().intY(),
                     null
             );
         }
@@ -100,5 +105,9 @@ public abstract class UIContainer extends UIComponent {
 
     public void setAlignment(Alignment alignment) {
         this.alignment = alignment;
+    }
+
+    public void setFixedSize(Size fixedSize) {
+        this.fixedSize = fixedSize;
     }
 }

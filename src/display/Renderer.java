@@ -21,12 +21,12 @@ public class Renderer {
 	}
 	
 	private void renderUI(State state, Graphics graphics) {
-		state.getUiContainers().forEach(uiContainer -> graphics.drawImage(
-					uiContainer.getSprite(),
-					(int)uiContainer.getPosition().getX(),
-					(int)uiContainer.getPosition().getY(),
-					null
-				));
+        state.getUiContainers().forEach(uiContainer -> graphics.drawImage(
+                uiContainer.getSprite(),
+                uiContainer.getRelativePosition().intX(),
+                uiContainer.getRelativePosition().intY(),
+                null
+        ));
 	}
 
 	private void renderGameObjects(State state, Graphics graphics) {

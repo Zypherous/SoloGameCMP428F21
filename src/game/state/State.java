@@ -46,7 +46,6 @@ public abstract class State {
         time = new Time();
         rect = new Rect[10];
         rand = new Random();
-		
     }
 
     
@@ -58,7 +57,16 @@ public abstract class State {
     	updateGameObjects();
         uiContainers.forEach(uiContainer -> uiContainer.update(this));
         camera.update(this);
-//        
+        handleMouseInput();
+    }
+	
+	private void handleMouseInput() {
+
+        if(input.isMouseClicked()) {
+            System.out.println(String.format("MOUSE CLICKED AT POSITION x:%d y:%d", input.getMousePosition().intX(), input.getMousePosition().intY()));
+        }
+
+        input.clearMouseClick();
     }
 	
 	private void updateGameObjects() {
