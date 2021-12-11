@@ -110,4 +110,10 @@ public class Humanoid extends MovingEntity {
         return availableCharacters.get(0);
     }
 	
+	public void setRenderOffset() {
+		 this.renderOffset = new Position(size.getWidth() / 2, size.getHeight() - 12);
+		 this.collisionBoxSize = new Size((int)(size.getWidth() * .25), (int)(size.getHeight() *.45));
+		 this.collisionBoxOffset = new Position(collisionBoxSize.getWidth() / 2, collisionBoxSize.getHeight());
+		 
+	}
 }
