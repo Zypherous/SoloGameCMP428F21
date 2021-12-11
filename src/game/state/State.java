@@ -55,10 +55,16 @@ public abstract class State {
 	public void update() {
 		time.update();
     	sortObjectsByPosition();
-        gameObjects.forEach(gameObject -> gameObject.update(this));
+    	updateGameObjects();
         uiContainers.forEach(uiContainer -> uiContainer.update(this));
         camera.update(this);
 //        
+    }
+	
+	private void updateGameObjects() {
+        for(int i = 0; i < gameObjects.size(); i++) {
+            gameObjects.get(i).update(this);
+        }
     }
 
 	public  Position getRandomPosition() {
