@@ -20,6 +20,7 @@ import state.State;
 import state.game.ui.UIGameTime;
 import state.game.ui.UISicknessStatistics;
 import state.menu.MenuState;
+import state.menu.ui.UIOptionMenu;
 import ui.Alignment;
 import ui.Spacing;
 import ui.UIContainer;
@@ -37,6 +38,7 @@ public class GameState extends State {
     public GameState(Size windowSize, Input input, GameSettings gameSettings) {
         super(windowSize, input, gameSettings);
         gameMap = new GameMap(new Size(20, 15)/*(30,30)*/, spriteLibrary);
+        gameSettings.getRenderSettings().getShouldRenderGrid().setValue(false);
         playing = true;
         
         initializeCharacters();
@@ -63,7 +65,7 @@ public class GameState extends State {
         sc.parent(player);
         gameObjects.add(sc);
         play = player;     
-        makeNumberOfNPCsSick(5);
+        makeNumberOfNPCsSick(1);
     }
     
     // Intialization of UI with spacing and positions etc
@@ -125,10 +127,16 @@ public class GameState extends State {
         winContainer.setAlignment(new Alignment(Alignment.Position.CENTER, Alignment.Position.CENTER));
         winContainer.setBackgroundColor(Color.DARK_GRAY);
         winContainer.addUIComponent(new UIButton("Menu", (state) -> state.setNextState(new MenuState(windowSize, input, gameSettings))));
-        winContainer.addUIComponent(new UIButton("Options", (state) -> state.setNextState(new MenuState(windowSize, input, gameSettings))));
+        winContainer.addUIComponent(new UIButton("Options", (state) -> ((GameState)state).enterMenu(new UIOptionMenu(windowSize, state.getGameSettings(), "Game"))));
         winContainer.addUIComponent(new UIButton("Exit", (state) -> System.exit(0)));
         uiContainers.add(winContainer);
 	}
+
+	public void enterMenu(UIContainer container) {
+        uiContainers.clear();
+        uiContainers.add(container);
+        
+    }
 
 	private void makeNumberOfNPCsSick(int number) {
         getGameObjectsOfClass(NPC.class).stream()

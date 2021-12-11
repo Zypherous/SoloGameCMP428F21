@@ -5,6 +5,7 @@ import java.awt.Color;
 import core.Size;
 import game.settings.GameSettings;
 import state.State;
+import state.game.GameState;
 import state.menu.MenuState;
 import ui.Alignment;
 import ui.Spacing;
@@ -20,11 +21,13 @@ public class UIOptionMenu extends VerticalContainer {
 	private UIText musicVolLabel;
 	private UISlider soundVolSlider;
     private UIText soundVolLabel;
+    private String previousState;
     
-    public UIOptionMenu(Size windowSize, GameSettings gameSettings) {
+    public UIOptionMenu(Size windowSize, GameSettings gameSettings, String prevState) {
     	 super(windowSize);
          alignment = new Alignment(Alignment.Position.CENTER, Alignment.Position.CENTER);
-
+         this.previousState = prevState;
+         
          musicVolSlider = new UISlider(0, 1);
          musicVolSlider.setValue(gameSettings.getAudioSettings().getMusicVolume());
          musicVolLabel = new UIText("");
@@ -46,7 +49,12 @@ public class UIOptionMenu extends VerticalContainer {
          contentContainer.addUIComponent(musicVolSlider);
          contentContainer.addUIComponent(soundVolLabel);
          contentContainer.addUIComponent(soundVolSlider);
-         contentContainer.addUIComponent(new UIButton("BACK", (state) -> ((MenuState)state).enterMenu(new UIMainMenu(windowSize))));
+         if(previousState.equals("Menu")) {
+        	 contentContainer.addUIComponent(new UIButton("BACK", (state) -> ((MenuState)state).enterMenu(new UIMainMenu(windowSize))));        	 
+         }
+         if(previousState.equals("Game")) {
+        	 contentContainer.addUIComponent(new UIButton("BACK", (state) -> state.setNextState(new GameState(windowSize, state.getInput(), state.getGameSettings()))));
+         }
 
          addUIComponent(labelContainer);
          addUIComponent(contentContainer);

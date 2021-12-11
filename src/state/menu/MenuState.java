@@ -13,6 +13,7 @@ public class MenuState extends State {
     public MenuState(Size windowSize, Input input, GameSettings gameSettings) {
         super(windowSize, input, gameSettings);
         gameMap = new GameMap(new Size(20, 20), spriteLibrary);
+        gameSettings.getRenderSettings().getShouldRenderGrid().setValue(false);
 
         uiContainers.add(new UIMainMenu(windowSize));
 //        audioPlayer.playMusic("MollysWorld.wav");
