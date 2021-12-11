@@ -4,7 +4,7 @@ import java.awt.Rectangle;
 
 import core.Position;
 import entity.Rect;
-import game.state.State;
+import state.State;
 import ui.UIComponent;
 
 public abstract class UIClickable extends UIComponent {

@@ -13,9 +13,9 @@ import core.Size;
 import core.Vector2D;
 import entity.humanoid.action.Action;
 import entity.humanoid.effect.Effect;
-import game.state.State;
 import gfx.AnimationManager;
 import gfx.SpriteLibrary;
+import state.State;
 
 public abstract class MovingEntity extends GameObject {
 

@@ -4,8 +4,8 @@ import java.awt.image.BufferStrategy;
 import javax.swing.*;
 
 import game.Game;
-import game.state.State;
 import input.Input;
+import state.State;
 
 
 public class Display extends JFrame {

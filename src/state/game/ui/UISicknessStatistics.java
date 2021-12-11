@@ -1,8 +1,8 @@
-package game.ui;
+package state.game.ui;
 
 import core.Size;
-import game.state.GameState;
-import game.state.State;
+import state.State;
+import state.game.GameState;
 import ui.Alignment;
 import ui.HorizontalContainer;
 import ui.Spacing;

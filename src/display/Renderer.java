@@ -7,8 +7,8 @@ import java.awt.Toolkit;
 
 import core.Position;
 import game.Game;
-import game.state.State;
 import map.GameMap;
+import state.State;
 
 public class Renderer {
 //	private Image testImage = Toolkit.getDefaultToolkit().getImage("C:\\Users\\Jonat\\soloGame\\Resources\\Image\\Dungeon Crawl Stone Soup Full\\monster\\cyclops_old.png");

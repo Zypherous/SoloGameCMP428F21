@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 
 import core.CollisionBox;
 import entity.humanoid.Humanoid;
-import game.state.State;
+import state.State;
 import ui.UIText;
 
 public class DebugRenderer {

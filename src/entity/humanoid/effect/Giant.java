@@ -4,7 +4,7 @@
 	import core.Size;
 import entity.humanoid.Humanoid;
 import game.GameLoop;
-import game.state.State;
+import state.State;
 
 	public class Giant extends Effect {
 	    public Giant( ) {

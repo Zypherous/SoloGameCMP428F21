@@ -7,7 +7,7 @@ import core.Size;
 import entity.GameObject;
 import entity.Rect;
 import game.Game;
-import game.state.State;
+import state.State;
 
 public class Camera {
 

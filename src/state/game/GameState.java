@@ -1,4 +1,4 @@
-package game.state;
+package state.game;
 
 import java.awt.Color;
 import java.util.List;
@@ -12,10 +12,11 @@ import entity.Player;
 import entity.SelectionCircle;
 import entity.humanoid.effect.Isolated;
 import entity.humanoid.effect.Sick;
-import game.ui.UIGameTime;
-import game.ui.UISicknessStatistics;
 import input.Input;
 import map.GameMap;
+import state.State;
+import state.game.ui.UIGameTime;
+import state.game.ui.UISicknessStatistics;
 import ui.Alignment;
 import ui.Spacing;
 import ui.UIContainer;

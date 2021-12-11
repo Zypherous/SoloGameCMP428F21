@@ -3,8 +3,8 @@ import controller.GameController;
 import core.Size;
 import display.Display;
 import game.settings.GameSettings;
-import game.state.GameState;
 import input.Input;
+import state.game.GameState;
 
 public class Game {
 	

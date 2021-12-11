@@ -9,8 +9,8 @@ import java.awt.image.BufferedImage;
 import core.CollisionBox;
 import core.Position;
 import core.Size;
-import game.state.State;
 import gfx.ImageUtils;
+import state.State;
 
 public class SelectionCircle extends GameObject {
 
