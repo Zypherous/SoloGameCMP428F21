@@ -36,7 +36,7 @@ public class DebugRenderer {
     	});
     }
     private void drawCollisionBox(CollisionBox collisionBox, Graphics graphics, Camera camera) {
-        collisionBox.getBounds().draw(graphics,Color.red, camera);
+        collisionBox.getBounds().draw(graphics,Color.red);
     }
 
 }

@@ -81,4 +81,8 @@ public class Camera {
     public Size getWindowSize() {
         return windowSize;
     }
+
+    public void setPosition(Position position) {
+        this.position = position;
+    }
 }

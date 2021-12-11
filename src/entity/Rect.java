@@ -126,11 +126,11 @@ public class Rect
 	}
 	
 	
-	public void draw(Graphics pen, Color color, Camera camera)
+	public void draw(Graphics pen, Color color)
 	{
 		pen.setColor(color);
 		
-		pen.drawRect(getX()- (int)camera.getPosition().getX(), getY()-(int)camera.getPosition().getY() , w, h);
+		pen.drawRect(getX(), getY() , w, h);
 	}
 
 	public int getX() {
