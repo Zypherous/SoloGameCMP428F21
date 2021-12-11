@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 
+import audio.AudioPlayer;
 import core.Position;
 import core.Size;
 import display.Camera;
@@ -22,6 +23,7 @@ import ui.UIContainer;
 public abstract class State {
 
 	// Gives option to pan around with a camera if you want.
+	protected AudioPlayer audioPlayer;
     protected GameMap gameMap;
     protected List<GameObject> gameObjects;
     protected List<UIContainer> uiContainers;
@@ -41,6 +43,7 @@ public abstract class State {
     public State(Size windowSize, Input input) {
     	this.windowSize = windowSize;
         this.input = input;
+        audioPlayer = new AudioPlayer();
         gameObjects = new ArrayList<>();
         uiContainers = new ArrayList<>();
         spriteLibrary = new SpriteLibrary();

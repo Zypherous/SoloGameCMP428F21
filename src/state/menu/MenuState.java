@@ -19,6 +19,7 @@ public class MenuState extends State {
     public void enterMenu(UIContainer container) {
         uiContainers.clear();
         uiContainers.add(container);
+        audioPlayer.playMusic("MollysWorld.wav");
     }
 
 	@Override

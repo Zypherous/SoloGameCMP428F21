@@ -21,4 +21,10 @@ public abstract class AudioClip {
 	}
 	
 	protected abstract float getSoundVolume(GameSettings gameSettings);
+	public boolean hasFinishedPlaying() {
+		return !clip.isRunning();
+	}
+	public void cleanUp() {
+		clip.close();
+	}
 }

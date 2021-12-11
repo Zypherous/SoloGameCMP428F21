@@ -11,6 +11,8 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
+import game.settings.GameSettings;
+
 public class AudioPlayer {
 	private List<AudioClip> audioClips;
 
@@ -18,11 +20,24 @@ public class AudioPlayer {
         audioClips = new ArrayList<>();
     }
     
+    public void update(GameSettings gameSettings) {
+    	audioClips.forEach(audioClip -> audioClip.update(gameSettings));
+    	
+    	List.copyOf(audioClips).forEach(audioClip -> {
+    		if(audioClip.hasFinishedPlaying()) {
+    			audioClip.cleanUp();
+    			audioClips.remove(audioClip);
+    		}
+    	});
+    }
+    
     public void playMusic(String fileName) {
     	final Clip clip = getClip(fileName);
+    	audioClips.add(new MusicClip(clip));
     }
     public void playSound(String fileName) {
     	final Clip clip = getClip(fileName);
+    	audioClips.add(new SoundClip(clip));
     }
     
     private Clip getClip(String fileName)   {
