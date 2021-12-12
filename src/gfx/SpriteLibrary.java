@@ -37,17 +37,17 @@ public class SpriteLibrary {
         String[] folderNames = getFolderNames(path);
 
         for(String folderName: folderNames) {
-            SpriteSheet spriteSet = new SpriteSheet();
+            SpriteSheet spriteSheet = new SpriteSheet();
             String pathToFolder = path + "/" + folderName;
             String[] sheetsInFolder = getImagesInFolder(pathToFolder);
 
             for(String sheetName: sheetsInFolder) {
-                spriteSet.addSheet(
+                spriteSheet.addSheet(
                         sheetName.substring(0, sheetName.length() - 4),
                         ImageUtils.loadImage(pathToFolder + "/" + sheetName));
             }
 
-            spriteSheets.put(folderName, spriteSet);
+            spriteSheets.put(folderName, spriteSheet);
         }
     }
 
