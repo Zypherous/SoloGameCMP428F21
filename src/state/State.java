@@ -18,6 +18,7 @@ import game.Time;
 import game.settings.GameSettings;
 import gfx.SpriteLibrary;
 import input.Input;
+import input.mouse.MouseHandler;
 import map.GameMap;
 import ui.UIContainer;
 
@@ -34,7 +35,9 @@ public abstract class State {
     protected Camera camera;
     protected Time time;
     protected Size windowSize;
-	private Random rand;
+	protected MouseHandler mouseHandler;
+    protected Random rand;
+	
     
 	private State nextState;
     
@@ -50,6 +53,7 @@ public abstract class State {
         gameObjects = new ArrayList<>();
         uiContainers = new ArrayList<>();
         spriteLibrary = new SpriteLibrary();
+        mouseHandler = new MouseHandler();
         camera = new Camera(windowSize);
 //        camera = new Camera(new Size(200, 200));
         time = new Time();
@@ -67,12 +71,11 @@ public abstract class State {
     	updateGameObjects();
     	List.copyOf(uiContainers).forEach(uiContainer -> uiContainer.update(this));
         camera.update(this);
-        handleMouseInput();
+        mouseHandler.update(this);
         if(nextState != null) {
             game.enterState(nextState);
         }
     }
-	
 	private void handleMouseInput() {
 
         if(input.isMouseClicked()) {
@@ -81,6 +84,7 @@ public abstract class State {
 
         input.clearMouseClick();
     }
+	
 	
 	private void updateGameObjects() {
         for(int i = 0; i < gameObjects.size(); i++) {
@@ -187,6 +191,13 @@ public abstract class State {
 	public void cleanUp() {
 		audioPlayer.clear();
 		
+	}
+
+
+
+
+	public MouseHandler getMouseHandler() {
+		return mouseHandler;
 	}
 	
 }
