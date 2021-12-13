@@ -20,6 +20,7 @@ import gfx.SpriteLibrary;
 import input.Input;
 import input.mouse.MouseHandler;
 import map.GameMap;
+import map.MapIO;
 import ui.UIContainer;
 
 public abstract class State {
@@ -199,6 +200,10 @@ public abstract class State {
 	public MouseHandler getMouseHandler() {
 		return mouseHandler;
 	}
+	
+	public void loadGameMap() {
+        gameMap = MapIO.load(spriteLibrary);
+    }
 	
 }
 	

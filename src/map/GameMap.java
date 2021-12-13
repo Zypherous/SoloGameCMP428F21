@@ -1,5 +1,6 @@
 package map;
 
+import java.io.Serializable;
 import java.util.Arrays;
 
 import core.Position;
@@ -8,7 +9,7 @@ import display.Camera;
 import game.Game;
 import gfx.SpriteLibrary;
 
-public class GameMap {
+public class GameMap implements Serializable {
 
 	private static final int RENDER_BUFFER = 2;
     private Tile[][] tiles;
@@ -65,5 +66,13 @@ public class GameMap {
 
     public void setTile(int gridX, int gridY, Tile tile) {
         tiles[gridX][gridY] = tile;
+    }
+    
+    public void reloadGraphics(SpriteLibrary spriteLibrary) {
+        for(Tile[] row: tiles) {
+            for(Tile tile: row) {
+                tile.reloadGraphics(spriteLibrary);
+            }
+        }
     }
 }
