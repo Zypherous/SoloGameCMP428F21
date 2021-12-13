@@ -2,13 +2,13 @@ package map;
 
 import java.awt.Image;
 import java.awt.image.BufferedImage;
-import java.io.Serializable;
 
 import game.Game;
 import gfx.SpriteLibrary;
+import io.Persistable;
 
 
-public class Tile implements Serializable {
+public class Tile implements Persistable {
 
 	// To not serialize the images since we can reload the assets
 	private transient Image image;
@@ -16,6 +16,7 @@ public class Tile implements Serializable {
 	private int tileIndex;
 	private String tileName;
 
+	public Tile() {}
     public Tile(SpriteLibrary spriteLibrary) {
     	this(spriteLibrary, "floor_sand_stone_1");
     }
@@ -64,6 +65,22 @@ public class Tile implements Serializable {
     }
 	public String getTileName() {
 		return tileName;
+	}
+	@Override
+	public String serialize() {
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append(this.getClass().getSimpleName());
+		stringBuilder.append(DELIMITER);
+		stringBuilder.append(tileName);
+		stringBuilder.append(DELIMITER);
+		stringBuilder.append(tileIndex);
+		return stringBuilder.toString();
+	}
+	@Override
+	public void applySerializedData(String serializedData) {
+		String[] tokens = serializedData.split(DELIMITER);
+		tileName = tokens[1];
+		tileIndex = Integer.parseInt(tokens[2]);
 	}
     
     

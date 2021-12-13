@@ -17,6 +17,7 @@ public class UIMainMenu extends VerticalContainer {
         alignment = new Alignment(Alignment.Position.CENTER, Alignment.Position.CENTER);
         setBackgroundColor(Color.DARK_GRAY);
 
+        centerChildren = true;
         addUIComponent(new UIText("MollysWorld"));
         addUIComponent(new UIButton("PLAY", (state) -> state.setNextState(new GameState(windowSize, state.getInput(), state.getGameSettings()))));
         addUIComponent(new UIButton("OPTIONS", (state) -> ((MenuState)state).enterMenu(new UIOptionMenu(windowSize, state.getGameSettings(), "Menu"))));

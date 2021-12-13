@@ -19,8 +19,8 @@ import game.settings.GameSettings;
 import gfx.SpriteLibrary;
 import input.Input;
 import input.mouse.MouseHandler;
+import io.MapIO;
 import map.GameMap;
-import map.MapIO;
 import ui.UIContainer;
 
 public abstract class State {

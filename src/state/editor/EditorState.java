@@ -22,6 +22,7 @@ public class EditorState extends State {
         uiContainers.add(new UIButtonMenu(windowSize));
         uiContainers.add(new UIRenderSettings(windowSize, gameSettings.getRenderSettings(), gameMap));
         uiContainers.add(new UITileMenu(windowSize, spriteLibrary));
+        audioPlayer.playMusic("Menu.wav");
     }
 
 	@Override

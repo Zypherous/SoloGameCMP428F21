@@ -19,6 +19,7 @@ public class UITileMenu extends HorizontalContainer {
         addUIComponent(getTileSet(spriteLibrary, "concrete"));
         addUIComponent(getTileSet(spriteLibrary, "dirt"));
         addUIComponent(getTileSet(spriteLibrary, "dungeon"));
+        addUIComponent(getTileSet(spriteLibrary, "spritesheet (1)"));
     }
 
     private UIComponent getTileSet(SpriteLibrary spriteLibrary, String tileset) {
