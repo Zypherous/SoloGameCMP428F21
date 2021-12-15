@@ -18,5 +18,6 @@ public class UIRenderSettings extends VerticalContainer {
         addUIComponent(new UIMiniMap(gameMap));
 //        addUIComponent(new UIText("Render settings"));
         addUIComponent(new UICheckbox("GRID", renderSettings.getShouldRenderGrid()));
+        addUIComponent(new UICheckbox("Col. Box", renderSettings.getCollisionBox()));
     }
 }

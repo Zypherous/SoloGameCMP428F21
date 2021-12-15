@@ -18,6 +18,8 @@ public abstract class GameObject {
 	protected boolean dead;
 	protected GameObject parent;
 	protected int renderOrder;
+    protected Size collisionBoxSize;
+
 	
 	public GameObject() {
 		position = new Position(0, 0);
@@ -25,7 +27,8 @@ public abstract class GameObject {
 		renderOffset = new Position(0,0);
 		collisionBoxOffset = new Position(0,0);
 		
-		
+        this.collisionBoxSize = new Size(size.getWidth(), size.getHeight());
+
 		this.thisID = ID;
 		this.dead = false;
 //		this.rect = new Rect((int)this.getRenderPosition(camera).getX(),(int)this.getRenderPosition(camera).getY(),this.size.getWidth(),this.size.getHeight());

@@ -1,6 +1,8 @@
 package core;
 
-public class Position {
+import io.Persistable;
+
+public class Position implements Persistable {
 
     public static int PROXIMITY_RANGE = 5;
 
@@ -78,5 +80,17 @@ public class Position {
 		double deltaY = this.getY() - other.getY();
 		
 		return Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+	}
+
+	// Shouldnt be saved on its own
+	@Override
+	public String serialize() {
+		return String.format("%d|%d", (int) x, (int) y);
+	}
+	@Override
+	public void applySerializedData(String serializedData) {
+		String [] tokens = serializedData.split("\\|");
+		x = Double.parseDouble(tokens[0]);
+		y = Double.parseDouble(tokens[1]);
 	}
 }

@@ -6,6 +6,7 @@ import core.Size;
 import game.Game;
 import game.settings.EditorSettings;
 import gfx.SpriteLibrary;
+import input.mouse.action.TilePlacer;
 import map.Tile;
 import ui.Alignment;
 import ui.HorizontalContainer;
@@ -14,8 +15,7 @@ import ui.UIContainer;
 import ui.UITabContainer;
 import ui.VerticalContainer;
 import ui.clickable.UICheckbox;
-import ui.clickable.UIHideButton;
-import ui.clickable.UITileToggle;
+import ui.clickable.UIToolToggle;
 
 public class UITileMenu extends VerticalContainer {
     public UITileMenu(Size windowSize, SpriteLibrary spriteLibrary, EditorSettings editorSettings) {
@@ -54,7 +54,7 @@ public class UITileMenu extends VerticalContainer {
                 Tile indexedTile = Tile.copyOf(tile);
                 //Convert from two dimensional array to one
                 indexedTile.setTileIndex(x * tilesX + y);
-                UITileToggle toggle = new UITileToggle(indexedTile);
+                UIToolToggle toggle = new UIToolToggle(indexedTile.getSprite(), new TilePlacer(indexedTile));
                 column.addUIComponent(toggle);
             }
 

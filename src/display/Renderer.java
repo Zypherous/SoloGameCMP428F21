@@ -3,6 +3,7 @@ package display;
 import java.awt.Color;
 import java.awt.Graphics;
 
+import core.CollisionBox;
 import core.Position;
 import game.Game;
 import map.GameMap;
@@ -40,14 +41,19 @@ public class Renderer {
 		        //  elements that return true without modifying original collection
 		        // here we are filtering the positions of the gameobjects that are not in view of the camera in order to not render them.
 				.filter(gameObject -> camera.isInView(gameObject))
-				.forEach(gameObject -> graphics.drawImage(
-				gameObject.getSprite(),
-				(int)gameObject.getRenderPosition(camera).getX(),
-				(int)gameObject.getRenderPosition(camera).getY(),
-				gameObject.getSize().getWidth(),
-				gameObject.getSize().getHeight(), 
-				null
-				));
+				.forEach(gameObject -> {
+					graphics.drawImage(
+						gameObject.getSprite(),
+						(int)gameObject.getRenderPosition(camera).getX(),
+						(int)gameObject.getRenderPosition(camera).getY(),
+						gameObject.getSize().getWidth(),
+						gameObject.getSize().getHeight(), 
+						null
+					);
+					if(state.getGameSettings().getRenderSettings().getCollisionBox().getValue()) {
+						drawCollisionBox(gameObject.getCollisionBox(), graphics, camera);
+					}
+				});
 		
 
 		
@@ -97,7 +103,9 @@ public class Renderer {
 		}
 	}
 	
-	
+	private void drawCollisionBox(CollisionBox collisionBox, Graphics graphics, Camera camera) {
+        collisionBox.getBounds().draw(graphics,Color.red);
+    }
 	
 }
 

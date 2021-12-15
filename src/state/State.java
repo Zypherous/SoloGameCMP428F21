@@ -13,6 +13,7 @@ import display.Camera;
 import entity.GameObject;
 import entity.Player;
 import entity.Rect;
+import entity.Scenery;
 import game.Game;
 import game.Time;
 import game.settings.GameSettings;
@@ -203,7 +204,13 @@ public abstract class State {
 	
 	public void loadGameMap() {
         gameMap = MapIO.load(spriteLibrary);
+        gameObjects.addAll(gameMap.getSceneryList());
     }
+	
+	public void saveGameMap() {
+		gameMap.setSceneryList(getGameObjectsOfClass(Scenery.class));
+		MapIO.save(gameMap);
+	}
 	
 }
 	

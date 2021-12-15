@@ -11,6 +11,7 @@ import map.Tile;
 import state.State;
 import state.editor.ui.UIButtonMenu;
 import state.editor.ui.UIRenderSettings;
+import state.editor.ui.UISceneryMenu;
 import state.editor.ui.UITileMenu;
 import ui.Alignment;
 import ui.UITabContainer;
@@ -28,7 +29,7 @@ public class EditorState extends State {
         UITabContainer toolsContainer = new UITabContainer(windowSize);
         toolsContainer.setAlignment(new Alignment(Alignment.Position.START, Alignment.Position.END));
         toolsContainer.addTab("TILES", new UITileMenu(windowSize, spriteLibrary, gameSettings.getEditorSettings()));
-        toolsContainer.addTab("SCENERY", new UIRenderSettings(windowSize, gameSettings.getRenderSettings(), gameMap));
+        toolsContainer.addTab("SCENERY", new UISceneryMenu(windowSize, spriteLibrary));
         uiContainers.add(toolsContainer);
 //        audioPlayer.playMusic("Menu.wav");
     }

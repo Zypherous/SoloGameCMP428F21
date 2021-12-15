@@ -1,25 +1,28 @@
 package ui.clickable;
 
+import java.awt.AlphaComposite;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+
 import gfx.ImageUtils;
-import input.mouse.action.TilePlacer;
-import map.Tile;
+import input.mouse.action.MouseAction;
 import state.State;
 import ui.UIImage;
 
-import java.awt.*;
-import java.awt.image.BufferedImage;
-
-public class UITileToggle extends UIClickable {
+public class UIToolToggle extends UIClickable {
 
     private UIImage image;
     private BufferedImage activeSprite;
-    private TilePlacer tilePlacer;
+    private MouseAction mouseAction;
     private boolean active;
 
-    public UITileToggle(Tile tile) {					// Scales the tile menu tiles
-        image = new UIImage(tile.getSprite()/*.getScaledInstance(32, 32, Image.SCALE_AREA_AVERAGING)*/);
-        tilePlacer = new TilePlacer(tile);
-        size = image.getSize();
+    public UIToolToggle(Image image, MouseAction mouseAction) {					// Scales the tile menu tiles
+        this.image = new UIImage(image/*.getScaledInstance(32, 32, Image.SCALE_AREA_AVERAGING)*/);
+        this.mouseAction = mouseAction;
+        size = this.image.getSize();
         generateActiveSprite();
     }
 
@@ -49,7 +52,7 @@ public class UITileToggle extends UIClickable {
     @Override
     public void update(State state) {
         super.update(state);
-        active = state.getMouseHandler().getPrimaryButtonAction().equals(tilePlacer);
+        active = state.getMouseHandler().getPrimaryButtonAction().equals(mouseAction);
     }
 
     @Override
@@ -59,7 +62,7 @@ public class UITileToggle extends UIClickable {
 
     @Override
     public void onClick(State state) {
-        state.getMouseHandler().setPrimaryButtonAction(tilePlacer);
+        state.getMouseHandler().setPrimaryButtonAction(mouseAction);
     }
 
     @Override

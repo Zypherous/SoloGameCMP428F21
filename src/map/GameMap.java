@@ -1,10 +1,13 @@
 package map;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import core.Position;
 import core.Size;
 import display.Camera;
+import entity.Scenery;
 import game.Game;
 import gfx.SpriteLibrary;
 import io.Persistable;
@@ -14,11 +17,15 @@ public class GameMap implements Persistable {
 
 	private static final int RENDER_BUFFER = 2;
     private Tile[][] tiles;
+    private List<Scenery> sceneryList;
 
     
-    public GameMap() {};
+    public GameMap() {
+    	sceneryList = new ArrayList<>();
+    };
     public GameMap(Size size, SpriteLibrary spriteLibrary) {
         tiles = new Tile[size.getWidth()][size.getHeight()];
+        sceneryList = new ArrayList<>();
         initializeTiles(spriteLibrary);
     }
 
@@ -78,8 +85,18 @@ public class GameMap implements Persistable {
                 tile.reloadGraphics(spriteLibrary);
             }
         }
+        
+        sceneryList.forEach(scenery -> scenery.loadGraphics(spriteLibrary));
     }
     
+    
+    
+	public List<Scenery> getSceneryList() {
+		return sceneryList;
+	}
+	public void setSceneryList(List<Scenery> sceneryList) {
+		this.sceneryList = sceneryList;
+	}
 	@Override
 	public String serialize() {
 		StringBuilder stringBuilder = new StringBuilder();
@@ -99,6 +116,11 @@ public class GameMap implements Persistable {
 			}
 			stringBuilder.append(COLUMN_DELIMITER);
 		}
+		stringBuilder.append(SECTION_DELIMITER);
+		sceneryList.forEach(scenery->{
+			stringBuilder.append(scenery.serialize());
+			stringBuilder.append(COLUMN_DELIMITER);
+		});
 		
 		return stringBuilder.toString();
 	}
@@ -107,14 +129,16 @@ public class GameMap implements Persistable {
 	public void applySerializedData(String serializedData) {
 		// Grabs data and splits based on delimiter set
 		String[] tokens = serializedData.split(DELIMITER);
+		String[] sections = serializedData.split(SECTION_DELIMITER);
+		
 		//tiles length is the first data after the class name, x  and y are immediately after one another
 		tiles = new Tile[Integer.parseInt(tokens[1])][Integer.parseInt(tokens[2])];
 		// Tiles section is nect, split based on section delimiter
-		String tileSection = serializedData.split(SECTION_DELIMITER)[1];
+		String tileSection = sections[1];
 		// Splits columns of tiles (y) in each row
-		 String[] columns = tileSection.split(COLUMN_DELIMITER);
+		String[] columns = tileSection.split(COLUMN_DELIMITER);
 		// goes through the columns and grabs tiles
-		 for(int x = 0; x < tiles.length; x++) {
+		for(int x = 0; x < tiles.length; x++) {
 	            String[] serializedTiles = columns[x].split(LIST_DELIMITER);
 	            for(int y = 0; y < tiles[0].length; y++) {
 	                Tile tile = new Tile();
@@ -122,8 +146,17 @@ public class GameMap implements Persistable {
 
 	                tiles[x][y] = tile;
 	            }
-	        }
-				
+        }
+		 
+			if(sections.length >2) {
+				String scenerySection = sections[2];
+				String[] serializedSceneries = scenerySection.split(COLUMN_DELIMITER);
+				for(String serializedScenery : serializedSceneries) {
+					Scenery scenery = new Scenery();
+					scenery.applySerializedData(serializedScenery);
+					sceneryList.add(scenery);
+				}
+			}
 	}
 
 }

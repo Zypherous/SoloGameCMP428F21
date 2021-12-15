@@ -28,7 +28,6 @@ public abstract class MovingEntity extends GameObject {
 
     protected Vector2D directionVector;
     
-    protected Size collisionBoxSize;
 
     public MovingEntity(EntityController entityController, SpriteLibrary spriteLibrary) {
         super();
@@ -37,7 +36,6 @@ public abstract class MovingEntity extends GameObject {
         this.direction = Direction.S;
         this.directionVector = new Vector2D(0,0);
         this.animationManager = new AnimationManager(spriteLibrary.getSpriteSheet("matt"));
-        this.collisionBoxSize = new Size(size.getWidth(), size.getHeight());
     }
 
     @Override
