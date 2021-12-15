@@ -70,18 +70,31 @@ public class Renderer {
 						Game.SPRITE_SIZE,
 						null
 						);
-				if(state.getGameSettings().getRenderSettings().getShouldRenderGrid().getValue()) {
-				graphics.setColor(Color.BLACK);
-				graphics.drawRect(
-						x * Game.SPRITE_SIZE - (int)state.getCamera().getPosition().getX(),
-						y * Game.SPRITE_SIZE - (int)state.getCamera().getPosition().getY(),
-						Game.SPRITE_SIZE,
-						Game.SPRITE_SIZE
-						);
-				}
+				
 			}
 		}
-		
+		//Refactored to draw lines instead of rects, lines along the x axis and lines along the y axis
+		// Before it would call drawRect for each grid position, with the lines its far less as a line
+		// can be drawn across entire map at once
+		if(state.getGameSettings().getRenderSettings().getShouldRenderGrid().getValue()) {
+			graphics.setColor(Color.BLACK);
+			for(int x = start.intX(); x< end.intX(); x++) {
+				graphics.drawLine(
+							x * Game.SPRITE_SIZE - camera.getPosition().intX(),
+							start.intY() * Game.SPRITE_SIZE - camera.getPosition().intY(),
+							x * Game.SPRITE_SIZE - camera.getPosition().intX(),
+							end.intY() * Game.SPRITE_SIZE  - camera.getPosition().intY()
+						);
+			}
+			for(int y = start.intY(); y< end.intY(); y++) {
+				graphics.drawLine(
+							start.intX() * Game.SPRITE_SIZE - camera.getPosition().intX(),
+							y * Game.SPRITE_SIZE - camera.getPosition().intY(),
+							end.intX() * Game.SPRITE_SIZE - camera.getPosition().intX(),
+							y * Game.SPRITE_SIZE  - camera.getPosition().intY()
+						);
+			}
+		}
 	}
 	
 	

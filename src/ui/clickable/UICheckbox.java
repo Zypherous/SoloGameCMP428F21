@@ -17,6 +17,8 @@ public class UICheckbox extends UIComponent {
         this.container = new HorizontalContainer(new Size(0, 0));
         container.addUIComponent(new Checkbox(setting));
         container.addUIComponent(new UIText(label));
+        container.setPadding(new Spacing(0));
+        setMargin(new Spacing(5, 0, 0, 0));
     }
 
     @Override

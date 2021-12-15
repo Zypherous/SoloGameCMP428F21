@@ -10,14 +10,17 @@ import java.awt.*;
 
 public class UIButton extends UIClickable {
 
-    private UIContainer container;
-    private UIText label;
+    protected UIContainer container;
+    protected UIText label;
 
-    private ClickAction clickAction;
+    protected ClickAction clickAction;
+    
+    protected Color backgroundColor;
 
     public UIButton(String label, ClickAction clickAction) {
         this.label = new UIText(label);
         this.clickAction = clickAction;
+        this.backgroundColor = Color.GRAY;
 
         container = new VerticalContainer(new Size(0, 0));
         container.setCenterChildren(true);
@@ -31,7 +34,7 @@ public class UIButton extends UIClickable {
         container.update(state);
         size = container.getSize();
 
-        Color color = Color.GRAY;
+        Color color = backgroundColor;
 
         if(hasFocus) {
             color = Color.LIGHT_GRAY;

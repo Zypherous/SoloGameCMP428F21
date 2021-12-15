@@ -3,6 +3,7 @@ package ui;
 import core.Size;
 import state.State;
 import ui.clickable.UIClickable;
+import ui.clickable.UIHideButton;
 
 import java.awt.*;
 
@@ -26,9 +27,13 @@ public class UITabContainer extends VerticalContainer {
 
         addUIComponent(tabContainer);
         addUIComponent(contentContainer);
+        tabContainer.addUIComponent(new UIHideButton(this, contentContainer));
+        
+        
     }
 
-    public void addTab(String label, UIContainer contents) {
+
+	public void addTab(String label, UIContainer contents) {
         UITab tab = new UITab(this, label, contents);
         tabContainer.addUIComponent(tab);
 
@@ -58,7 +63,7 @@ public class UITabContainer extends VerticalContainer {
             this.contents = contents;
 
             contents.setMargin(new Spacing(0));
-            contents.setPadding(new Spacing(0));
+            
 
             this.label = new VerticalContainer(new Size(0, 0));
             this.label.addUIComponent(new UIText(label));

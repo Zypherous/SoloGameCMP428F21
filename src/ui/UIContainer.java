@@ -1,14 +1,15 @@
 package ui;
 
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.util.ArrayList;
+import java.util.List;
+
 import core.Position;
 import core.Size;
 import gfx.ImageUtils;
 import state.State;
-
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-import java.util.List;
 
 public abstract class UIContainer extends UIComponent {
 
@@ -21,6 +22,8 @@ public abstract class UIContainer extends UIComponent {
     protected Size fixedSize;
 
     protected List<UIComponent> children;
+    //Cache image for UI optimization
+    protected Image sprite;
 
     public UIContainer(Size windowSize) {
         super();
@@ -73,8 +76,22 @@ public abstract class UIContainer extends UIComponent {
 
     @Override
     public Image getSprite() {
-        BufferedImage image = (BufferedImage) ImageUtils.createCompatibleImage(size, ImageUtils.ALPHA_BIT_MASKED);
-        Graphics2D graphics = image.createGraphics();
+    	return sprite;
+    }
+
+    @Override
+    public void update(State state) {
+        children.forEach(component -> component.update(state));
+        calculateSize();
+        calculatePosition();
+        if(state.getTime().secondsDivisbleBy(0.01)) {
+        	generateSprite();
+        }
+    }
+
+    private void generateSprite() {
+        sprite = ImageUtils.createCompatibleImage(size, ImageUtils.ALPHA_BIT_MASKED);
+        Graphics2D graphics = (Graphics2D) sprite.getGraphics();
 
         graphics.setColor(backgroundColor);
         graphics.fillRect(0, 0, size.getWidth(), size.getHeight());
@@ -89,17 +106,10 @@ public abstract class UIContainer extends UIComponent {
         }
 
         graphics.dispose();
-        return image;
-    }
+        		
+	}
 
-    @Override
-    public void update(State state) {
-        children.forEach(component -> component.update(state));
-        calculateSize();
-        calculatePosition();
-    }
-
-    public void addUIComponent(UIComponent uiComponent) {
+	public void addUIComponent(UIComponent uiComponent) {
         children.add(uiComponent);
         uiComponent.setParent(this);
     }
@@ -127,4 +137,12 @@ public abstract class UIContainer extends UIComponent {
 	   protected void clear() {
 	        children.clear();
 	    }
+
+	public void removeComponent(UIComponent component) {
+		this.children.remove(component);
+	}
+
+	public boolean hasComponent(UIComponent component) {
+		return children.contains(component);
+	}
 }

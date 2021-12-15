@@ -16,8 +16,8 @@ public class UITileToggle extends UIClickable {
     private TilePlacer tilePlacer;
     private boolean active;
 
-    public UITileToggle(Tile tile) {
-        image = new UIImage(tile.getSprite().getScaledInstance(32, 32, Image.SCALE_AREA_AVERAGING));
+    public UITileToggle(Tile tile) {					// Scales the tile menu tiles
+        image = new UIImage(tile.getSprite()/*.getScaledInstance(32, 32, Image.SCALE_AREA_AVERAGING)*/);
         tilePlacer = new TilePlacer(tile);
         size = image.getSize();
         generateActiveSprite();

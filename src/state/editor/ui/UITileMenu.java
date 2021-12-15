@@ -10,11 +10,11 @@ import map.Tile;
 import ui.Alignment;
 import ui.HorizontalContainer;
 import ui.Spacing;
-import ui.UIComponent;
 import ui.UIContainer;
 import ui.UITabContainer;
 import ui.VerticalContainer;
 import ui.clickable.UICheckbox;
+import ui.clickable.UIHideButton;
 import ui.clickable.UITileToggle;
 
 public class UITileMenu extends VerticalContainer {
@@ -22,19 +22,21 @@ public class UITileMenu extends VerticalContainer {
         super(windowSize);
         setBackgroundColor(Color.DARK_GRAY);
         setAlignment(new Alignment(Alignment.Position.START, Alignment.Position.END));
+        setPadding(new Spacing(5));
 
         UITabContainer tileContainer = new UITabContainer(windowSize);
-        tileContainer.addUIComponent(new UITileToggle(new Tile(spriteLibrary, "grass")));
-        tileContainer.addUIComponent(getTileSet(spriteLibrary, "concrete"));
-        tileContainer.addUIComponent(getTileSet(spriteLibrary, "dirt"));
-        tileContainer.addUIComponent(getTileSet(spriteLibrary, "dungeon"));
-        tileContainer.addUIComponent(getTileSet(spriteLibrary, "water"));
+        tileContainer.addTab("grass",getTileSet(spriteLibrary, "grass"));
+        tileContainer.addTab("concrete",getTileSet(spriteLibrary, "concrete"));
+        tileContainer.addTab("dirt",getTileSet(spriteLibrary, "dirt"));
+        tileContainer.addTab("dungeon",getTileSet(spriteLibrary, "dungeon1"));
+        tileContainer.addTab("water",getTileSet(spriteLibrary, "water"));
+        tileContainer.setPadding(new Spacing(0));
         
-        addUIComponent(new UICheckbox("Autoile", editorSettings.getAutotile()));
         addUIComponent(tileContainer);
+        addUIComponent(new UICheckbox("Autoile", editorSettings.getAutotile())); 
     }
 
-    private UIComponent getTileSet(SpriteLibrary spriteLibrary, String tileset) {
+    private UIContainer getTileSet(SpriteLibrary spriteLibrary, String tileset) {
         UIContainer main = new HorizontalContainer(new Size(0, 0));
         main.setMargin(new Spacing(0));
         main.setPadding(new Spacing(0));

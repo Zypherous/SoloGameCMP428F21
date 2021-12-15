@@ -18,7 +18,7 @@ public class Tile implements Persistable {
 
 	public Tile() {}
     public Tile(SpriteLibrary spriteLibrary) {
-    	this(spriteLibrary, "water");
+    	this(spriteLibrary, "grass");
     }
     public Tile(SpriteLibrary spriteLibrary, String tileName) {
         this.image = spriteLibrary.getImage(tileName);
