@@ -53,8 +53,7 @@ public class GameState extends State {
     	defeatConditions = List.of(()-> (float)getNumberOfSick() / getNumberOfNPC() > 0.25);
     }
 	private void initializeCharacters() {
-    	SelectionCircle sc = new SelectionCircle();
-        Player player = new Player(new PlayerController(input), spriteLibrary,  new Size(64,64), sc);
+        Player player = new Player(new PlayerController(input), spriteLibrary,  new Size(64,64));
         initializeNPCs(50);
         
 //        List<GameObject> listOf = new ArrayList<>();
@@ -62,8 +61,6 @@ public class GameState extends State {
         gameObjects.add(player);
         camera.focusOn(player);
 
-        sc.parent(player);
-        gameObjects.add(sc);
         play = player;     
         makeNumberOfNPCsSick(1);
     }

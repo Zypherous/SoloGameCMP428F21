@@ -19,8 +19,8 @@ public class UISceneryMenu extends HorizontalContainer{
 				"pinetree",
 				new Size(64, 93),
 				new Position(32, 64),
-				new Size(40, 24),
-				new Position(0,0),
+				new Size(50, 24),
+				new Position(24,0),
 				false,
 				spriteLibrary
 		))));

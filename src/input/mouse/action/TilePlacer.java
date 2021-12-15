@@ -110,5 +110,11 @@ public class TilePlacer extends MouseAction {
 		}
 		return stringBuilder.toString();
 	}
+
+	@Override
+	public void cleanUp() {
+		// TODO Auto-generated method stub
+		
+	}
     
 }

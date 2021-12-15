@@ -39,4 +39,10 @@ public class SceneryPlacer extends MouseAction {
 		return preview;
 	}
 
+	@Override
+	public void cleanUp() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

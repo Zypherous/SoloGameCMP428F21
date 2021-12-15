@@ -10,21 +10,49 @@ import java.util.Optional;
 public class MouseHandler {
 
     private MouseAction primaryButtonAction;
+    private MouseAction wheelMouseButtonAction;
+    private MouseAction rightMouseButtonAction;
     private MouseConsumer activeConsumer;
 
     public void update(State state) {
         final Input input = state.getInput();
 
         handlePrimaryButton(state);
+        handleRightButton(state);
+        handleWheelButton(state);
         handleActiveConsumer(state, input);
 
         cleanUp(input);
     }
 
+    
     private void handlePrimaryButton(State state) {
         if(primaryButtonAction != null) {
             setActiveConsumer(primaryButtonAction);
             primaryButtonAction.update(state);
+        }
+    }
+    private void handleRightButton(State state) {
+        if(rightMouseButtonAction != null) {
+//            setActiveConsumer(rightMouseButtonAction);
+            rightMouseButtonAction.update(state);
+            if(state.getInput().isRightMouseClicked()) {
+            	rightMouseButtonAction.onClick(state);
+            }
+            else if(state.getInput().isRightMouseClicked()){
+            	rightMouseButtonAction.onDrag(state);
+            }
+        }
+    }private void handleWheelButton(State state) {
+        if(wheelMouseButtonAction != null) {
+//            setActiveConsumer(wheelMouseButtonAction);
+            wheelMouseButtonAction.update(state);
+            if(state.getInput().isWheelMouseClicked()) {
+            	wheelMouseButtonAction.onClick(state);
+            }
+            else if(state.getInput().isWheelMouseClicked()){
+            	wheelMouseButtonAction.onDrag(state);
+            }
         }
     }
 
@@ -71,4 +99,26 @@ public class MouseHandler {
 	 public MouseAction getPrimaryButtonAction() {
         return primaryButtonAction;
     }
+
+
+	public MouseAction getWheelMouseButtonAction() {
+		return wheelMouseButtonAction;
+	}
+
+
+	public void setWheelMouseButtonAction(MouseAction wheelMouseButtonAction) {
+		this.wheelMouseButtonAction = wheelMouseButtonAction;
+	}
+
+
+	public MouseAction getRightMouseButtonAction() {
+		return rightMouseButtonAction;
+	}
+
+
+	public void setRightMouseButtonAction(MouseAction rightMouseButtonAction) {
+		this.rightMouseButtonAction = rightMouseButtonAction;
+	}
+	
+	 
 }

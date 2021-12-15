@@ -42,8 +42,8 @@ public class Scenery extends GameObject implements Persistable{
 		copy.position = Position.copyOf(scenery.position);
 		copy.size = Size.copyOf(scenery.size);
 		copy.renderOffset = Position.copyOf(scenery.renderOffset);
-		copy.collisionBoxSize = Size.copyOf(scenery.collisionBoxSize);
 		copy.collisionBoxOffset = Position.copyOf(scenery.collisionBoxOffset);
+		copy.collisionBoxSize = Size.copyOf(scenery.collisionBoxSize);
 		copy.sprite = scenery.sprite;
 		copy.walkable = scenery.walkable;
 		return copy;
@@ -63,6 +63,7 @@ public class Scenery extends GameObject implements Persistable{
 	@Override
 	public CollisionBox getCollisionBox() {
 		Position position = Position.copyOf(getPosition());
+		position.subtract(collisionBoxOffset);
         return new CollisionBox(
             new Rect(
                 (int)position.getX() ,

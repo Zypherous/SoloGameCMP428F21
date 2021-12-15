@@ -5,6 +5,7 @@ import java.awt.Graphics;
 
 import core.CollisionBox;
 import core.Position;
+import entity.GameObject;
 import game.Game;
 import map.GameMap;
 import state.State;
@@ -42,14 +43,7 @@ public class Renderer {
 		        // here we are filtering the positions of the gameobjects that are not in view of the camera in order to not render them.
 				.filter(gameObject -> camera.isInView(gameObject))
 				.forEach(gameObject -> {
-					graphics.drawImage(
-						gameObject.getSprite(),
-						(int)gameObject.getRenderPosition(camera).getX(),
-						(int)gameObject.getRenderPosition(camera).getY(),
-						gameObject.getSize().getWidth(),
-						gameObject.getSize().getHeight(), 
-						null
-					);
+					renderGameObject(graphics, camera, gameObject);
 					if(state.getGameSettings().getRenderSettings().getCollisionBox().getValue()) {
 						drawCollisionBox(gameObject.getCollisionBox(), graphics, camera);
 					}
@@ -57,6 +51,19 @@ public class Renderer {
 		
 
 		
+	}
+
+	// Draws the attachments from each of the individiual gameobjects
+	private void renderGameObject(Graphics graphics, Camera camera, GameObject gameObject) {
+		gameObject.getAttachments().forEach(attachment -> renderGameObject(graphics,camera,attachment));
+		graphics.drawImage(
+			gameObject.getSprite(),
+			(int)gameObject.getRenderPosition(camera).getX(),
+			(int)gameObject.getRenderPosition(camera).getY(),
+			gameObject.getSize().getWidth(),
+			gameObject.getSize().getHeight(), 
+			null
+		);
 	}
 
 	private void renderMap(State state, Graphics graphics) {
@@ -102,11 +109,19 @@ public class Renderer {
 			}
 		}
 	}
-	
 	private void drawCollisionBox(CollisionBox collisionBox, Graphics graphics, Camera camera) {
-        collisionBox.getBounds().draw(graphics,Color.red);
+        graphics.setColor(Color.red);
+        graphics.drawRect(
+                (int) collisionBox.getBounds().getX() - camera.getPosition().intX(),
+                (int) collisionBox.getBounds().getY() - camera.getPosition().intY(),
+                (int) collisionBox.getBounds().getW(),
+                (int) collisionBox.getBounds().getH()
+        );
     }
-	
+//	private void drawCollisionBox(CollisionBox collisionBox, Graphics graphics, Camera camera) {
+//        collisionBox.getBounds().draw(graphics,Color.red);
+//    }
+//	
 }
 
 

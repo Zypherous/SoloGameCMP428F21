@@ -27,10 +27,10 @@ public class Player extends Humanoid{
 	private double targetRange;
 	private SelectionCircle selectionCircle;
 	
-	public Player(EntityController controller, SpriteLibrary spriteLibrary, Size size, SelectionCircle selectionCirlce) {
+	public Player(EntityController controller, SpriteLibrary spriteLibrary, Size size) {
 		super(controller, spriteLibrary);
 		this.size = size;
-		this.selectionCircle = selectionCirlce;
+		this.selectionCircle = new SelectionCircle();
 		
 		this.setPosition(new Position(1280/2,960 - Game.SPRITE_SIZE));
 		perform(new WalkInDirection(new Vector2D(0, -1)));
@@ -62,10 +62,16 @@ public class Player extends Humanoid{
         if(closestNPC.isPresent()) {
             NPC npc = closestNPC.get();
             if(!npc.equals(target)) {
-                selectionCircle.parent(npc);
-                target = npc;
+            	if(target != null) {
+            		target.detach(selectionCircle);
+            	}
+            	if(target != null) {
+            		target.detach(selectionCircle);
+            		target = npc;
+            	}
             }
-        } else {
+        } 
+        else {
             selectionCircle.clearParent();
             target = null;
         }
@@ -86,7 +92,12 @@ public class Player extends Humanoid{
 	}
 
 	@Override
-	public void handleCollision(GameObject other) {}
+	public void handleCollision(GameObject other) {
+		if(other instanceof Scenery && !((Scenery)other).isWalkable()) {
+            movement.stop(willCollideX(other), willCollideY(other));
+        }
+    
+	}
 		
 }	
 	

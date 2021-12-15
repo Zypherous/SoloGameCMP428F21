@@ -157,6 +157,9 @@ public abstract class State {
 	public void spawn(GameObject gameObject) {
         gameObjects.add(gameObject);
     }
+	public void despawn(GameObject gameObject) {
+		gameObjects.remove(gameObject);
+	}
 
 	public int getHealth() {
 		return health;

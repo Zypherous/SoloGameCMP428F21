@@ -5,6 +5,7 @@ import core.Size;
 import entity.Player;
 import game.settings.GameSettings;
 import input.Input;
+import input.mouse.action.ClearAction;
 import input.mouse.action.TilePlacer;
 import map.GameMap;
 import map.Tile;
@@ -22,7 +23,9 @@ public class EditorState extends State {
         gameMap = new GameMap(new Size(20,15), spriteLibrary);
         gameSettings.getRenderSettings().getShouldRenderGrid().setValue(true);
         mouseHandler.setPrimaryButtonAction(new TilePlacer(new Tile(spriteLibrary, "grass")));
-
+        mouseHandler.setRightMouseButtonAction(new ClearAction());
+//        mouseHandler.setWheelMouseButtonAction(new);
+        
         uiContainers.add(new UIButtonMenu(windowSize));
         uiContainers.add(new UIRenderSettings(windowSize, gameSettings.getRenderSettings(), gameMap));
         
