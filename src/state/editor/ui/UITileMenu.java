@@ -1,25 +1,37 @@
 package state.editor.ui;
 
+import java.awt.Color;
+
 import core.Size;
 import game.Game;
+import game.settings.EditorSettings;
 import gfx.SpriteLibrary;
 import map.Tile;
-import ui.*;
+import ui.Alignment;
+import ui.HorizontalContainer;
+import ui.Spacing;
+import ui.UIComponent;
+import ui.UIContainer;
+import ui.UITabContainer;
+import ui.VerticalContainer;
+import ui.clickable.UICheckbox;
 import ui.clickable.UITileToggle;
 
-import java.awt.*;
-
-public class UITileMenu extends HorizontalContainer {
-    public UITileMenu(Size windowSize, SpriteLibrary spriteLibrary) {
+public class UITileMenu extends VerticalContainer {
+    public UITileMenu(Size windowSize, SpriteLibrary spriteLibrary, EditorSettings editorSettings) {
         super(windowSize);
         setBackgroundColor(Color.DARK_GRAY);
         setAlignment(new Alignment(Alignment.Position.START, Alignment.Position.END));
 
-        addUIComponent(new UITileToggle(new Tile(spriteLibrary, "stonefloor")));
-        addUIComponent(getTileSet(spriteLibrary, "concrete"));
-        addUIComponent(getTileSet(spriteLibrary, "dirt"));
-        addUIComponent(getTileSet(spriteLibrary, "dungeon"));
-        addUIComponent(getTileSet(spriteLibrary, "spritesheet (1)"));
+        UITabContainer tileContainer = new UITabContainer(windowSize);
+        tileContainer.addUIComponent(new UITileToggle(new Tile(spriteLibrary, "grass")));
+        tileContainer.addUIComponent(getTileSet(spriteLibrary, "concrete"));
+        tileContainer.addUIComponent(getTileSet(spriteLibrary, "dirt"));
+        tileContainer.addUIComponent(getTileSet(spriteLibrary, "dungeon"));
+        tileContainer.addUIComponent(getTileSet(spriteLibrary, "water"));
+        
+        addUIComponent(new UICheckbox("Autoile", editorSettings.getAutotile()));
+        addUIComponent(tileContainer);
     }
 
     private UIComponent getTileSet(SpriteLibrary spriteLibrary, String tileset) {

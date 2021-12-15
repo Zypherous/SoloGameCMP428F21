@@ -15,13 +15,13 @@ import state.editor.ui.UITileMenu;
 public class EditorState extends State {
     public EditorState(Size windowSize, Input input, GameSettings gameSettings) {
         super(windowSize, input, gameSettings);
-        gameMap = new GameMap(new Size(16, 32), spriteLibrary);
+        gameMap = new GameMap(new Size(12, 12), spriteLibrary);
         gameSettings.getRenderSettings().getShouldRenderGrid().setValue(true);
-        mouseHandler.setPrimaryButtonAction(new TilePlacer(new Tile(spriteLibrary, "stonefloor")));
+        mouseHandler.setPrimaryButtonAction(new TilePlacer(new Tile(spriteLibrary, "grass")));
 
         uiContainers.add(new UIButtonMenu(windowSize));
         uiContainers.add(new UIRenderSettings(windowSize, gameSettings.getRenderSettings(), gameMap));
-        uiContainers.add(new UITileMenu(windowSize, spriteLibrary));
+        uiContainers.add(new UITileMenu(windowSize, spriteLibrary, gameSettings.getEditorSettings()));
         audioPlayer.playMusic("Menu.wav");
     }
 
