@@ -76,6 +76,12 @@ public class UISlider extends UIClickable{
 		this.value = Math.max(min, this.value);
 	}
 
+	@Override
+	public void onRelease(State state) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	
 	
 }

@@ -105,5 +105,11 @@ public class UITabContainer extends VerticalContainer {
         public UIContainer getContents() {
             return contents;
         }
+
+		@Override
+		public void onRelease(State state) {
+			// TODO Auto-generated method stub
+			
+		}
     }
 }

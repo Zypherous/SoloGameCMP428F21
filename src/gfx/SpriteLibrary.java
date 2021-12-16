@@ -22,6 +22,7 @@ public class SpriteLibrary {
         loadImages("/sprites/tiles");
         loadImages("/sprites/effects");
         loadImages("/sprites/scenery");
+        loadImages("/sprites/icons");
     }
 
     private void loadImages(String path) {

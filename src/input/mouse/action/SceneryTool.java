@@ -1,8 +1,9 @@
 package input.mouse.action;
 
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.HashSet;
 
 import core.Position;
 import entity.Scenery;
@@ -13,12 +14,15 @@ import ui.UIImage;
 public class SceneryTool  extends MouseAction{
 
 	private Position dragPosition;
-	private List<Scenery> selectedScenery;
+	
+	// Hashing collection that does not care about insertion order, only hash code. Fixes issue with List since List allows duplicates, can be solved in another way
+	// but for time this is easiest solution.
+	private Set<Scenery> selectedScenery;
 	
 	
 	
 	public SceneryTool() {
-		selectedScenery = new ArrayList<>();
+		selectedScenery = new HashSet<>();
 	}
 
 	@Override
@@ -32,9 +36,9 @@ public class SceneryTool  extends MouseAction{
 		// Just starting to drag
 		if(dragPosition == null) {
 			dragPosition = Position.copyOf(state.getInput().getMousePosition());
-			
-			cleanUp();
-			
+			if(!state.getInput().isCurrentlyPressed(KeyEvent.VK_SHIFT)) {
+				cleanUp();
+			}
 			Position mousePosition = Position.copyOf(state.getInput().getMousePosition());
 			mousePosition.add(state.getCamera().getPosition());
 			
@@ -71,9 +75,7 @@ public class SceneryTool  extends MouseAction{
 			dragPosition = null;
 		}
 		
-		if(state.getMouseHandler().getPrimaryButtonAction() != this) {
-			cleanUp();
-		}
+	
 	}
 
 	@Override
@@ -85,6 +87,11 @@ public class SceneryTool  extends MouseAction{
 	public void cleanUp() {
 		List.copyOf(selectedScenery).forEach(this::deselect);
 		
+	}
+
+	@Override
+	public void onRelease(State state) {
+		dragPosition = null;
 	}
 	
 	

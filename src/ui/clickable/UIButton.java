@@ -68,4 +68,10 @@ public class UIButton extends UIClickable {
     public Image getSprite() {
         return container.getSprite();
     }
+
+	@Override
+	public void onRelease(State state) {
+		// TODO Auto-generated method stub
+		
+	}
 }

@@ -7,7 +7,7 @@ public class ClearAction extends MouseAction{
 
 	@Override
 	public void onClick(State state) {
-		state.getMouseHandler().setPrimaryButtonAction(new SceneryTool());
+		state.getMouseHandler().switchPrimaryButtonAction(new SceneryTool());
 	}
 
 	@Override
@@ -30,6 +30,12 @@ public class ClearAction extends MouseAction{
 
 	@Override
 	public void cleanUp() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onRelease(State state) {
 		// TODO Auto-generated method stub
 		
 	}

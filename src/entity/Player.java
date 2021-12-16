@@ -62,18 +62,17 @@ public class Player extends Humanoid{
         if(closestNPC.isPresent()) {
             NPC npc = closestNPC.get();
             if(!npc.equals(target)) {
-            	if(target != null) {
-            		target.detach(selectionCircle);
-            	}
-            	if(target != null) {
-            		target.detach(selectionCircle);
-            		target = npc;
-            	}
+                if(target != null) {
+                    target.detach(selectionCircle);
+                }
+                npc.attach(selectionCircle);
+                target = npc;
             }
-        } 
-        else {
-            selectionCircle.clearParent();
-            target = null;
+        } else {
+            if(target != null) {
+                target.detach(selectionCircle);
+                target = null;
+            }
         }
     }
 	private Optional<NPC> findClosestNPC(State state) {
@@ -94,7 +93,7 @@ public class Player extends Humanoid{
 	@Override
 	public void handleCollision(GameObject other) {
 		if(other instanceof Scenery && !((Scenery)other).isWalkable()) {
-            movement.stop(willCollideX(other), willCollideY(other));
+            movement.stop(willCollideX(other.getCollisionBox()), willCollideY(other.getCollisionBox()));
         }
     
 	}

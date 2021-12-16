@@ -3,11 +3,12 @@ package ui.clickable;
 import java.awt.Color;
 
 import core.Size;
+import input.mouse.MouseConsumer;
 import state.State;
 import ui.UIComponent;
 import ui.UIContainer;
 
-public class UIHideButton extends UIButton {
+public class UIHideButton extends UIButton  {
 	
 	private UIContainer parentContainer;
 	private UIComponent componentToHide;

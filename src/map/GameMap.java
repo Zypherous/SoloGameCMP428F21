@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import core.CollisionBox;
 import core.Position;
 import core.Size;
 import display.Camera;
+import entity.Rect;
 import entity.Scenery;
 import game.Game;
 import gfx.SpriteLibrary;
@@ -51,9 +53,23 @@ public class GameMap implements Persistable {
 	public Position getRandomPosition() {
 		double x = Math.random() * tiles.length * Game.SPRITE_SIZE;
 		double y = Math.random() * tiles[0].length * Game.SPRITE_SIZE;
+		int gridX = (int) x/ Game.SPRITE_SIZE;
+		int gridY = (int) y/ Game.SPRITE_SIZE;
+		//recursive call if position unwalkable;
+		if(!getTile(gridX,gridY).isWalkable() || tileHadUnwalkableScenery(gridX, gridY) ) {
+			return getRandomPosition();
+		}
+		
 		return new Position (x, y);
 	}
 
+	// Checks if the scenery object collides with grid object to determine that the scenery is within that grid position
+	private boolean tileHadUnwalkableScenery(int gridX, int gridY) {
+		CollisionBox gridCollisionBox = getGridCollisionBox(gridX,gridY);
+		return sceneryList.stream()
+				.filter(scenery -> scenery.isWalkable())
+				.anyMatch(scenery -> scenery.getCollisionBox().collidesWith(gridCollisionBox));
+	}
 	public Position getViewableStartingGridPosition(Camera camera) {
 		
 		return new Position(
@@ -89,7 +105,31 @@ public class GameMap implements Persistable {
         sceneryList.forEach(scenery -> scenery.loadGraphics(spriteLibrary));
     }
     
-    
+    public List<CollisionBox> getCollidingUnwalkableTileBoxes(CollisionBox collisionBox) {
+        int gridX = (int) (collisionBox.getBounds().getX() / Game.SPRITE_SIZE);
+        int gridY = (int) (collisionBox.getBounds().getY() / Game.SPRITE_SIZE);
+
+        List<CollisionBox> collidingUnwalkableTileBoxes = new ArrayList<>();
+
+        for(int x = gridX - 1; x < gridX + 2; x++) {
+            for(int y = gridY - 1; y < gridY + 2; y++) {
+                if(gridWithinBounds(x, y) && !getTile(x, y).isWalkable()) {
+                    CollisionBox gridCollisionBox = getGridCollisionBox(x, y);
+                    if(collisionBox.collidesWith(gridCollisionBox)) {
+                        collidingUnwalkableTileBoxes.add(gridCollisionBox);
+                    }
+                }
+            }
+        }
+
+        return collidingUnwalkableTileBoxes;
+    }
+    private CollisionBox getGridCollisionBox(int x, int y) {
+        return new CollisionBox(new Rect(x * Game.SPRITE_SIZE, y * Game.SPRITE_SIZE, Game.SPRITE_SIZE, Game.SPRITE_SIZE));
+    }
+    public Tile getTile(int x, int y) {
+        return tiles[x][y];
+    }
     
 	public List<Scenery> getSceneryList() {
 		return sceneryList;

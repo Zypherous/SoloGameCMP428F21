@@ -89,5 +89,11 @@ public class UICheckbox extends UIComponent {
             graphics.dispose();
             return sprite;
         }
+
+		@Override
+		public void onRelease(State state) {
+			// TODO Auto-generated method stub
+			
+		}
     }
 }

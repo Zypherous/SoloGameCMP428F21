@@ -1,15 +1,22 @@
 package ui.clickable;
 
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import core.Position;
 import core.Size;
 import display.Camera;
+import entity.GameObject;
 import game.Game;
 import gfx.ImageUtils;
 import map.GameMap;
 import state.State;
-
-import java.awt.*;
-import java.awt.image.BufferedImage;
 
 public class UIMiniMap extends UIClickable {
 
@@ -19,6 +26,9 @@ public class UIMiniMap extends UIClickable {
     private Rectangle cameraViewBounds;
     private BufferedImage mapImage;
     private Color color;
+    
+    // To store images and improve the performance of minimap drawing
+    private Map<Image, Image> cachedScaledImages;
 
     public UIMiniMap(GameMap gameMap) {
         size = new Size(128, 128);
@@ -26,7 +36,8 @@ public class UIMiniMap extends UIClickable {
         color = Color.GRAY;
 
         calculateRatio(gameMap);
-        generateMap(gameMap);
+        cachedScaledImages = new HashMap<>();
+        generateMap(gameMap, List.of());  // Passes in an empty game List which can be instantiated this way
     }
 
     @Override
@@ -34,7 +45,7 @@ public class UIMiniMap extends UIClickable {
         super.update(state);
         // Four times in a second
         if(state.getTime().secondsDivisbleBy(0.25)) {
-        	generateMap(state.getGameMap());
+        	generateMap(state.getGameMap(), state.getGameObjects());
         }
         Camera camera = state.getCamera();
         cameraViewBounds = new Rectangle(
@@ -50,22 +61,49 @@ public class UIMiniMap extends UIClickable {
         }
     }
 
-    private void generateMap(GameMap gameMap) {
+    private void generateMap(GameMap gameMap, List<GameObject> gameObjects) {
         mapImage = (BufferedImage) ImageUtils.createCompatibleImage(size, ImageUtils.ALPHA_OPAQUE);
         Graphics2D graphics = mapImage.createGraphics();
 
         for(int x = 0; x < gameMap.getTiles().length; x++) {
             for(int y = 0; y < gameMap.getTiles()[0].length; y++) {
                 graphics.drawImage(
-                        gameMap.getTiles()[x][y].getSprite().getScaledInstance(pixelsPerGrid, pixelsPerGrid, Image.SCALE_AREA_AVERAGING),
+                		getScaledSprite( gameMap.getTiles()[x][y].getSprite()),
                         x * pixelsPerGrid + pixelOffset.intX(),
                         y * pixelsPerGrid + pixelOffset.intY(),
                         null
                 );
             }
         }
+        gameObjects.forEach(gameObject -> {
+            Position positionWithOffset = Position.copyOf(gameObject.getPosition());
+            positionWithOffset.subtract(gameObject.getRenderOffset());
+
+            graphics.drawImage(
+                    getScaledSprite(gameObject.getSprite()),
+                    (int) Math.round(positionWithOffset.getX() / Game.SPRITE_SIZE * pixelsPerGrid),
+                    (int) Math.round(positionWithOffset.getY() / Game.SPRITE_SIZE * pixelsPerGrid),
+                    null
+            );
+        });
     }
 
+    private Image getScaledSprite(Image sprite) {
+        if(cachedScaledImages.containsKey(sprite)) {
+            return cachedScaledImages.get(sprite);
+        }
+
+        Size scaledSize = new Size(
+                (sprite.getWidth(null) / Game.SPRITE_SIZE) * pixelsPerGrid,
+                (sprite.getHeight(null) / Game.SPRITE_SIZE) * pixelsPerGrid
+        );
+
+        Image scaledSprite = sprite.getScaledInstance(scaledSize.getWidth(), scaledSize.getHeight(), Image.SCALE_AREA_AVERAGING);
+        // Maps sprites to the scaled value
+        cachedScaledImages.put(sprite, scaledSprite);
+        return scaledSprite;
+    }
+    
     private void calculateRatio(GameMap gameMap) {
         ratio = Math.min(
                 size.getWidth() / (double) gameMap.getWidth(),
@@ -119,4 +157,10 @@ public class UIMiniMap extends UIClickable {
         graphics.dispose();
         return sprite;
     }
+
+	@Override
+	public void onRelease(State state) {
+		// TODO Auto-generated method stub
+		
+	}
 }

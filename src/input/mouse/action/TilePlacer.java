@@ -116,5 +116,11 @@ public class TilePlacer extends MouseAction {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void onRelease(State state) {
+		// TODO Auto-generated method stub
+		
+	}
     
 }

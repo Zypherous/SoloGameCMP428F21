@@ -45,14 +45,20 @@ public abstract class MovingEntity extends GameObject {
         animationManager.update(direction);
 
         handleCollisions(state);
+        handleTileCollisions(state);
         animationManager.playAnimation(decideAnimation());
 
         apply(movement);
     }
 
-    private void handleCollisions(State state) {
-        state.getCollidingGameObjects(this).forEach(this::handleCollision);
+    protected void handleTileCollisions(State state) {
+    	state.getGameMap().getCollidingUnwalkableTileBoxes(getCollisionBox())
+        .forEach(this::handleTileCollision);
     }
+
+    protected abstract void handleTileCollision(CollisionBox collisionBox);
+    
+	protected abstract void handleCollisions(State state);
 
     protected abstract void handleCollision(GameObject other);
 
@@ -91,8 +97,7 @@ public abstract class MovingEntity extends GameObject {
         return entityController;
     }
 
-    public boolean willCollideX(GameObject other) {
-        CollisionBox otherBox = other.getCollisionBox();
+    public boolean willCollideX(CollisionBox otherBox) {
         Position positionWithXApplied = Position.copyOf(position);
         positionWithXApplied.applyX(movement);
         positionWithXApplied.subtract(collisionBoxOffset);
@@ -100,12 +105,10 @@ public abstract class MovingEntity extends GameObject {
         return CollisionBox.of(positionWithXApplied, collisionBoxSize).collidesWith(otherBox);
     }
 
-    public boolean willCollideY(GameObject other) {
-        CollisionBox otherBox = other.getCollisionBox();
+    public boolean willCollideY(CollisionBox otherBox) {
         Position positionWithYApplied = Position.copyOf(position);
         positionWithYApplied.applyY(movement);
         positionWithYApplied.subtract(collisionBoxOffset);
-
 
         return CollisionBox.of(positionWithYApplied, collisionBoxSize).collidesWith(otherBox);
     }

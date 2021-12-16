@@ -45,4 +45,10 @@ public class SceneryPlacer extends MouseAction {
 		
 	}
 
+	@Override
+	public void onRelease(State state) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

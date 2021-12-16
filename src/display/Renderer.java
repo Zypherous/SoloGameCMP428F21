@@ -7,9 +7,9 @@ import core.CollisionBox;
 import core.Position;
 import entity.GameObject;
 import game.Game;
+import game.settings.RenderSettings;
 import map.GameMap;
 import state.State;
-import state.game.GameState;
 
 public class Renderer {
 //	private Image testImage = Toolkit.getDefaultToolkit().getImage("C:\\Users\\Jonat\\soloGame\\Resources\\Image\\Dungeon Crawl Stone Soup Full\\monster\\cyclops_old.png");
@@ -69,20 +69,27 @@ public class Renderer {
 	private void renderMap(State state, Graphics graphics) {
 		GameMap map = state.getGameMap();
 		Camera camera = state.getCamera();
-		
+		RenderSettings renderSettings = state.getGameSettings().getRenderSettings();
 		//		Tile[][] tiles = state.getGameMap().getTiles();
 		graphics.setColor(Color.LIGHT_GRAY);
 		Position start = map.getViewableStartingGridPosition(camera);
 		Position end = map.getviewableEndingGridPosition(camera);
 		for(int x = (int)start.getX(); x < (int)end.getX(); x++) {
 			for (int y = (int)start.getY(); y< (int)end.getY(); y++) {
+				int drawPositionX = x * Game.SPRITE_SIZE - (int)state.getCamera().getPosition().getX();
+				int drawPositionY = y * Game.SPRITE_SIZE - (int)state.getCamera().getPosition().getY();
 				graphics.drawImage(map.getTiles()[x][y].getSprite(),
-						x * Game.SPRITE_SIZE - (int)state.getCamera().getPosition().getX(),
-						y * Game.SPRITE_SIZE - (int)state.getCamera().getPosition().getY(),
+						drawPositionX,
+						drawPositionY,
 						Game.SPRITE_SIZE,
 						Game.SPRITE_SIZE,
 						null
 						);
+				if(renderSettings.getTileWalkability().getValue()) {
+					Color walkabilityOverlayColor = map.getTile(x, y).isWalkable() ? new Color(0, 255, 0 , 75): new Color(255,0,0,75);
+					graphics.setColor(walkabilityOverlayColor);
+					graphics.fillRect(drawPositionX, drawPositionY, Game.SPRITE_SIZE, Game.SPRITE_SIZE);
+				}
 				
 			}
 		}

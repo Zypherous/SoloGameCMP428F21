@@ -17,6 +17,7 @@ public class MenuState extends State {
         // Load map 
         gameMap = MapIO.load(spriteLibrary);
         gameSettings.getRenderSettings().getShouldRenderGrid().setValue(false);
+        gameSettings.getRenderSettings().getTileWalkability().setValue(false);
 
         uiContainers.add(new UIMainMenu(windowSize));
 //        audioPlayer.playMusic("MollysWorld.wav");

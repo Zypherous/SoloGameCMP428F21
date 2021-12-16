@@ -62,7 +62,7 @@ public class UIToolToggle extends UIClickable {
 
     @Override
     public void onClick(State state) {
-        state.getMouseHandler().setPrimaryButtonAction(mouseAction);
+        state.getMouseHandler().switchPrimaryButtonAction(mouseAction);
     }
 
     @Override
@@ -72,6 +72,25 @@ public class UIToolToggle extends UIClickable {
 
     @Override
     public Image getSprite() {
-        return active ? activeSprite : image.getSprite();
+    	if(active) {
+    		return activeSprite;
+    	}
+    	if(hasFocus) {
+    		Image imageWithFocus = ImageUtils.createCompatibleImage(image.getSize(), ImageUtils.ALPHA_OPAQUE);
+    		Graphics2D graphics =(Graphics2D) imageWithFocus.getGraphics();
+    		graphics.drawImage(image.getSprite(),0,0,null);
+    		graphics.setColor(new Color(255,255,255,75));
+    		graphics.fillRect(0, 0, image.getSize().getWidth(), image.getSize().getHeight());
+    		
+    		graphics.dispose();
+    		return  imageWithFocus;   		
+    	}
+        return  image.getSprite();
     }
+
+	@Override
+	public void onRelease(State state) {
+		// TODO Auto-generated method stub
+		
+	}
 }

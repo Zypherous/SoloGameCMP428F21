@@ -15,21 +15,26 @@ public class Tile implements Persistable {
 	private transient Image sprite;
 	private int tileIndex;
 	private String tileName;
+	private boolean walkable;
 
-	public Tile() {}
+	public Tile() {
+		walkable = true;
+	}
     public Tile(SpriteLibrary spriteLibrary) {
-    	this(spriteLibrary, "grass");
+    	this(spriteLibrary, "grass", true);
     }
-    public Tile(SpriteLibrary spriteLibrary, String tileName) {
+    public Tile(SpriteLibrary spriteLibrary, String tileName, boolean walkable) {
         this.image = spriteLibrary.getImage(tileName);
         this.tileName = tileName;
+        this.walkable = walkable;
         generateSprite();
     }
 
-    private Tile(Image image, int tileIndex, String tileName) {
+    private Tile(Image image, int tileIndex, String tileName, boolean walkable) {
         this.image = image;
         this.tileIndex = tileIndex;
         this.tileName = tileName;
+        this.walkable = walkable;
         generateSprite();
     }
     
@@ -37,9 +42,12 @@ public class Tile implements Persistable {
         return sprite;
     }
     public static Tile copyOf(Tile tile) {
-        return new Tile(tile.getImage(), tile.getTileIndex(), tile.getTileName());
+        return new Tile(tile.getImage(), tile.getTileIndex(), tile.getTileName(), tile.isWalkable());
     }
-    public int getTileIndex() {
+    public boolean isWalkable() {
+		return walkable;
+	}
+	public int getTileIndex() {
         return tileIndex;
     }
 
@@ -74,6 +82,8 @@ public class Tile implements Persistable {
 		stringBuilder.append(tileName);
 		stringBuilder.append(DELIMITER);
 		stringBuilder.append(tileIndex);
+		stringBuilder.append(DELIMITER);
+		stringBuilder.append(walkable);
 		return stringBuilder.toString();
 	}
 	@Override
@@ -81,6 +91,13 @@ public class Tile implements Persistable {
 		String[] tokens = serializedData.split(DELIMITER);
 		tileName = tokens[1];
 		tileIndex = Integer.parseInt(tokens[2]);
+		if(tokens.length > 3) {
+			walkable = Boolean.parseBoolean(tokens[3]);
+		}
+	}
+	public void setWalkable(boolean walkable) {
+		this.walkable = walkable;
+		
 	}
     
     
