@@ -34,7 +34,7 @@ public class Player extends Humanoid{
 		
 		this.setPosition(new Position(1280/2,960 - Game.SPRITE_SIZE));
 		perform(new WalkInDirection(new Vector2D(0, -1)));
-		animationManager = new AnimationManager(spriteLibrary.getSpriteSheet("dave"));
+		animationManager = new AnimationManager(spriteLibrary.getSpriteSheet("molly"));
 		
 		this.targetRange = Game.SPRITE_SIZE;
 		//TESTING RECT
