@@ -33,7 +33,6 @@ public class EditorState extends State {
 		mouseHandler.switchPrimaryButtonAction(new SceneryTool());
         mouseHandler.setRightMouseButtonAction(new ClearAction());
         mouseHandler.setWheelMouseButtonAction(new CameraMovement());
-        DrawRect drawRect = new DrawRect();
 	}
 
 	private void setUpUI(Size windowSize, GameSettings gameSettings) {

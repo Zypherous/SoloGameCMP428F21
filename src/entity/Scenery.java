@@ -59,6 +59,10 @@ public class Scenery extends GameObject implements Persistable{
 	public Image getSprite() {
 		return sprite;
 	}
+	
+	public String getName() {
+		return this.name;
+	}
 
 	@Override
 	public CollisionBox getCollisionBox() {

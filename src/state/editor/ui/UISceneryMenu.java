@@ -24,5 +24,14 @@ public class UISceneryMenu extends HorizontalContainer{
 				false,
 				spriteLibrary
 		))));
+		addUIComponent(new UIToolToggle(spriteLibrary.getImage("invisible"), new SceneryPlacer(new Scenery(
+				"invisible",
+				new Size(256, 64),
+				new Position(32, 64),
+				new Size(256, 64),
+				new Position(24,0),
+				false,
+				spriteLibrary
+				))));
 	}
 }

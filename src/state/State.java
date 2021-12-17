@@ -205,14 +205,17 @@ public abstract class State {
 		return mouseHandler;
 	}
 	
-	public void loadGameMap() {
-        gameMap = MapIO.load(spriteLibrary);
+	// Takes in the file path to load the file using the persistableIO
+	public void loadGameMap(String filePath) {
+		// Clear the game objects previously loaded to load new ones and not have too many in the list
+		gameObjects.clear();
+        gameMap = MapIO.load(spriteLibrary, filePath );
         gameObjects.addAll(gameMap.getSceneryList());
     }
 	
-	public void saveGameMap() {
+	public void saveGameMap(String filePath) {
 		gameMap.setSceneryList(getGameObjectsOfClass(Scenery.class));
-		MapIO.save(gameMap);
+		MapIO.save(gameMap, filePath);
 	}
 	
 }

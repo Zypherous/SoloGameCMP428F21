@@ -1,6 +1,7 @@
 package state.game;
 
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.List;
 
 import controller.NPCController;
@@ -9,12 +10,12 @@ import core.Condition;
 import core.Size;
 import entity.NPC;
 import entity.Player;
-import entity.SelectionCircle;
 import entity.humanoid.effect.Isolated;
 import entity.humanoid.effect.Sick;
 import game.Game;
 import game.settings.GameSettings;
 import input.Input;
+import io.MapIO;
 import map.GameMap;
 import state.State;
 import state.game.ui.UIGameTime;
@@ -32,26 +33,35 @@ public class GameState extends State {
 
 	private List<Condition> victoryConditions;
 	private List<Condition> defeatConditions;
+	private String [][] gameMaps;
 	private boolean playing;
+	int currentRoomX = 1;
+	int currentRoomY = 0;
 	
 	private Player play;
     public GameState(Size windowSize, Input input, GameSettings gameSettings) {
         super(windowSize, input, gameSettings);
-        gameMap = new GameMap(new Size(20, 15)/*(30,30)*/, spriteLibrary);
+//        gameMaps = new ArrayList();
+//        initializeGameMaps();
+        loadGameMap(getClass().getResource("/maps/start.wrl").getFile());
         gameSettings.getRenderSettings().getShouldRenderGrid().setValue(false);
         playing = true;
         
         initializeCharacters();
         initializeUI(windowSize);
-        initializeConditions();
+//        initializeConditions();
         
         audioPlayer.playMusic("MollysWorld.wav");
     }
     
-    private void initializeConditions() {
-    	victoryConditions = List.of(()-> getNumberOfSick() == 0);
-    	defeatConditions = List.of(()-> (float)getNumberOfSick() / getNumberOfNPC() > 0.25);
-    }
+    
+    // Code from tutorial that creates a win condition based on number of sick/healthy
+    // Not using this as the determination of my games win, it'll instead be the death of the
+    // big wolfman
+//    private void initializeConditions() {
+//    	victoryConditions = List.of(()-> getNumberOfSick() == 0);
+//    	defeatConditions = List.of(()-> (float)getNumberOfSick() / getNumberOfNPC() > 0.25);
+//    }
 	private void initializeCharacters() {
         Player player = new Player(new PlayerController(input), spriteLibrary,  new Size(64,64));
         initializeNPCs(5);
@@ -166,5 +176,16 @@ public class GameState extends State {
     }
     public long getNumberOfNPC() {
     	return getGameObjectsOfClass(NPC.class).size();
+    }
+    
+    private void initializeGameMaps() {
+    	gameMaps = new String[2][5];
+    	gameMaps [1][0] = "/maps/start.wrl";
+    	gameMaps [1][1] = "/maps/dungEnt.wrl";
+    	gameMaps [1][2] = "/maps/dungRoom.wrl";
+    	gameMaps [1][3] = "/maps/dungFinal.wrl";
+    	gameMaps [0][3] = "/maps/itemroom.wrl";
+    	gameMaps [1][4] = "/maps/boss.wrl";
+    	
     }
 }
