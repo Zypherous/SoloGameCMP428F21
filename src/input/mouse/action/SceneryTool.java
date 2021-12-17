@@ -55,7 +55,7 @@ public class SceneryTool  extends MouseAction{
 	}
 	
 	public void select(Scenery scenery) {
-		scenery.attach(new SelectionCircle(2));
+		scenery.attach(new SelectionCircle(4));
 		selectedScenery.add(scenery);
 	}
 	public void deselect(Scenery scenery) {

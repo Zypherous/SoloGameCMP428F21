@@ -6,6 +6,7 @@ import javax.swing.*;
 import game.Game;
 import input.Input;
 import state.State;
+import state.menu.MenuState;
 
 
 public class Display extends JFrame {
@@ -51,7 +52,9 @@ public class Display extends JFrame {
 		graphics.setFont(font);
 		graphics.setColor(Color.BLACK);
 		graphics.fillRect(0,0, canvas.getWidth(),canvas.getHeight());
-		
+	
+		drawMenuImage( graphics, state);
+	
 		renderer.render(state, graphics );
 		if(debug) {
 			debugRenderer.render(state, graphics);
@@ -63,5 +66,9 @@ public class Display extends JFrame {
 		bufferStrategy.show();
 		
 		
+	}
+	private void drawMenuImage(Graphics graphics,State state) {
+		Image splash = state.getSpriteLibrary().getImage("mollysworld");
+        graphics.drawImage(splash, 0, 0, 1280, 960, null);
 	}
 }

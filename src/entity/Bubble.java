@@ -19,7 +19,7 @@ public class Bubble extends MovingEntity {
         super(npcController, spriteLibrary);
         this.controller = npcController;
 
-        this.animationManager = new AnimationManager(new SpriteSheet(spriteLibrary.getImage("bubble")), false);
+        this.animationManager = new AnimationManager(new SpriteSheet(spriteLibrary.getImage("bubble")), false, 20);
         renderOffset = new Position(size.getWidth() / 2, size.getHeight() - 12);
         collisionBoxOffset = renderOffset;
     }

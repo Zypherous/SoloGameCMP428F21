@@ -54,7 +54,7 @@ public class GameState extends State {
     }
 	private void initializeCharacters() {
         Player player = new Player(new PlayerController(input), spriteLibrary,  new Size(64,64));
-        initializeNPCs(50);
+        initializeNPCs(5);
         
 //        List<GameObject> listOf = new ArrayList<>();
 //        listOf.add(player); 
@@ -87,7 +87,7 @@ public class GameState extends State {
 
 	private void initializeNPCs(int numberOfNPCs){
     	for(int i = 0; i < numberOfNPCs; i++) {
-    		NPC npc = new NPC(new NPCController(), spriteLibrary);
+    		NPC npc = new NPC(new NPCController(), spriteLibrary, 5);
     		npc.setPosition(gameMap.getRandomPosition());
     		gameObjects.add(npc);
     	}
@@ -97,14 +97,14 @@ public class GameState extends State {
 	public void update(Game game) {
 		super.update(game);
 		
-		if(playing) {
-			if(victoryConditions.stream().allMatch(Condition::isMet)) {
-				win();
-			}
-			if(defeatConditions.stream().allMatch(Condition::isMet)) {
-				lose();
-			}
-		}
+//		if(playing) {
+//			if(victoryConditions.stream().allMatch(Condition::isMet)) {
+//				win();
+//			}
+//			if(defeatConditions.stream().allMatch(Condition::isMet)) {
+//				lose();
+//			}
+//		}
 	}
 	
 	

@@ -9,10 +9,11 @@ import state.State;
 
 public class NPC extends Humanoid {
     private AIManager aiManager;
+    private int health;
 
-    public NPC(EntityController entityController, SpriteLibrary spriteLibrary) {
+    public NPC(EntityController entityController, SpriteLibrary spriteLibrary, int health) {
         super(entityController, spriteLibrary);
-        
+        this.health = health;
         aiManager = new AIManager();
     }
 

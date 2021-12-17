@@ -15,7 +15,7 @@ public class MenuState extends State {
         super(windowSize, input, gameSettings);
         
         // Load map 
-        gameMap = MapIO.load(spriteLibrary);
+//        gameMap = MapIO.load(spriteLibrary);
         gameSettings.getRenderSettings().getShouldRenderGrid().setValue(false);
         gameSettings.getRenderSettings().getTileWalkability().setValue(false);
 

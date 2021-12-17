@@ -35,7 +35,7 @@ public abstract class MovingEntity extends GameObject {
         this.movement = new Movement(2);
         this.direction = Direction.S;
         this.directionVector = new Vector2D(0,0);
-        this.animationManager = new AnimationManager(spriteLibrary.getSpriteSheet("matt"));
+        this.animationManager = new AnimationManager(spriteLibrary.getSpriteSheet("matt"), 20);
     }
 
     @Override

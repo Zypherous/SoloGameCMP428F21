@@ -7,6 +7,7 @@ import game.settings.GameSettings;
 import input.Input;
 import input.mouse.action.CameraMovement;
 import input.mouse.action.ClearAction;
+import input.mouse.action.DrawRect;
 import input.mouse.action.SceneryTool;
 import map.GameMap;
 import state.State;
@@ -32,6 +33,7 @@ public class EditorState extends State {
 		mouseHandler.switchPrimaryButtonAction(new SceneryTool());
         mouseHandler.setRightMouseButtonAction(new ClearAction());
         mouseHandler.setWheelMouseButtonAction(new CameraMovement());
+        DrawRect drawRect = new DrawRect();
 	}
 
 	private void setUpUI(Size windowSize, GameSettings gameSettings) {

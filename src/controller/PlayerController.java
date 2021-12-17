@@ -32,5 +32,6 @@ public class PlayerController implements EntityController{
 	public boolean isRequestingAction() {
 		return input.isPressed(KeyEvent.VK_SPACE);
 		}
+	
 
 }

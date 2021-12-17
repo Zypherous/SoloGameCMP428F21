@@ -7,6 +7,7 @@ import java.util.Optional;
 
 import controller.EntityController;
 import core.CollisionBox;
+import core.Direction;
 import core.Position;
 import core.Size;
 import entity.GameObject;
@@ -19,7 +20,7 @@ import state.State;
 
 public abstract class Humanoid extends MovingEntity {
     protected List<Effect> effects;
-    private static List<String> availableCharacters = new ArrayList<>(List.of( "matt", "melissa", "roger"));
+    private static List<String> availableCharacters = new ArrayList<>(List.of( "matt", "melissa", "roger", "wolfman"));
     protected Optional<Action> action;
 
     public Humanoid(EntityController entityController, SpriteLibrary spriteLibrary) {
@@ -28,7 +29,7 @@ public abstract class Humanoid extends MovingEntity {
         effects = new ArrayList<>();
         action = Optional.empty();
         
-        this.animationManager = new AnimationManager(spriteLibrary.getSpriteSheet(getRandomCharacter()));
+        this.animationManager = new AnimationManager(spriteLibrary.getSpriteSheet(getRandomCharacter()), 20);
 
 
         this.collisionBoxSize = new Size(16, 28);
@@ -127,5 +128,9 @@ public abstract class Humanoid extends MovingEntity {
 	protected void handleCollisions(State state) {
 		
 		
+	}
+
+	public Direction getDirection() {
+		return this.direction;
 	}
 }

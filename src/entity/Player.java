@@ -8,7 +8,7 @@ import core.Position;
 import core.Size;
 import core.Vector2D;
 import entity.humanoid.Humanoid;
-import entity.humanoid.action.BlowBubble;
+import entity.humanoid.action.Attack;
 import entity.humanoid.action.WalkInDirection;
 import entity.humanoid.effect.Caffeinated;
 import entity.humanoid.effect.Giant;
@@ -33,14 +33,14 @@ public class Player extends Humanoid{
 		this.selectionCircle = new SelectionCircle();
 		
 		this.setPosition(new Position(1280/2,960 - Game.SPRITE_SIZE));
-		perform(new WalkInDirection(new Vector2D(0, -1)));
-		animationManager = new AnimationManager(spriteLibrary.getSpriteSheet("molly"));
+//		perform(new WalkInDirection(new Vector2D(0, -1)));
+		animationManager = new AnimationManager(spriteLibrary.getSpriteSheet("molly"),20);
 		
 		this.targetRange = Game.SPRITE_SIZE;
 		//TESTING RECT
 //		this.setRect(new Rect((int)this.position.getX(), (int) this.position.getY(), this.size.getWidth(), this.getSize().getHeight(),0,0, camera));
 		effects.add(new Caffeinated());
-		effects.add(new Giant());
+//		effects.add(new Giant());
 	}
 	@Override
 	public void update(State state) {
@@ -52,7 +52,7 @@ public class Player extends Humanoid{
 	private void handleInput(State state) {
 		if(entityController.isRequestingAction()) {
 			if(target != null) {
-				this.perform(new BlowBubble(target));
+				this.perform(new Attack(target));
 			}
 		}
 	}

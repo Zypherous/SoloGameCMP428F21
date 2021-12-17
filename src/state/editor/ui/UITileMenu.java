@@ -32,6 +32,7 @@ public class UITileMenu extends VerticalContainer {
         tileContainer.addTab("concrete",getTileSet(spriteLibrary, "concrete", true));
         tileContainer.addTab("dirt",getTileSet(spriteLibrary, "dirt", true));
         tileContainer.addTab("dungeon",getTileSet(spriteLibrary, "dungeon1", true));
+        tileContainer.addTab("dungeon",getTileSet(spriteLibrary, "dungeonRoom", true));
         tileContainer.addTab("water",getTileSet(spriteLibrary, "water", false));
         tileContainer.setPadding(new Spacing(0));
         

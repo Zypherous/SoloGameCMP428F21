@@ -2,6 +2,7 @@ package entity;
 
 import controller.NPCController;
 import core.CollisionBox;
+import core.Direction;
 import core.Movement;
 import core.Position;
 import core.Vector2D;
@@ -20,7 +21,7 @@ public class Claw extends MovingEntity{
 	        this.controller = npcController;
 //	        this.player = this.parent;
 
-	        this.animationManager = new AnimationManager(new SpriteSheet(spriteLibrary.getImage("claw")), false);
+	        this.animationManager = new AnimationManager(new SpriteSheet(spriteLibrary.getImage("claw")), false,60);
 	        renderOffset = new Position(size.getWidth() / 2, size.getHeight() - 12);
 	        collisionBoxOffset = renderOffset;
 	    }
@@ -36,12 +37,12 @@ public class Claw extends MovingEntity{
 
 	    @Override
 	    protected void handleMovement() {
-//	    	if(!halted) {
-//	    		movement.add(new Vector2D(0,-0.5 ));
-//	    		// Since only one row in the sprite sheet
-//	    	}
-//	    	setHalted(false);
-//	    	direction = Direction.S;
+	    	if(!halted) {
+	    		movement.add(new Vector2D(0,-0.5 ));
+	    		// Since only one row in the sprite sheet
+	    	}
+	    	setHalted(false);
+	    	direction = Direction.S;
 	    }
 
 	    @Override
