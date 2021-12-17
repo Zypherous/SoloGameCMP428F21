@@ -30,7 +30,7 @@ public class UISceneryMenu extends HorizontalContainer{
 				new Position(32, 64),
 				new Size(256, 64),
 				new Position(24,0),
-				false,
+				true,
 				spriteLibrary
 				))));
 	}

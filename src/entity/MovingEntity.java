@@ -46,6 +46,7 @@ public abstract class MovingEntity extends GameObject {
 
         handleCollisions(state);
         handleTileCollisions(state);
+        handleSceneryCollisions(state);
         animationManager.playAnimation(decideAnimation());
 
         apply(movement);
@@ -54,6 +55,9 @@ public abstract class MovingEntity extends GameObject {
     protected void handleTileCollisions(State state) {
     	state.getGameMap().getCollidingUnwalkableTileBoxes(getCollisionBox())
         .forEach(this::handleTileCollision);
+    }
+    protected void handleSceneryCollisions(State state) {
+    	state.getGameMap().getSceneryList().forEach(scenery -> this.handleCollision(scenery));
     }
 
     protected abstract void handleTileCollision(CollisionBox collisionBox);

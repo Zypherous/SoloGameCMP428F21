@@ -41,8 +41,10 @@ public class GameState extends State {
 	private Player play;
     public GameState(Size windowSize, Input input, GameSettings gameSettings) {
         super(windowSize, input, gameSettings);
+        
+        gameMaps = new String[2][5];
 //        gameMaps = new ArrayList();
-//        initializeGameMaps();
+        initializeGameMaps();
         loadGameMap(getClass().getResource("/maps/start.wrl").getFile());
         gameSettings.getRenderSettings().getShouldRenderGrid().setValue(false);
         playing = true;
@@ -179,7 +181,7 @@ public class GameState extends State {
     }
     
     private void initializeGameMaps() {
-    	gameMaps = new String[2][5];
+    	
     	gameMaps [1][0] = "/maps/start.wrl";
     	gameMaps [1][1] = "/maps/dungEnt.wrl";
     	gameMaps [1][2] = "/maps/dungRoom.wrl";

@@ -33,14 +33,14 @@ public class Player extends Humanoid{
 		this.selectionCircle = new SelectionCircle();
 		this.state = state;
 		
-		this.setPosition(new Position(1280/2,960 - Game.SPRITE_SIZE));
+		this.setPosition(new Position(1280/2,960 - 3*Game.SPRITE_SIZE));
 //		perform(new WalkInDirection(new Vector2D(0, -1)));
 		animationManager = new AnimationManager(spriteLibrary.getSpriteSheet("molly"),20);
 		
 		this.targetRange = Game.SPRITE_SIZE;
 		//TESTING RECT
 //		this.setRect(new Rect((int)this.position.getX(), (int) this.position.getY(), this.size.getWidth(), this.getSize().getHeight(),0,0, camera));
-		effects.add(new Caffeinated());
+//		effects.add(new Caffeinated());
 //		effects.add(new Giant());
 	}
 	@Override
@@ -94,13 +94,14 @@ public class Player extends Humanoid{
 	@Override
 	public void handleCollision(GameObject other) {
 		if(other instanceof Scenery && !((Scenery)other).isWalkable()) {
+//			System.out.println(String.format("Line 97 : Player  COLLIDING WITH INVISIBLE atX:%d|Y:%d", other.getPosition().intX(), other.getPosition().intY()));
             movement.stop(willCollideX(other.getCollisionBox()), willCollideY(other.getCollisionBox()));
             if(other.getCollisionBox().getBounds().overlaps(this.getCollisionBox().getBounds())) {
             	this.apply(other.getCollisionBox().getBounds().pushBack(this.getCollisionBox().getBounds()));
             }
         }
-		if(other instanceof Scenery && ((Scenery)other).getName().equals("invisible")) {
-			System.out.println(String.format("Line 99 : Player  COLLIDING WITH INVISIBLE atX:%d|Y:%d", other.getPosition().intX(), other.getPosition().intY()));
+		if(other instanceof Scenery && ((Scenery)other).isWalkable() && ((Scenery)other).collidesWith(this)) {
+			System.out.println(String.format("Line 104 : Player  COLLIDING WITH INVISIBLE atX:%d|Y:%d", other.getPosition().intX(), other.getPosition().intY()));
 			if(position.intX() < 200) {
 				state.setCurrentRoomX(state.getCurrentRoomX()-1);
 				setPosition(new Position(18*Game.SPRITE_SIZE, state.getWindowSize().getHeight()/2));
@@ -119,7 +120,6 @@ public class Player extends Humanoid{
 				setPosition(new Position(state.getWindowSize().getWidth()/2, 2*Game.SPRITE_SIZE ));
 				
 			}
-			state.getGameObjects().clear();
 			state.loadGameMap(getClass().getResource(state.getGameMaps()[state.getCurrentRoomX()][state.getCurrentRoomY()]).getFile());
 		}
     
