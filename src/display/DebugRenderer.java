@@ -17,6 +17,7 @@ public class DebugRenderer {
 
     private void drawEffects(State state, Graphics graphics) {
     	Camera camera = state.getCamera();
+    	state.getGameMap().getSceneryList().forEach(scenery -> drawCollisionBox(scenery.getCollisionBox(),graphics, camera));
     	state.getGameObjectsOfClass(Humanoid.class).stream()
     	.forEach(humanoid -> {
     		drawCollisionBox(humanoid.getCollisionBox(),graphics,camera);

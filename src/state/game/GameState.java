@@ -63,7 +63,7 @@ public class GameState extends State {
 //    	defeatConditions = List.of(()-> (float)getNumberOfSick() / getNumberOfNPC() > 0.25);
 //    }
 	private void initializeCharacters() {
-        Player player = new Player(new PlayerController(input), spriteLibrary,  new Size(64,64));
+        Player player = new Player(new PlayerController(input), spriteLibrary,  new Size(64,64), this);
         initializeNPCs(5);
         
 //        List<GameObject> listOf = new ArrayList<>();
@@ -188,4 +188,31 @@ public class GameState extends State {
     	gameMaps [1][4] = "/maps/boss.wrl";
     	
     }
+
+
+	public int getCurrentRoomX() {
+		return currentRoomX;
+	}
+
+
+	public void setCurrentRoomX(int currentRoomX) {
+		this.currentRoomX = currentRoomX;
+	}
+
+
+	public int getCurrentRoomY() {
+		return currentRoomY;
+	}
+
+
+	public void setCurrentRoomY(int currentRoomY) {
+		this.currentRoomY = currentRoomY;
+	}
+
+
+	public String[][] getGameMaps() {
+		return gameMaps;
+	}
+    
+    
 }

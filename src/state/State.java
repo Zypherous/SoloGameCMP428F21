@@ -217,6 +217,11 @@ public abstract class State {
 		gameMap.setSceneryList(getGameObjectsOfClass(Scenery.class));
 		MapIO.save(gameMap, filePath);
 	}
+
+
+	public Size getWindowSize() {
+		return windowSize;
+	}
 	
 }
 	

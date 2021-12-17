@@ -2,6 +2,8 @@ package entity;
 import java.awt.Color;
 import java.awt.Graphics;
 
+import core.Movement;
+import core.Vector2D;
 import display.Camera;
 
 // Class to represent Axis-Aligned Rectangles
@@ -171,5 +173,13 @@ public class Rect
 
 	public void setVelx(int velx) {
 		this.velx = velx;
+	}
+	
+	public Movement pushBack(Rect r) {
+		Vector2D direction = new Vector2D(w +r.w, h + r.h);
+		Movement movement = new Movement(5);
+		movement.add(direction);
+		return movement;
+		
 	}
 }
