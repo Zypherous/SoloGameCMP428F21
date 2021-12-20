@@ -25,7 +25,7 @@ public class UISlider extends UIClickable{
 	}
 
 	@Override
-	protected void onClick(State state) {
+	public void onClick(State state) {
 		
 	}
 
@@ -70,8 +70,16 @@ public class UISlider extends UIClickable{
 	}
 
 	@Override
-	protected void onDrag(State state) {
+	public void onDrag(State state) {
 		this.value = getValueAt(state.getInput().getMousePosition().getX());
+		this.value = Math.min(max, this.value);
+		this.value = Math.max(min, this.value);
+	}
+
+	@Override
+	public void onRelease(State state) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	

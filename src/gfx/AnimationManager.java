@@ -16,13 +16,13 @@ public class AnimationManager {
     private int directionIndex;
     private boolean looping;
 
-    public AnimationManager(SpriteSheet spriteSheet) {
-        this(spriteSheet, true);
+    public AnimationManager(SpriteSheet spriteSheet, int updatesPerFrame) {
+        this(spriteSheet, true, updatesPerFrame);
     }
 
-    public AnimationManager(SpriteSheet spriteSheet, boolean looping) {
+    public AnimationManager(SpriteSheet spriteSheet, boolean looping, int updatesPerFrame) {
         this.spriteSheet = spriteSheet;
-        this.updatesPerFrame = 20;
+        this.updatesPerFrame = updatesPerFrame;
         this.frameIndex = 0;
         this.currentFrameTime = 0;
         this.directionIndex = 0;

@@ -48,8 +48,8 @@ public class Camera {
             this.position.setY(objectPosition.getY() - windowSize.getHeight() / 2);
 
             clampWithinBounds(state);
-            calculateViewBounds();
         }
+        calculateViewBounds();
     }
 
     private void clampWithinBounds(State state) {
@@ -80,5 +80,9 @@ public class Camera {
 
     public Size getWindowSize() {
         return windowSize;
+    }
+
+    public void setPosition(Position position) {
+        this.position = position;
     }
 }

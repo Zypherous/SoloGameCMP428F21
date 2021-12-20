@@ -9,10 +9,11 @@ import state.State;
 
 public class NPC extends Humanoid {
     private AIManager aiManager;
+    private int health;
 
-    public NPC(EntityController entityController, SpriteLibrary spriteLibrary) {
+    public NPC(EntityController entityController, SpriteLibrary spriteLibrary, int health) {
         super(entityController, spriteLibrary);
-        
+        this.health = health;
         aiManager = new AIManager();
     }
 
@@ -24,8 +25,8 @@ public class NPC extends Humanoid {
 
     @Override
     protected void handleCollision(GameObject other) {
-        if(other instanceof Player) {
-            movement.stop(willCollideX(other), willCollideY(other));
+        if(other instanceof Player || (other instanceof Scenery && !((Scenery)other).isWalkable())) {
+            movement.stop(willCollideX(other.getCollisionBox()), willCollideY(other.getCollisionBox()));
         }
     }
     

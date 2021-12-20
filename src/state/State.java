@@ -13,11 +13,14 @@ import display.Camera;
 import entity.GameObject;
 import entity.Player;
 import entity.Rect;
+import entity.Scenery;
 import game.Game;
 import game.Time;
 import game.settings.GameSettings;
 import gfx.SpriteLibrary;
 import input.Input;
+import input.mouse.MouseHandler;
+import io.MapIO;
 import map.GameMap;
 import ui.UIContainer;
 
@@ -34,7 +37,9 @@ public abstract class State {
     protected Camera camera;
     protected Time time;
     protected Size windowSize;
-	private Random rand;
+	protected MouseHandler mouseHandler;
+    protected Random rand;
+	
     
 	private State nextState;
     
@@ -50,6 +55,7 @@ public abstract class State {
         gameObjects = new ArrayList<>();
         uiContainers = new ArrayList<>();
         spriteLibrary = new SpriteLibrary();
+        mouseHandler = new MouseHandler();
         camera = new Camera(windowSize);
 //        camera = new Camera(new Size(200, 200));
         time = new Time();
@@ -67,12 +73,11 @@ public abstract class State {
     	updateGameObjects();
     	List.copyOf(uiContainers).forEach(uiContainer -> uiContainer.update(this));
         camera.update(this);
-        handleMouseInput();
+        mouseHandler.update(this);
         if(nextState != null) {
             game.enterState(nextState);
         }
     }
-	
 	private void handleMouseInput() {
 
         if(input.isMouseClicked()) {
@@ -81,6 +86,7 @@ public abstract class State {
 
         input.clearMouseClick();
     }
+	
 	
 	private void updateGameObjects() {
         for(int i = 0; i < gameObjects.size(); i++) {
@@ -151,6 +157,9 @@ public abstract class State {
 	public void spawn(GameObject gameObject) {
         gameObjects.add(gameObject);
     }
+	public void despawn(GameObject gameObject) {
+		gameObjects.remove(gameObject);
+	}
 
 	public int getHealth() {
 		return health;
@@ -187,6 +196,31 @@ public abstract class State {
 	public void cleanUp() {
 		audioPlayer.clear();
 		
+	}
+
+
+
+
+	public MouseHandler getMouseHandler() {
+		return mouseHandler;
+	}
+	
+	// Takes in the file path to load the file using the persistableIO
+	public void loadGameMap(String filePath) {
+		// Clear the game objects previously loaded to load new ones and not have too many in the list
+		gameObjects.clear();
+        gameMap = MapIO.load(spriteLibrary, filePath );
+        gameObjects.addAll(gameMap.getSceneryList());
+    }
+	
+	public void saveGameMap(String filePath) {
+		gameMap.setSceneryList(getGameObjectsOfClass(Scenery.class));
+		MapIO.save(gameMap, filePath);
+	}
+
+
+	public Size getWindowSize() {
+		return windowSize;
 	}
 	
 }

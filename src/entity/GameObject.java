@@ -1,11 +1,14 @@
 package entity;
 import java.awt.Image;
+import java.util.ArrayList;
+import java.util.List;
 
 import core.CollisionBox;
 import core.Position;
 import core.Size;
 import display.Camera;
 import state.State;
+import ui.UIContainer;
 public abstract class GameObject {
 	protected Position position;
 	protected Position renderOffset;
@@ -18,6 +21,9 @@ public abstract class GameObject {
 	protected boolean dead;
 	protected GameObject parent;
 	protected int renderOrder;
+    protected Size collisionBoxSize;
+
+    protected List<GameObject> attachments;
 	
 	public GameObject() {
 		position = new Position(0, 0);
@@ -25,12 +31,14 @@ public abstract class GameObject {
 		renderOffset = new Position(0,0);
 		collisionBoxOffset = new Position(0,0);
 		
-		
+        this.collisionBoxSize = new Size(size.getWidth(), size.getHeight());
+
 		this.thisID = ID;
 		this.dead = false;
 //		this.rect = new Rect((int)this.getRenderPosition(camera).getX(),(int)this.getRenderPosition(camera).getY(),this.size.getWidth(),this.size.getHeight());
 		ID++;
 		renderOrder = 5;
+		attachments = new ArrayList<>();;
 	}
 	
 	
@@ -105,5 +113,31 @@ public abstract class GameObject {
 	public Position getCollisionBoxOffset() {
 		return collisionBoxOffset;
 	}
+
+	public void attach(GameObject gameObject) {
+		gameObject.setPosition(position);
+		attachments.add(gameObject);
+	}
+	public void detach(GameObject gameObject) {
+		attachments.remove(gameObject);
+	}
+	public void clearattachments() {
+		attachments.clear();
+	}
+
+
+	public List<GameObject> getAttachments() {
+		return attachments;
+	}
+
+
+	public void setAttachments(List<GameObject> attachments) {
+		this.attachments = attachments;
+	}
+
+	public void changePositionBY(Position position) {
+		this.position.add(position);
+	}
+	
 
 }

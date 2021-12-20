@@ -16,6 +16,7 @@ public class Caffeinated extends Effect {
     @Override
     public void update(State state, Humanoid humanoid) {
         super.update(state, humanoid);
+        
         humanoid.multiplySpeed(speedMultiplier);
     }
 }

@@ -11,6 +11,7 @@ import state.menu.MenuState;
 public class Game {
 	
 	public static int SPRITE_SIZE = 64;
+//	public static int SPRITE_SIZE = 32;
 	
 	private Display display;
 	

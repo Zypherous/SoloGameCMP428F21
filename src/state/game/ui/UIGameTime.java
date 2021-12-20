@@ -12,7 +12,7 @@ public class UIGameTime extends HorizontalContainer {
 
     public UIGameTime(Size windowSize) {
         super(windowSize);
-        this.alignment = new Alignment(Alignment.Position.CENTER, Alignment.Position.START);
+        this.alignment = new Alignment(Alignment.Position.END, Alignment.Position.START);
         this.gameTime = new UIText("");
         addUIComponent(gameTime);
     }

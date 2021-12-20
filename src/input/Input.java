@@ -9,6 +9,13 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener {
     private Position mousePosition;
     private boolean mouseClicked;
     private boolean mousePressed;
+    private boolean mouseReleased;
+    private boolean rightMouseClicked;
+    private boolean rightMousePressed;
+    private boolean rightMouseReleased;
+    private boolean wheelMouseClicked;
+    private boolean wheelMousePressed;
+    private boolean wheelMouseReleased;
 
     private boolean[] currentlyPressed;
     private boolean[] pressed;
@@ -31,9 +38,16 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener {
     public boolean isCurrentlyPressed(int keyCode) {
         return currentlyPressed[keyCode];
     }
+    
+    
 
     public void clearMouseClick() {
         mouseClicked = false;
+        rightMouseClicked = false;
+        wheelMouseClicked = false;
+        mouseReleased = false;
+        wheelMouseReleased = false;
+        rightMouseReleased = false;
     }
 
     public Position getMousePosition() {
@@ -48,7 +62,34 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener {
         return mousePressed;
     }
 
-    @Override
+    public boolean isRightMouseClicked() {
+		return rightMouseClicked;
+	}
+
+	public boolean isRightMousePressed() {
+		return rightMousePressed;
+	}
+
+	public boolean isWheelMouseClicked() {
+		return wheelMouseClicked;
+	}
+
+	public boolean isWheelMousePressed() {
+		return wheelMousePressed;
+	}
+
+	public boolean isMouseReleased() {
+		return mouseReleased;
+	}
+	public boolean isRightMouseReleased() {
+		return rightMouseReleased;
+	}
+
+	public boolean isWheelMouseReleased() {
+		return wheelMouseReleased;
+	}
+
+	@Override
     public void keyTyped(KeyEvent e) {}
 
     @Override
@@ -67,13 +108,30 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener {
 
     @Override
     public void mousePressed(MouseEvent e) {
-        mousePressed = true;
+    	mousePressed = e.getButton() == MouseEvent.BUTTON1;
+    	wheelMousePressed = e.getButton() == MouseEvent.BUTTON2;
+    	rightMousePressed = e.getButton() == MouseEvent.BUTTON3;
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        mouseClicked = true;
-        mousePressed = false;
+    	if(e.getButton() == MouseEvent.BUTTON1) {
+    		mouseClicked = true;
+    		mousePressed = false;
+    		mouseReleased = true;
+    	}
+    	if(e.getButton() == MouseEvent.BUTTON2) {
+    		wheelMouseClicked = true;
+    		wheelMousePressed = false;
+    		wheelMouseReleased = true;
+    	}
+    	if(e.getButton() == MouseEvent.BUTTON3) {
+    		rightMouseClicked = true;
+    		rightMousePressed = false;
+    		rightMouseReleased = true;
+    	}
+    	
+    	
     }
 
     @Override
@@ -91,4 +149,5 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener {
     public void mouseMoved(MouseEvent e) {
         mousePosition = new Position(e.getPoint().getX(), e.getPoint().getY());
     }
+
 }

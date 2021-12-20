@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Optional;
 
 import controller.EntityController;
+import core.CollisionBox;
+import core.Direction;
 import core.Position;
 import core.Size;
 import entity.GameObject;
@@ -16,9 +18,9 @@ import gfx.AnimationManager;
 import gfx.SpriteLibrary;
 import state.State;
 
-public class Humanoid extends MovingEntity {
+public abstract class Humanoid extends MovingEntity {
     protected List<Effect> effects;
-    private static List<String> availableCharacters = new ArrayList<>(List.of("dave", "matt", "melissa", "roger"));
+    private static List<String> availableCharacters = new ArrayList<>(List.of( "matt", "melissa", "roger", "wolfman"));
     protected Optional<Action> action;
 
     public Humanoid(EntityController entityController, SpriteLibrary spriteLibrary) {
@@ -27,7 +29,7 @@ public class Humanoid extends MovingEntity {
         effects = new ArrayList<>();
         action = Optional.empty();
         
-        this.animationManager = new AnimationManager(spriteLibrary.getSpriteSheet(getRandomCharacter()));
+        this.animationManager = new AnimationManager(spriteLibrary.getSpriteSheet(getRandomCharacter()), 20);
 
 
         this.collisionBoxSize = new Size(16, 28);
@@ -115,5 +117,20 @@ public class Humanoid extends MovingEntity {
 		 this.collisionBoxSize = new Size((int)(size.getWidth() * .25), (int)(size.getHeight() *.45));
 		 this.collisionBoxOffset = new Position(collisionBoxSize.getWidth() / 2, collisionBoxSize.getHeight());
 		 
+	}
+
+	@Override
+	protected void handleTileCollision(CollisionBox collisionBox) {
+		movement.stop(willCollideX(collisionBox), willCollideY(collisionBox));
+	}
+
+	@Override
+	protected void handleCollisions(State state) {
+		
+		
+	}
+
+	public Direction getDirection() {
+		return this.direction;
 	}
 }

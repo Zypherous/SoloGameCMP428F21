@@ -12,18 +12,15 @@ import ui.UIText;
 public class DebugRenderer {
 
     public void render(State state, Graphics graphics) {
-        Camera camera = state.getCamera();
-        state.getGameObjects().stream()
-                .filter(gameObject -> camera.isInView(gameObject))
-                .map(gameObject -> gameObject.getCollisionBox())
-                .forEach(collisionBox -> drawCollisionBox(collisionBox, graphics, camera));
         drawEffects(state, graphics);
     }
 
     private void drawEffects(State state, Graphics graphics) {
     	Camera camera = state.getCamera();
+    	state.getGameMap().getSceneryList().forEach(scenery -> drawCollisionBox(scenery.getCollisionBox(),graphics, camera));
     	state.getGameObjectsOfClass(Humanoid.class).stream()
     	.forEach(humanoid -> {
+    		drawCollisionBox(humanoid.getCollisionBox(),graphics,camera);
     		UIText effectsText = new UIText(
     					humanoid.getEffects().stream().map(effect -> effect.getClass().getSimpleName()).collect(Collectors.joining(","))
     					);
@@ -36,7 +33,13 @@ public class DebugRenderer {
     	});
     }
     private void drawCollisionBox(CollisionBox collisionBox, Graphics graphics, Camera camera) {
-        collisionBox.getBounds().draw(graphics,Color.red, camera);
+        graphics.setColor(Color.red);
+        graphics.drawRect(
+                (int) collisionBox.getBounds().getX() - camera.getPosition().intX(),
+                (int) collisionBox.getBounds().getY() - camera.getPosition().intY(),
+                (int) collisionBox.getBounds().getW(),
+                (int) collisionBox.getBounds().getH()
+        );
     }
 
 }
