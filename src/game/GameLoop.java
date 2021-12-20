@@ -58,7 +58,7 @@ public class GameLoop implements Runnable{
 				// If the accumulator has passed enough time, update the game.
 				while(accumulator > updateRate) {
 //					if(gamePaused == false({
-						update();
+					update();
 //					}
 					accumulator -= updateRate;
 				}

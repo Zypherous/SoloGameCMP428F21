@@ -4,12 +4,12 @@ import java.util.Comparator;
 import java.util.Optional;
 
 import controller.EntityController;
-import core.Movement;
 import core.Position;
 import core.Size;
 import entity.humanoid.Humanoid;
 import entity.humanoid.action.Attack;
 import entity.humanoid.effect.Caffeinated;
+import entity.humanoid.effect.Giant;
 import entity.humanoid.effect.Isolated;
 import game.Game;
 import gfx.AnimationManager;
@@ -26,13 +26,14 @@ public class Player extends Humanoid{
 	private double targetRange;
 	private SelectionCircle selectionCircle;
 	private GameState state;
+	private boolean transition;
 	
 	public Player(EntityController controller, SpriteLibrary spriteLibrary, Size size, GameState state) {
 		super(controller, spriteLibrary);
 		this.size = size;
 		this.selectionCircle = new SelectionCircle();
 		this.state = state;
-		
+		this.transition = false;
 		this.setPosition(new Position(1280/2,960 - 3*Game.SPRITE_SIZE));
 //		perform(new WalkInDirection(new Vector2D(0, -1)));
 		animationManager = new AnimationManager(spriteLibrary.getSpriteSheet("molly"),20);
@@ -96,31 +97,44 @@ public class Player extends Humanoid{
 		if(other instanceof Scenery && !((Scenery)other).isWalkable()) {
 //			System.out.println(String.format("Line 97 : Player  COLLIDING WITH INVISIBLE atX:%d|Y:%d", other.getPosition().intX(), other.getPosition().intY()));
             movement.stop(willCollideX(other.getCollisionBox()), willCollideY(other.getCollisionBox()));
-            if(other.getCollisionBox().getBounds().overlaps(this.getCollisionBox().getBounds())) {
-            	this.apply(other.getCollisionBox().getBounds().pushBack(this.getCollisionBox().getBounds()));
-            }
+//            if(other.getCollisionBox().getBounds().overlaps(this.getCollisionBox().getBounds())) {
+//            	this.apply(other.getCollisionBox().getBounds().pushBack(this.getCollisionBox().getBounds()));
+//            }
         }
 		if(other instanceof Scenery && ((Scenery)other).isWalkable() && ((Scenery)other).collidesWith(this)) {
 			System.out.println(String.format("Line 104 : Player  COLLIDING WITH INVISIBLE atX:%d|Y:%d", other.getPosition().intX(), other.getPosition().intY()));
-			if(position.intX() < 200) {
-				state.setCurrentRoomX(state.getCurrentRoomX()-1);
+			if(this.position.intX() < 150 && !this.transition) {
+				this.transition = true;
 				setPosition(new Position(18*Game.SPRITE_SIZE, state.getWindowSize().getHeight()/2));
+				state.setCurrentRoomX(state.getCurrentRoomX()-1);
 			}
-			if(position.intX() > 800) {
-				state.setCurrentRoomX(state.getCurrentRoomX()+1);
+			if(this.position.intX() > 1000 && !this.transition) {
+				this.transition = true;
 				setPosition(new Position(2*Game.SPRITE_SIZE, state.getWindowSize().getHeight()/2));
+				state.setCurrentRoomX(state.getCurrentRoomX()+1);
 			}
-			if(position.intY() < 200) {
-				state.setCurrentRoomX(state.getCurrentRoomY()-1);
-				setPosition(new Position(state.getWindowSize().getWidth()/2,15*Game.SPRITE_SIZE ));
-			}
-				
-			if(position.intY() > 600) {
-				state.setCurrentRoomX(state.getCurrentRoomY()+1);
-				setPosition(new Position(state.getWindowSize().getWidth()/2, 2*Game.SPRITE_SIZE ));
+			if(this.position.intY() < 100 && !this.transition) {
+				this.transition = true;
+				setPosition(new Position(state.getWindowSize().getWidth()/2,13*Game.SPRITE_SIZE ));
+				state.setCurrentRoomY(state.getCurrentRoomY() +1);
 				
 			}
+				
+			if(this.position.intY() > 800 && !this.transition) {
+				this.transition = true;
+				System.out.println("ffffffffffff");
+				setPosition(new Position(state.getWindowSize().getWidth()/2, 4*Game.SPRITE_SIZE ));
+				state.setCurrentRoomY(state.getCurrentRoomY()-1);
+				
+			}
+			if(state.getCurrentRoomY() == 4) {
+				state.getAudioPlayer().clear();
+	        	state.getAudioPlayer().playMusic("ThingsAreGettingWeird.wav");
+	        	effects.add(new Giant());	
+			}
+			System.out.println(String.format("Line 123 Player:  CurrentX Room = %d   currentYRoom =%d", state.getCurrentRoomX(), state.getCurrentRoomY()));
 			state.loadGameMap(getClass().getResource(state.getGameMaps()[state.getCurrentRoomX()][state.getCurrentRoomY()]).getFile());
+			this.transition = false;
 		}
     
 	}

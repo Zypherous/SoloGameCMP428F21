@@ -17,15 +17,26 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener {
     private boolean wheelMousePressed;
     private boolean wheelMouseReleased;
 
+    // Array holding information of what key is currently being pressed
+    // and one that determines when a button has been pressed
+    
     private boolean[] currentlyPressed;
     private boolean[] pressed;
 
+    
+    //Constructor that initiates input and provides an array in excess size for receiving 
+    // input booleans, as well as instantiating the position of the mouse to "off screen"
+    // since upon creation, the various elements come into existence at position 0,0
+    // causing the menu sounds to be played as if you hovered over an option
     public Input() {
         pressed = new boolean[1000];
         currentlyPressed = new boolean[1000];
         mousePosition = new Position(-1, -1);
     }
 
+    // Checks to see if the button was pressed and if it is currently being pressed to return true
+    // other wise it returns false if you continue to hold it down thereby allowing differentiating
+    // between a single press and the in ability of a human to press for a "single  update"
     public boolean isPressed(int keyCode) {
         if(!pressed[keyCode] && currentlyPressed[keyCode]) {
             pressed[keyCode] = true;
@@ -35,12 +46,14 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener {
         return false;
     }
 
+    // Check for if button is held down
     public boolean isCurrentlyPressed(int keyCode) {
         return currentlyPressed[keyCode];
     }
     
     
 
+    // Clears the input of the Mouse to allow for setting flags without registering multiple clicks
     public void clearMouseClick() {
         mouseClicked = false;
         rightMouseClicked = false;
@@ -50,34 +63,42 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener {
         rightMouseReleased = false;
     }
 
+    // Returns the position of the mouse stored in a custom class holding an x and y double
     public Position getMousePosition() {
         return mousePosition;
     }
 
+    // Check for if the mouse is clicked or not
     public boolean isMouseClicked() {
         return mouseClicked;
     }
 
+    // standard check for mouse pressed
     public boolean isMousePressed() {
         return mousePressed;
     }
 
+    // standard check for right mouse clicked
     public boolean isRightMouseClicked() {
 		return rightMouseClicked;
 	}
 
+    // standard check for mouse pressed
 	public boolean isRightMousePressed() {
 		return rightMousePressed;
 	}
 
+	// standard check for wheel button on mouse clicked
 	public boolean isWheelMouseClicked() {
 		return wheelMouseClicked;
 	}
 
+	// standard check for wheel button on mouse pressed
 	public boolean isWheelMousePressed() {
 		return wheelMousePressed;
 	}
 
+	// The next three check for the release of mouse buttons
 	public boolean isMouseReleased() {
 		return mouseReleased;
 	}
@@ -89,6 +110,8 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener {
 		return wheelMouseReleased;
 	}
 
+	// This is where the listening is done  and the input information is
+	// obtained by Java
 	@Override
     public void keyTyped(KeyEvent e) {}
 

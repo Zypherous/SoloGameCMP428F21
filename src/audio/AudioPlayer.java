@@ -14,11 +14,15 @@ public class AudioPlayer {
     private AudioSettings audioSettings;
     private List<AudioClip> audioClips;
 
+    // Constructor
     public AudioPlayer(AudioSettings audioSettings) {
         this.audioSettings = audioSettings;
         audioClips = new ArrayList<>();
     }
-
+    // Updates the audio clips
+    // makes a copy of the list and checks if an audio clip has finished playing, if it has,
+    // it calls the clean up to remove it from the list. Copy list is used to not modify the list
+    // as it is being iterated through
     public void update() {
         audioClips.forEach(audioClip -> audioClip.update(audioSettings));
 
@@ -45,6 +49,9 @@ public class AudioPlayer {
         audioClips.add(soundClip);
     }
 
+    // Opens a line to a clip and sets first/last frames.
+    // Uses javas class get resource to obtain file path 
+    // returns the clip
     private Clip getClip(String fileName) {
         final URL soundFile = AudioPlayer.class.getResource("/sounds/" + fileName);
         try(AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(soundFile)) {
@@ -53,6 +60,7 @@ public class AudioPlayer {
             clip.setMicrosecondPosition(0);
             return clip;
 
+            // required error handling
         } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
             System.out.println(e);
         }

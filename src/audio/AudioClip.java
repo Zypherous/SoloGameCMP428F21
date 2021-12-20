@@ -9,7 +9,7 @@ import javax.sound.sampled.FloatControl;
 public abstract class AudioClip {
 
     private final Clip clip;
-
+    // Creates a clip and starts the thread
     public AudioClip(Clip clip) {
         this.clip = clip;
         clip.start();

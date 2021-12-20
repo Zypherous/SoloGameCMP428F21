@@ -22,6 +22,7 @@ import input.Input;
 import input.mouse.MouseHandler;
 import io.MapIO;
 import map.GameMap;
+import state.game.GameState;
 import ui.UIContainer;
 
 public abstract class State {
@@ -208,7 +209,12 @@ public abstract class State {
 	// Takes in the file path to load the file using the persistableIO
 	public void loadGameMap(String filePath) {
 		// Clear the game objects previously loaded to load new ones and not have too many in the list
-		gameObjects.clear();
+		if(!(this instanceof GameState)) {
+			gameObjects.clear();
+		}
+		else {
+			gameObjects.removeIf( gameObject -> !(gameObject instanceof Player));
+		}
         gameMap = MapIO.load(spriteLibrary, filePath );
         gameObjects.addAll(gameMap.getSceneryList());
     }

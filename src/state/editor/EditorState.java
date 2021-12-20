@@ -26,7 +26,7 @@ public class EditorState extends State {
         setUpMouseHandler();
         
         setUpUI(windowSize, gameSettings);
-//        audioPlayer.playMusic("Menu.wav");
+        audioPlayer.playMusic("Menu.wav");
     }
 
 	private void setUpMouseHandler() {

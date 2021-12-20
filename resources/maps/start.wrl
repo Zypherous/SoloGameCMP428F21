@@ -22,6 +22,7 @@ Tile:water:6:false, Tile:grass:0:true, Tile:grass:0:true, Tile:grass:0:true, Til
 Tile:water:6:false, Tile:grass:0:true, Tile:grass:0:true, Tile:grass:0:true, Tile:grass:0:true, Tile:grass:0:true, Tile:grass:0:true, Tile:grass:0:true, Tile:grass:0:true, Tile:grass:0:true, Tile:grass:0:true, Tile:grass:0:true, Tile:grass:0:true, Tile:grass:0:true, Tile:grass:0:true, 
 
 ###
+Scenery:invisible:556|-16:256|64:32|64:24|0:256|64:true:
 Scenery:pinetree:861|32:64|93:32|64:24|0:50|24:false:
 Scenery:pinetree:842|32:64|93:32|64:24|0:50|24:false:
 Scenery:pinetree:861|32:64|93:32|64:24|0:50|24:false:

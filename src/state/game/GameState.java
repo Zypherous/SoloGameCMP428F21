@@ -35,13 +35,14 @@ public class GameState extends State {
 	private List<Condition> defeatConditions;
 	private String [][] gameMaps;
 	private boolean playing;
-	int currentRoomX = 1;
-	int currentRoomY = 0;
+	int currentRoomX ;
+	int currentRoomY ;
 	
 	private Player play;
     public GameState(Size windowSize, Input input, GameSettings gameSettings) {
         super(windowSize, input, gameSettings);
-        
+        this.currentRoomX = 1;
+        this.currentRoomY = 0;
         gameMaps = new String[2][5];
 //        gameMaps = new ArrayList();
         initializeGameMaps();
@@ -52,8 +53,13 @@ public class GameState extends State {
         initializeCharacters();
         initializeUI(windowSize);
 //        initializeConditions();
-        
-        audioPlayer.playMusic("MollysWorld.wav");
+        if(currentRoomY !=4 ) {
+        	audioPlayer.playMusic("MollysWorld.wav");
+        }
+        else {
+        	audioPlayer.clear();
+        	audioPlayer.playMusic("ThingsAreGettingWeird.wav");
+        }
     }
     
     
@@ -188,7 +194,7 @@ public class GameState extends State {
     	gameMaps [1][3] = "/maps/dungFinal.wrl";
     	gameMaps [0][3] = "/maps/itemroom.wrl";
     	gameMaps [1][4] = "/maps/boss.wrl";
-    	
+    	System.out.println(gameMaps[1][1]);
     }
 
 

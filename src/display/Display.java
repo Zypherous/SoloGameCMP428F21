@@ -47,7 +47,7 @@ public class Display extends JFrame {
 		BufferStrategy bufferStrategy = canvas.getBufferStrategy();
 		Graphics graphics = bufferStrategy.getDrawGraphics();
 		
-		Font font = new Font("Serif", Font.PLAIN, 32);
+		Font font = new Font("Serif", Font.BOLD, 32);
 		
 		graphics.setFont(font);
 		graphics.setColor(Color.BLACK);

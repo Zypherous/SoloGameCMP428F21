@@ -9,6 +9,10 @@ import java.util.Optional;
 
 public class MouseHandler {
 
+	// Different actions that can be attached to a mouse button
+	// A mouse "consumer" that prevents multiple elements from listening to the mouse
+	// at the same time be keeping track of what has focus of the mouse.
+	
     private MouseAction primaryButtonAction;
     private MouseAction wheelMouseButtonAction;
     private MouseAction rightMouseButtonAction;

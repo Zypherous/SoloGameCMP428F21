@@ -11,6 +11,8 @@ import io.Persistable;
 public class Tile implements Persistable {
 
 	// To not serialize the images since we can reload the assets
+	// No longer using the transient since i implemented a text based
+	// "serialization"
 	private transient Image image;
 	private transient Image sprite;
 	private int tileIndex;
